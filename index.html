@@ -525,22 +525,60 @@
 
         @media (max-width: 768px) {
             .floating-call { display: flex; }
+            /* Hero */
             .hud-overlay { grid-template-columns: 1fr; grid-template-rows: 60px 1fr 60px; padding: 10px; }
-            .header { padding: 0 16px; font-size: 9px; }
+            .header { padding: 0 12px; font-size: 8px; gap: 8px; overflow: hidden; }
             .header nav { display: none; }
-            .hero-content { grid-column: 1; padding-left: 20px; }
-            h1 { font-size: 40px; }
-            .description { font-size: 15px; }
+            .logo-group { gap: 8px; }
+            .logo-group span:not(.logo-main) { display: none; }
+            .hero-content { grid-column: 1; padding-left: 16px; padding-right: 16px; }
+            h1 { font-size: 36px; }
+            .description { font-size: 14px; max-width: 100%; }
             .data-panel { display: none; }
-            .footer { grid-column: 1; padding: 0 16px; font-size: 8px; }
+            .footer { grid-column: 1; padding: 0 12px; font-size: 7px; }
             .footer div:not(.status-badge) { display: none; }
-            .problem-section, .services-section, .whyus-section, .testimonials-section, .cta-section { padding: 60px 20px; }
-            .section-title { font-size: 32px; }
+            .system-code { display: none; }
+            .crosshair { display: none; }
+            /* 섹션 공통 */
+            .problem-section, .services-section, .whyus-section, .testimonials-section, .cta-section { padding: 48px 16px; overflow-x: hidden; }
+            .section-title { font-size: 28px; word-break: keep-all; }
+            .section-header { margin-bottom: 40px; }
+            /* 카드 그리드 */
             .problem-grid, .services-grid { grid-template-columns: 1fr; }
-            .whyus-container { grid-template-columns: 1fr; }
-            .cta-container { grid-template-columns: 1fr; }
-            .testimonial-card { padding: 32px 24px; }
-            .testimonial-quote { font-size: 22px; }
+            .problem-card, .service-card { padding: 24px; }
+            .card-title { font-size: 20px; }
+            /* WhyUs */
+            .whyus-container { grid-template-columns: 1fr; gap: 40px; }
+            .intro-lead { font-size: 24px; }
+            .profile-card { padding: 24px; }
+            .profile-avatar { width: 60px; height: 60px; font-size: 18px; }
+            /* Testimonials */
+            .testimonial-card { padding: 24px; }
+            .testimonial-quote { font-size: 20px; }
+            .quote-icon { font-size: 60px; margin-bottom: -20px; }
+            /* CTA */
+            .cta-container { grid-template-columns: 1fr; gap: 40px; }
+            .example-list li { font-size: 14px; padding-left: 20px; }
+            .highlight-block { padding: 20px; }
+            .cost-highlight { font-size: 18px; word-break: keep-all; }
+            .cost-detail { font-size: 14px; }
+            .cost-detail p { word-break: keep-all; }
+            .cta-footer { font-size: 14px; }
+            /* 전화 카드 */
+            .contact-card { padding: 24px; }
+            .phone-number { font-size: 24px; white-space: nowrap; }
+            .phone-icon { width: 36px; height: 36px; font-size: 16px; }
+            /* 연락처 정보 */
+            .info-row { flex-direction: column; gap: 4px; }
+            .info-value { font-size: 14px; }
+            /* 서비스 인트로 */
+            .services-intro { font-size: 15px; }
+            .services-intro .intro-highlight { font-size: 18px; }
+            .services-intro .intro-highlight.large { font-size: 20px; }
+            /* 서비스 하이라이트 */
+            .service-highlight { padding: 16px; }
+            .check-item { padding: 12px; }
+            .check-item p { font-size: 13px; }
         }
     </style>
 </head>
