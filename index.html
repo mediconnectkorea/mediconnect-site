@@ -109,56 +109,65 @@
             z-index: 10;
             display: grid;
             grid-template-columns: 80px 1fr 350px;
-            grid-template-rows: 80px 1fr 100px;
-            height: 100vh;
+            grid-template-rows: 1fr 100px;
+            height: calc(100vh - 78px);
             padding: 20px;
             pointer-events: none;
         }
 
-        .header {
-            grid-column: 1 / 4;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 48px;
-            padding: 0 40px;
-            border-bottom: 0.5px solid var(--border);
-            text-transform: uppercase;
-            font-size: 11px;
-            letter-spacing: 0.2em;
-            color: var(--text-muted);
-            font-family: var(--font-mono);
-            pointer-events: auto;
-            position: relative;
-            z-index: 30;
+        .wrap {
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 0 24px;
         }
 
-        .site-nav {
+        .nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(2, 5, 10, .94);
+            border-bottom: 1px solid rgba(255, 255, 255, .12);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-inner {
+            min-height: 78px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 48px;
+        }
+
+        .brand {
+            text-decoration: none;
+            font-weight: 900;
+            letter-spacing: -.02em;
+            font-size: 20px;
+            white-space: nowrap;
+            color: var(--text-main);
+        }
+
+        .menu {
             display: grid;
             grid-template-columns: repeat(4, minmax(0, 1fr));
-            gap: 18px;
             align-items: center;
+            gap: 18px;
             flex: 1;
-            max-width: 780px;
-            letter-spacing: 0;
-            text-transform: none;
-            font-family: var(--font-sans);
+            max-width: 760px;
+        }
+
+        .menu a {
+            text-decoration: none;
+            color: #dbeafe;
             font-size: 19px;
             font-weight: 900;
-            pointer-events: auto;
-            position: relative;
-            z-index: 31;
-        }
-
-        .site-nav a {
-            color: rgba(255, 255, 255, 0.78);
-            text-decoration: none;
+            letter-spacing: -.03em;
+            white-space: nowrap;
             text-align: center;
             padding: 10px 12px;
-            transition: color 0.2s ease;
         }
 
-        .site-nav a:hover {
+        .menu a:hover {
             color: #fff;
         }
 
@@ -177,7 +186,7 @@
 
         .hero-content {
             grid-column: 2;
-            grid-row: 2;
+            grid-row: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -247,7 +256,7 @@
 
         .data-panel {
             grid-column: 3;
-            grid-row: 2;
+            grid-row: 1;
             border-left: 0.5px solid var(--border);
             padding: 40px;
             display: flex;
@@ -298,7 +307,7 @@
 
         .footer {
             grid-column: 1 / 4;
-            grid-row: 3;
+            grid-row: 2;
             border-top: 0.5px solid var(--border);
             display: flex;
             align-items: center;
@@ -747,17 +756,19 @@
         @media (max-width: 768px) {
             .floating-call { display: flex; }
             /* Hero */
-            .hud-overlay { grid-template-columns: 1fr; grid-template-rows: 60px 1fr 60px; padding: 10px; }
-            .header { padding: 12px; font-size: 8px; gap: 12px; align-items: flex-start; flex-direction: column; overflow: visible; min-height: 178px; }
-            .header nav { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; gap: 8px; }
-            .site-nav a { border: 1px solid rgba(255,255,255,0.18); background: rgba(15,23,42,0.86); padding: 12px 10px; font-size: 15px; text-align: center; min-height: 48px; display: flex; align-items: center; justify-content: center; pointer-events: auto; }
-            .logo-group { gap: 8px; }
-            .logo-group span:not(.logo-main) { display: none; }
-            .hero-content { grid-column: 1; padding-left: 16px; padding-right: 16px; padding-top: 92px; }
+            .wrap{padding:0 18px}
+            .nav{background:rgba(2,5,10,.96);z-index:100}
+            .nav .wrap{padding:10px}
+            .nav-inner{min-height:178px;align-items:flex-start;gap:12px;flex-direction:column;padding:12px}
+            .brand{font-family:'Courier New',monospace;font-size:28px;line-height:1.15;letter-spacing:-.04em;color:#fff}
+            .menu{width:100%;max-width:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+            .menu a{font-size:15px;border:1px solid rgba(255,255,255,.18);padding:12px 10px;background:rgba(15,23,42,.86);min-height:48px;display:flex;align-items:center;justify-content:center;text-align:center;color:rgba(255,255,255,.78)}
+            .hud-overlay { grid-template-columns: 1fr; grid-template-rows: 1fr 60px; min-height: calc(100vh - 178px); height: auto; padding: 10px; }
+            .hero-content { grid-column: 1; grid-row: 1; padding-left: 16px; padding-right: 16px; padding-top: 0; }
             h1 { font-size: 36px; }
             .description { font-size: 14px; max-width: 100%; }
             .data-panel { display: none; }
-            .footer { grid-column: 1; padding: 0 12px; font-size: 7px; }
+            .footer { grid-column: 1; grid-row: 2; padding: 0 12px; font-size: 7px; }
             .footer div:not(.status-badge) { display: none; }
             .system-code { display: none; }
             .crosshair { display: none; }
@@ -812,22 +823,22 @@
 </head>
 <body>
 
+    <nav class="nav">
+        <div class="wrap nav-inner">
+            <a class="brand" href="/">MEDICONNECT</a>
+            <div class="menu">
+                <a href="/about/">회사소개</a>
+                <a href="/listings/">추천매물</a>
+                <a href="/insights/">입지분석칼럼</a>
+                <a href="/contact/">문의</a>
+            </div>
+        </div>
+    </nav>
+
     <div id="canvas-container"></div>
     <div class="grid-mesh"></div>
 
     <div class="hud-overlay">
-        <div class="header">
-            <div class="logo-group">
-                <span class="logo-main">MEDICONNECT</span>
-            </div>
-            <nav class="site-nav" aria-label="주요 메뉴">
-                <a href="about/">회사소개</a>
-                <a href="listings/">추천매물</a>
-                <a href="insights/">입지분석칼럼</a>
-                <a href="contact/">문의</a>
-            </nav>
-        </div>
-
         <div class="hero-content">
             <div class="meta-tag">ANALYSIS_MODE // CORE_EXPERTISE</div>
             <h1>병의원 입지,<br><span style="color: #ffffff">이것만 합니다.</span></h1>
