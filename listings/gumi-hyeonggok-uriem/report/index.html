@@ -1121,6 +1121,26 @@
       .data-table td:first-child {
         min-width: 0 !important;
       }
+      .stat-row {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 8px !important;
+        width: 100% !important;
+      }
+      .stat-item {
+        min-width: 0 !important;
+        padding: 10px 8px !important;
+      }
+      .stat-item .stat-value {
+        font-size: clamp(1.05rem, 6vw, 1.35rem) !important;
+        line-height: 1.15 !important;
+        word-break: keep-all;
+      }
+      .stat-item .stat-label {
+        font-size: 0.68rem !important;
+        line-height: 1.25 !important;
+        word-break: keep-all;
+      }
       .chart-block,
       .map-block,
       figure {
