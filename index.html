@@ -92,6 +92,7 @@
             height: 100%;
             z-index: 0;
             background: radial-gradient(circle at 60% 50%, var(--bg-accent) 0%, var(--bg-deep) 100%);
+            pointer-events: none;
         }
 
         .hud-overlay {
@@ -119,6 +120,8 @@
             color: var(--text-muted);
             font-family: var(--font-mono);
             pointer-events: auto;
+            position: relative;
+            z-index: 30;
         }
 
         .site-nav {
@@ -133,6 +136,9 @@
             font-family: var(--font-sans);
             font-size: 19px;
             font-weight: 900;
+            pointer-events: auto;
+            position: relative;
+            z-index: 31;
         }
 
         .site-nav a {
@@ -733,12 +739,12 @@
             .floating-call { display: flex; }
             /* Hero */
             .hud-overlay { grid-template-columns: 1fr; grid-template-rows: 60px 1fr 60px; padding: 10px; }
-            .header { padding: 12px; font-size: 8px; gap: 12px; align-items: flex-start; flex-direction: column; overflow: visible; }
+            .header { padding: 12px; font-size: 8px; gap: 12px; align-items: flex-start; flex-direction: column; overflow: visible; min-height: 178px; }
             .header nav { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; gap: 8px; }
-            .site-nav a { border: 1px solid rgba(255,255,255,0.14); background: rgba(15,23,42,0.72); padding: 9px 10px; font-size: 14px; text-align: center; }
+            .site-nav a { border: 1px solid rgba(255,255,255,0.18); background: rgba(15,23,42,0.86); padding: 12px 10px; font-size: 15px; text-align: center; min-height: 48px; display: flex; align-items: center; justify-content: center; pointer-events: auto; }
             .logo-group { gap: 8px; }
             .logo-group span:not(.logo-main) { display: none; }
-            .hero-content { grid-column: 1; padding-left: 16px; padding-right: 16px; }
+            .hero-content { grid-column: 1; padding-left: 16px; padding-right: 16px; padding-top: 92px; }
             h1 { font-size: 36px; }
             .description { font-size: 14px; max-width: 100%; }
             .data-panel { display: none; }

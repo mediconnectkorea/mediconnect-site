@@ -1023,6 +1023,102 @@
       .mc-report-nav .mc-report-links { justify-content: flex-start; gap: 12px; }
       .mc-report-nav a { font-size: 13px; }
     }
+  
+    /* MOBILE_WEB_REPORT_PATCH */
+    @media screen and (max-width: 720px) {
+      :root {
+        --page-w: 100vw;
+        --page-h: auto;
+        --page-px: 14px;
+        --page-py: 18px;
+      }
+      html, body {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+        background: #f2f3f6;
+      }
+      body {
+        font-size: 0.84rem;
+        line-height: 1.58;
+      }
+      .cover-page,
+      .page,
+      .interstitial {
+        width: 100%;
+        max-width: 100%;
+        min-height: auto;
+        height: auto;
+        margin: 0 0 10px 0;
+        padding-left: var(--page-px);
+        padding-right: var(--page-px);
+        box-shadow: none;
+        overflow-x: hidden;
+      }
+      .cover-page {
+        min-height: 100vh;
+        padding: 0;
+      }
+      .cover-content {
+        left: 22px;
+        right: 22px;
+        top: 14%;
+      }
+      .cover-brand {
+        top: 22px;
+        right: 22px;
+      }
+      .cover-title {
+        font-size: 2.05rem;
+        line-height: 1.18;
+      }
+      .cover-photo {
+        width: 100%;
+        max-width: none;
+        height: auto;
+      }
+      .section-header {
+        align-items: flex-start;
+        gap: 10px;
+        flex-direction: column;
+      }
+      .sh-title,
+      .int-title,
+      .toc-title {
+        font-size: 1.45rem;
+        line-height: 1.25;
+      }
+      .catchphrase {
+        padding: 12px 14px;
+      }
+      .data-table {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+      }
+      .data-table table,
+      table.data-table {
+        min-width: 620px;
+      }
+      .chart-block,
+      .map-block,
+      figure {
+        max-width: 100%;
+        overflow-x: auto;
+      }
+      img,
+      .report-img,
+      .map-img,
+      .chart-img {
+        max-width: 100%;
+        height: auto;
+      }
+      .page-number {
+        display: none;
+      }
+    }
   </style>
 </head>
 <body class="">
@@ -3034,5 +3130,6 @@
 
 </body>
 </html>
+
 
 
