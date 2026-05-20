@@ -1,4 +1,4 @@
-<html lang="ko"><head>
+﻿<html lang="ko"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Google tag (gtag.js) -->
@@ -10,8 +10,8 @@
       gtag('config', 'G-YF6FC9EBS3');
     </script>
     <title>메디커넥트 공인중개사무소 — 대구·부산 병의원 개원 입지 분석 전문</title>
-    <meta name="description" content="경상권 병의원·약국 개원 입지를 데이터로 분석합니다. 8년 현장 경험 + 데이터사이언스. 대구 부산 경상도 개원 전문 공인중개사무소.">
-    <meta name="keywords" content="대구 개원, 부산 개원, 병의원 입지 분석, 개원 컨설팅, 의원 개원 자리, 경상도 개원, 병원 배후세대, 메디커넥트">
+    <meta name="description" content="경상권 병의원·약국 개원 입지를 데이터로 분석합니다. 구미 형곡동 우리엠빌딩 등 대구·경북 병의원 개원 입지와 의원 자리를 과목별 데이터로 검토합니다.">
+    <meta name="keywords" content="대구 개원, 경북 개원, 구미 개원, 형곡동 개원, 병의원 입지 분석, 개원 컨설팅, 의원 개원 자리, 경상도 개원, 병원 배후세대, 메디커넥트">
     <meta name="google-site-verification" content="tEOGfwEAppZRtHWj6fyWljhzSfNFydt407iTEOBCVkU">
     <meta name="naver-site-verification" content="501ec5702516b7988dea1ad18fb5e64255dedbdc">
     <link rel="canonical" href="https://mediconnect.co.kr/">
@@ -110,6 +110,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 48px;
             padding: 0 40px;
             border-bottom: 0.5px solid var(--border);
             text-transform: uppercase;
@@ -117,6 +118,33 @@
             letter-spacing: 0.2em;
             color: var(--text-muted);
             font-family: var(--font-mono);
+            pointer-events: auto;
+        }
+
+        .site-nav {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 18px;
+            align-items: center;
+            flex: 1;
+            max-width: 780px;
+            letter-spacing: 0;
+            text-transform: none;
+            font-family: var(--font-sans);
+            font-size: 19px;
+            font-weight: 900;
+        }
+
+        .site-nav a {
+            color: rgba(255, 255, 255, 0.78);
+            text-decoration: none;
+            text-align: center;
+            padding: 10px 12px;
+            transition: color 0.2s ease;
+        }
+
+        .site-nav a:hover {
+            color: #fff;
         }
 
         .logo-group {
@@ -454,6 +482,138 @@
         .check-item.danger .check-dot { background: #ef4444; box-shadow: 0 0 8px #ef4444; }
         .check-item p { font-size: 14px; margin: 0; }
 
+        /* Case Study Section */
+        .case-section {
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
+            background: linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-accent) 100%);
+            padding: 100px 80px;
+            border-top: 0.5px solid var(--border);
+        }
+
+        .case-container {
+            display: grid;
+            grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+            gap: 48px;
+            max-width: 1200px;
+            margin: 0 auto;
+            align-items: stretch;
+        }
+
+        .case-summary {
+            background: rgba(10, 20, 40, 0.6);
+            border: 0.5px solid var(--border);
+            padding: 48px;
+            position: relative;
+        }
+
+        .case-summary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--electric-blue), transparent);
+        }
+
+        .case-title {
+            font-size: 34px;
+            line-height: 1.35;
+            letter-spacing: -0.03em;
+            margin-bottom: 24px;
+        }
+
+        .case-desc {
+            font-size: 17px;
+            line-height: 1.8;
+            color: var(--text-main);
+            margin-bottom: 32px;
+        }
+
+        .case-points {
+            display: grid;
+            gap: 14px;
+            margin-bottom: 36px;
+        }
+
+        .case-point {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            font-size: 15px;
+            line-height: 1.7;
+            color: var(--text-main);
+        }
+
+        .case-point::before {
+            content: '';
+            width: 7px;
+            height: 7px;
+            flex: 0 0 auto;
+            margin-top: 9px;
+            background: var(--electric-blue);
+            box-shadow: 0 0 8px var(--electric-blue);
+        }
+
+        .case-link {
+            display: inline-flex;
+            align-items: center;
+            min-height: 48px;
+            padding: 0 22px;
+            border: 1px solid var(--electric-blue);
+            color: #fff;
+            text-decoration: none;
+            font-weight: 700;
+            background: rgba(59, 130, 246, 0.14);
+            transition: all 0.2s ease;
+        }
+
+        .case-link:hover {
+            background: rgba(59, 130, 246, 0.24);
+            transform: translateY(-1px);
+        }
+
+        .case-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        .case-link.secondary {
+            border-color: rgba(255, 255, 255, 0.22);
+            color: rgba(255, 255, 255, 0.78);
+        }
+
+        .case-metrics {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .case-metric {
+            background: rgba(0, 0, 0, 0.3);
+            border: 0.5px solid var(--border);
+            padding: 24px;
+            min-height: 148px;
+        }
+
+        .case-metric-value {
+            font-family: var(--font-mono);
+            font-size: 28px;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .case-metric-label {
+            font-size: 13px;
+            line-height: 1.55;
+            color: var(--text-muted);
+        }
+
         /* Why Us Section */
         .whyus-section {
             position: relative;
@@ -573,8 +733,9 @@
             .floating-call { display: flex; }
             /* Hero */
             .hud-overlay { grid-template-columns: 1fr; grid-template-rows: 60px 1fr 60px; padding: 10px; }
-            .header { padding: 0 12px; font-size: 8px; gap: 8px; overflow: hidden; }
-            .header nav { display: none; }
+            .header { padding: 12px; font-size: 8px; gap: 12px; align-items: flex-start; flex-direction: column; overflow: visible; }
+            .header nav { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; gap: 8px; }
+            .site-nav a { border: 1px solid rgba(255,255,255,0.14); background: rgba(15,23,42,0.72); padding: 9px 10px; font-size: 14px; text-align: center; }
             .logo-group { gap: 8px; }
             .logo-group span:not(.logo-main) { display: none; }
             .hero-content { grid-column: 1; padding-left: 16px; padding-right: 16px; }
@@ -586,13 +747,19 @@
             .system-code { display: none; }
             .crosshair { display: none; }
             /* 섹션 공통 */
-            .problem-section, .services-section, .whyus-section, .testimonials-section, .cta-section { padding: 48px 16px; overflow-x: hidden; }
+            .problem-section, .services-section, .case-section, .whyus-section, .testimonials-section, .cta-section { padding: 48px 16px; overflow-x: hidden; }
             .section-title { font-size: 28px; word-break: keep-all; }
             .section-header { margin-bottom: 40px; }
             /* 카드 그리드 */
             .problem-grid, .services-grid { grid-template-columns: 1fr; }
             .problem-card, .service-card { padding: 24px; }
             .card-title { font-size: 20px; }
+            /* Case Study */
+            .case-container { grid-template-columns: 1fr; gap: 24px; }
+            .case-summary { padding: 24px; }
+            .case-title { font-size: 24px; }
+            .case-desc { font-size: 15px; }
+            .case-metrics { grid-template-columns: 1fr; }
             /* WhyUs */
             .whyus-container { grid-template-columns: 1fr; gap: 40px; }
             .intro-lead { font-size: 24px; }
@@ -637,13 +804,12 @@
         <div class="header">
             <div class="logo-group">
                 <span class="logo-main">MEDICONNECT</span>
-                <span style="opacity: 0.3">/</span>
-                <span>Location Intelligence v8.4.1</span>
             </div>
-            <nav style="display: flex; gap: 30px;">
-                <span>System Status: Optimal</span>
-                <span>Region: Gyeongsang_S</span>
-                <span>User: Guest_032</span>
+            <nav class="site-nav" aria-label="주요 메뉴">
+                <a href="about/">회사소개</a>
+                <a href="listings/">추천매물</a>
+                <a href="insights/">입지분석칼럼</a>
+                <a href="contact/">문의</a>
             </nav>
         </div>
 
@@ -698,6 +864,60 @@
         <div class="crosshair top-right"></div>
         <div class="system-code">MNCT_LOC_DATA_STREAM_88294_PRIME</div>
     </div>
+
+    <section class="whyus-section">
+        <div class="section-header">
+            <div class="meta-tag">SECTION_01 // CREDENTIALS_MODE</div>
+            <h2 class="section-title">1. 왜 우리인가</h2>
+        </div>
+
+        <div class="whyus-container">
+            <div class="whyus-intro">
+                <p class="intro-lead">입지 분석, 오직 이것만 합니다.</p>
+                <div class="intro-block">
+                    <p>인테리어, 세무, 인허가, 마케팅, 의료기기.</p>
+                    <p>개원 컨설팅이라는 이름으로 이것저것 다 해주겠다는 곳은 많습니다.</p>
+                    <p class="highlight">저희는 하지 않습니다.</p>
+                    <p class="conclusion">입지 하나만 봅니다. 그래서 이 분야에서 가장 깊습니다.</p>
+                </div>
+                <div class="divider"></div>
+                <div class="intro-block">
+                    <p class="highlight">외부 컨설턴트가 아닙니다.</p>
+                    <p>저는 현직 약사입니다.</p>
+                    <p>병원이 잘 돼야 제가 잘 됩니다.</p>
+                    <p>개원 입지를 분석하는 게 남의 일이 아니라 제 일입니다.</p>
+                    <p>밖에서 보고서 던져주고 끝나는 사람이 아니라,</p>
+                    <p class="conclusion">같은 업에서 매일 부딪히고 있는 사람입니다.</p>
+                </div>
+            </div>
+
+            <div class="profile-card">
+                <div class="profile-header">
+                    <div class="profile-avatar"><span>KJH</span></div>
+                    <div class="profile-title">
+                        <h3>대표 <span class="name-highlight">김진현</span></h3>
+                        <div class="profile-badge">FOUNDER / LEAD ANALYST</div>
+                    </div>
+                </div>
+                <div class="profile-story">
+                    <p>서울대 건축학과에서 공간을 읽는 법을 배웠습니다.</p>
+                    <p>약사가 되어, 이 일이 남의 일이 아니게 됐습니다.</p>
+                    <p class="highlight">병원이 잘 돼야 제가 잘 됩니다.</p>
+                    <div class="divider"></div>
+                    <p>그래서 직접 답을 찾기로 했습니다.</p>
+                    <p>공인중개사 자격을 땄고,</p>
+                    <p>경북대 데이터사이언스 대학원에서 분석 도구를 직접 만들고 있습니다.</p>
+                </div>
+                <div class="credentials-list">
+                    <div class="credential-item"><div class="credential-dot"></div><span>서울대학교 건축학과</span></div>
+                    <div class="credential-item"><div class="credential-dot"></div><span>약학과 졸업, 현직 약사</span></div>
+                    <div class="credential-item"><div class="credential-dot"></div><span>공인중개사</span></div>
+                    <div class="credential-item"><div class="credential-dot"></div><span>경북대 데이터사이언스 대학원 석사과정</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
 
     <section class="problem-section">
         <div class="section-header">
@@ -844,54 +1064,48 @@
         </div>
     </section>
 
-    <section class="whyus-section">
+    <section class="case-section" id="case-gumi-hyeonggok">
         <div class="section-header">
-            <div class="meta-tag">SECTION_04 // CREDENTIALS_MODE</div>
-            <h2 class="section-title">4. 왜 우리인가</h2>
+            <div class="meta-tag">SECTION_04 // CASE_STUDY_MODE</div>
+            <h2 class="section-title">4. 분석 사례 —<br><span style="color: var(--text-muted);">구미 형곡동 우리엠빌딩 개원 입지</span></h2>
         </div>
 
-        <div class="whyus-container">
-            <div class="whyus-intro">
-                <p class="intro-lead">입지 분석, 오직 이것만 합니다.</p>
-                <div class="intro-block">
-                    <p>인테리어, 세무, 인허가, 마케팅, 의료기기.</p>
-                    <p>개원 컨설팅이라는 이름으로 이것저것 다 해주겠다는 곳은 많습니다.</p>
-                    <p class="highlight">저희는 하지 않습니다.</p>
-                    <p class="conclusion">입지 하나만 봅니다. 그래서 이 분야에서 가장 깊습니다.</p>
+        <div class="case-container">
+            <article class="case-summary">
+                <h3 class="case-title">구미 형곡동 병의원 개원 입지,<br>데이터로 본 우리엠빌딩 분석</h3>
+                <p class="case-desc">
+                    구미시 형곡동 우리엠빌딩을 기준으로 배후세대, 기존 의원 분포, 과목별 경쟁 강도, 건물 조건을 함께 검토한 개원 입지 분석 리포트입니다.
+                    공홈에는 매물 정보와 분석 요약을 분리해 정리하고, 네이버 블로그에는 장문 리포트 전문을 공개했습니다.
+                </p>
+                <div class="case-points">
+                    <div class="case-point">의료시설 전용 건물, 기존 3개 의원 운영, 형곡동 의원 밀집 동선 위의 입지</div>
+                    <div class="case-point">도보 15분권 배후세대와 40대 이상 인구 비율을 함께 검토</div>
+                    <div class="case-point">정신건강의학과, 통증계열, 소화기내과, 외과 관점의 과목별 성립 가능성 분석</div>
+                    <div class="case-point">네이버 부동산 170건과 건축물대장을 비교해 의원 개원 가능 건물을 필터링</div>
                 </div>
-                <div class="divider"></div>
-                <div class="intro-block">
-                    <p class="highlight">외부 컨설턴트가 아닙니다.</p>
-                    <p>저는 현직 약사입니다.</p>
-                    <p>병원이 잘 돼야 제가 잘 됩니다.</p>
-                    <p>개원 입지를 분석하는 게 남의 일이 아니라 제 일입니다.</p>
-                    <p>밖에서 보고서 던져주고 끝나는 사람이 아니라,</p>
-                    <p class="conclusion">같은 업에서 매일 부딪히고 있는 사람입니다.</p>
+                <div class="case-actions">
+                    <a class="case-link" href="listings/gumi-hyeonggok-uriem/report/">추천매물 리포트 보기 →</a>
+                    <a class="case-link secondary" href="listings/gumi-hyeonggok-uriem/">매물 조건만 보기 →</a>
+                    <a class="case-link secondary" href="https://blog.naver.com/dgmediconnect/224290430439" target="_blank" rel="noopener">네이버 블로그 전문 →</a>
                 </div>
-            </div>
+            </article>
 
-            <div class="profile-card">
-                <div class="profile-header">
-                    <div class="profile-avatar"><span>KJH</span></div>
-                    <div class="profile-title">
-                        <h3>대표 <span class="name-highlight">김진현</span></h3>
-                        <div class="profile-badge">FOUNDER / LEAD ANALYST</div>
-                    </div>
+            <div class="case-metrics" aria-label="구미 형곡동 우리엠빌딩 분석 핵심 수치">
+                <div class="case-metric">
+                    <div class="case-metric-value">13,893</div>
+                    <div class="case-metric-label">우리엠빌딩 기준 도보 15분권 배후세대</div>
                 </div>
-                <div class="profile-story">
-                    <p>서울대 건축학과에서 공간을 읽는 법을 배웠습니다.</p>
-                    <p>약사가 되어, 이 일이 남의 일이 아니게 됐습니다.</p>
-                    <p class="highlight">병원이 잘 돼야 제가 잘 됩니다.</p>
-                    <div class="divider"></div>
-                    <p>그래서 직접 답을 찾기로 했습니다.</p>
-                    <p>공인중개사 자격을 땄고,</p>
-                    <p>경북대 데이터사이언스 대학원에서 분석 도구를 직접 만들고 있습니다.</p>
+                <div class="case-metric">
+                    <div class="case-metric-value">64.7%</div>
+                    <div class="case-metric-label">형곡동 40대 이상 인구 비율</div>
                 </div>
-                <div class="credentials-list">
-                    <div class="credential-item"><div class="credential-dot"></div><span>서울대학교 건축학과</span></div>
-                    <div class="credential-item"><div class="credential-dot"></div><span>약학과 졸업, 현직 약사</span></div>
-                    <div class="credential-item"><div class="credential-dot"></div><span>공인중개사</span></div>
-                    <div class="credential-item"><div class="credential-dot"></div><span>경북대 데이터사이언스 대학원 석사과정</span></div>
+                <div class="case-metric">
+                    <div class="case-metric-value">170건</div>
+                    <div class="case-metric-label">형곡동 반경 내 사무실·상가 매물 수집 및 필터링</div>
+                </div>
+                <div class="case-metric">
+                    <div class="case-metric-value">4개</div>
+                    <div class="case-metric-label">정신건강의학과·통증계열·소화기내과·외과 추천 과목 검토</div>
                 </div>
             </div>
         </div>
@@ -900,7 +1114,7 @@
     <section class="testimonials-section">
         <div class="section-header">
             <div class="meta-tag">SECTION_05 // TESTIMONIAL_MODE</div>
-            <h2 class="section-title">고객 후기</h2>
+            <h2 class="section-title">5. 고객 후기</h2>
         </div>
         <div class="testimonials-container">
             <div class="testimonial-label">후기</div>
@@ -930,7 +1144,7 @@
     <section class="cta-section" id="cta">
         <div class="section-header">
             <div class="meta-tag">SECTION_06 // CONTACT_MODE</div>
-            <h2 class="section-title">6. CTA —<br><span style="color: var(--text-muted);">이런 고민이 있으시면, 전화 한 통이면 됩니다.</span></h2>
+            <h2 class="section-title">6. 문의 —<br><span style="color: var(--text-muted);">이런 고민이 있으시면, 전화 한 통이면 됩니다.</span></h2>
         </div>
 
         <div class="cta-container">
@@ -1080,3 +1294,4 @@
     </script>
 
 </body></html>
+

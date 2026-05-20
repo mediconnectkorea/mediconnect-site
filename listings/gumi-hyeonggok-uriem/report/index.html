@@ -1,0 +1,3038 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>구미 형곡동 우리엠빌딩 개원전략 리포트 | 메디커넥트</title>
+  <meta name="description" content="구미 형곡동 우리엠빌딩 병의원 개원전략 리포트입니다. 배후세대, 기존 의원 분포, 과목별 경쟁 강도, 건물 조건을 데이터로 분석합니다.">
+  <link rel="canonical" href="https://mediconnect.co.kr/listings/gumi-hyeonggok-uriem/report/">
+  <meta property="og:title" content="구미 형곡동 우리엠빌딩 개원전략 리포트 | 메디커넥트">
+  <meta property="og:description" content="구미 형곡동 우리엠빌딩 병의원 개원 입지를 데이터로 분석한 원문 리포트입니다.">
+  <meta property="og:url" content="https://mediconnect.co.kr/listings/gumi-hyeonggok-uriem/report/">
+  <meta property="og:type" content="article">
+  <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" rel="stylesheet">
+  <style>
+    /* ============================================================
+       DESIGN SYSTEM — Gumi Hyeonggok Medical Building Report
+       McKinsey-meets-Korean-startup aesthetic
+       ============================================================ */
+
+    :root {
+      /* Color palette — strict 3-color system */
+      --navy: #1B2A4A;
+      --navy-90: rgba(27, 42, 74, 0.9);
+      --navy-60: rgba(27, 42, 74, 0.6);
+      --navy-30: rgba(27, 42, 74, 0.3);
+      --navy-10: rgba(27, 42, 74, 0.1);
+      --navy-05: rgba(27, 42, 74, 0.05);
+      --accent: #C0392B;
+      --accent-light: rgba(192, 57, 43, 0.08);
+      --blue: #2980B9;
+      --blue-light: rgba(41, 128, 185, 0.08);
+
+      /* Neutrals */
+      --gray-900: #1a1a2e;
+      --gray-700: #4a4a5a;
+      --gray-500: #8c8c96;
+      --gray-300: #c8c8d0;
+      --gray-200: #e2e2e8;
+      --gray-100: #f0f0f4;
+      --gray-50: #f8f8fb;
+      --white: #ffffff;
+
+      /* Typography */
+      --font: 'Pretendard Variable', 'Pretendard', 'Noto Sans KR', 'Malgun Gothic', -apple-system, sans-serif;
+
+      /* Spacing (8px grid) */
+      --sp-1: 4px;
+      --sp-2: 8px;
+      --sp-3: 12px;
+      --sp-4: 16px;
+      --sp-5: 24px;
+      --sp-6: 32px;
+      --sp-7: 40px;
+      --sp-8: 48px;
+      --sp-9: 64px;
+      --sp-10: 80px;
+
+      /* Page */
+      --page-w: 210mm;
+      --page-h: 297mm;
+      --page-px: 28mm;
+      --page-py: 22mm;
+    }
+
+    /* ---- Reset ---- */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      font-size: 0.92rem;
+      font-weight: 400;
+      color: var(--gray-700);
+      line-height: 1.72;
+      background: #e8e8ec;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ---- Page container ---- */
+    .page {
+      width: var(--page-w);
+      min-height: var(--page-h);
+      margin: 12px auto;
+      background: var(--white);
+      padding: var(--page-py) var(--page-px);
+      position: relative;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+    }
+
+    /* ============================================================
+       COVER PAGE
+       ============================================================ */
+    .cover-page {
+      width: var(--page-w);
+      height: var(--page-h);
+      margin: 12px auto;
+      background: var(--navy);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+    }
+    .cover-page::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 50%;
+      background: linear-gradient(180deg, var(--navy) 0%, rgba(27,42,74,0.85) 100%);
+      z-index: 2;
+    }
+    .cover-brand {
+      position: absolute;
+      top: 36px;
+      right: 44px;
+      z-index: 3;
+      color: rgba(255,255,255,0.45);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+    .cover-content {
+      position: absolute;
+      top: 15%;
+      left: 44px;
+      right: 44px;
+      z-index: 3;
+    }
+    .cover-label {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 0.12em;
+      margin-bottom: var(--sp-4);
+      text-transform: uppercase;
+    }
+    .cover-title {
+      font-size: 2.6rem;
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1.25;
+      letter-spacing: -0.03em;
+      margin-bottom: var(--sp-5);
+    }
+    .cover-subtitle {
+      font-size: 1.15rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.5;
+      letter-spacing: 0.08em;
+    }
+    .cover-line {
+      width: 64px;
+      height: 3px;
+      background: var(--accent);
+      margin: var(--sp-5) 0;
+      border-radius: 2px;
+    }
+    .cover-meta {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.45);
+      font-weight: 400;
+      letter-spacing: 0.02em;
+    }
+    .cover-photo {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 52%;
+      object-fit: cover;
+      width: 100%;
+      z-index: 1;
+    }
+    .cover-photo-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 52%;
+      background: linear-gradient(180deg, var(--navy) 0%, rgba(27,42,74,0.2) 40%, transparent 100%);
+      z-index: 2;
+    }
+
+    /* ============================================================
+       TABLE OF CONTENTS
+       ============================================================ */
+    .toc-header {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--gray-500);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: var(--sp-2);
+    }
+    .toc-title {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--navy);
+      letter-spacing: -0.02em;
+      margin-bottom: var(--sp-3);
+    }
+    .toc-bar {
+      width: 48px;
+      height: 3px;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: var(--sp-8);
+    }
+    .toc-group {
+      margin-bottom: var(--sp-6);
+    }
+    .toc-group-header {
+      display: flex;
+      align-items: baseline;
+      gap: var(--sp-3);
+      margin-bottom: var(--sp-2);
+    }
+    .toc-letter {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--navy);
+      min-width: 36px;
+    }
+    .toc-section-name {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--navy);
+    }
+    .toc-items {
+      padding-left: 48px;
+    }
+    .toc-item {
+      font-size: 0.88rem;
+      color: var(--gray-500);
+      line-height: 2.0;
+      font-weight: 400;
+    }
+    .toc-footnote {
+      position: absolute;
+      bottom: var(--page-py);
+      left: var(--page-px);
+      right: var(--page-px);
+      border-top: 1px solid var(--gray-200);
+      padding-top: var(--sp-3);
+      font-size: 0.72rem;
+      color: var(--gray-300);
+    }
+
+    /* ============================================================
+       INTERSTITIAL (Section divider pages)
+       ============================================================ */
+    .interstitial {
+      width: var(--page-w);
+      min-height: 180px;
+      margin: 12px auto;
+      background: var(--white);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: var(--sp-9) var(--page-px);
+      position: relative;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+    }
+    .interstitial .int-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--gray-300);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: var(--sp-2);
+    }
+    .interstitial .int-title {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--navy);
+      letter-spacing: -0.02em;
+    }
+    .interstitial .int-bar {
+      width: 40px;
+      height: 3px;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-top: var(--sp-4);
+    }
+
+    /* ============================================================
+       SECTION HEADER (within page)
+       ============================================================ */
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: var(--sp-6);
+      padding-bottom: var(--sp-3);
+      border-bottom: 1px solid var(--gray-200);
+    }
+    .section-header .sh-left {
+      display: flex;
+      align-items: baseline;
+      gap: var(--sp-3);
+    }
+    .section-header .sh-number {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--navy-30);
+      letter-spacing: 0.05em;
+    }
+    .section-header .sh-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: -0.01em;
+    }
+    .section-header .sh-category {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--gray-500);
+    }
+
+    /* ============================================================
+       CATCHPHRASE
+       ============================================================ */
+    .catchphrase {
+      text-align: center;
+      margin: var(--sp-6) 0;
+      padding: var(--sp-5) var(--sp-7);
+    }
+    .catchphrase p {
+      font-size: 1.15rem;
+      font-weight: 400;
+      color: var(--navy);
+      line-height: 1.6;
+      letter-spacing: -0.01em;
+    }
+    .catchphrase p strong {
+      font-weight: 600;
+      color: var(--navy);
+    }
+    .catchphrase-bar {
+      width: 40px;
+      height: 2px;
+      background: var(--accent);
+      margin: var(--sp-3) auto 0;
+      border-radius: 1px;
+    }
+
+    /* ============================================================
+       DATA TABLE
+       ============================================================ */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+      margin: var(--sp-4) 0 var(--sp-5) 0;
+    }
+    .data-table thead th {
+      font-weight: 600;
+      font-size: 0.78rem;
+      color: var(--navy-60);
+      padding: 9px var(--sp-3);
+      text-align: left;
+      border-bottom: 2px solid var(--navy);
+      background: transparent;
+      letter-spacing: 0.02em;
+    }
+    .data-table thead th.num {
+      text-align: right;
+    }
+    .data-table tbody td {
+      padding: 7px var(--sp-3);
+      border-bottom: 1px solid var(--gray-100);
+      color: var(--gray-700);
+      vertical-align: top;
+    }
+    .data-table tbody td.num {
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+    .data-table tbody tr:nth-child(even) td {
+      background: var(--gray-50);
+    }
+    .data-table tbody tr.row-highlight td {
+      background: var(--accent-light);
+      font-weight: 500;
+    }
+    .data-table tbody tr.row-highlight td:first-child {
+      border-left: 3px solid var(--accent);
+    }
+    .data-table tbody tr.row-muted td {
+      color: var(--gray-300);
+    }
+    .data-table .accent {
+      color: var(--accent);
+      font-weight: 700;
+    }
+    .data-table .bold {
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    /* Compact table variant */
+    .data-table.compact {
+      font-size: 0.78rem;
+    }
+    .data-table.compact thead th {
+      font-size: 0.74rem;
+      padding: var(--sp-1) var(--sp-2);
+    }
+    .data-table.compact tbody td {
+      padding: 5px var(--sp-2);
+    }
+
+    /* ============================================================
+       CONTENT TYPOGRAPHY
+       ============================================================ */
+    .content {
+      margin: var(--sp-4) 0;
+    }
+    .content p {
+      margin-bottom: 0.7em;
+      line-height: 1.72;
+    }
+    .content h3 {
+      font-size: 1.0rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin: var(--sp-6) 0 var(--sp-3) 0;
+      letter-spacing: -0.01em;
+    }
+    .content h4 {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--navy);
+      margin: var(--sp-5) 0 var(--sp-2) 0;
+    }
+    .content ul {
+      padding-left: 20px;
+      margin-bottom: 0.8em;
+      list-style: none;
+    }
+    .content ul li {
+      margin-bottom: 4px;
+      position: relative;
+      padding-left: 4px;
+    }
+    .content ul li::before {
+      content: '';
+      position: absolute;
+      left: -16px;
+      top: 10px;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--navy-30);
+    }
+    .content blockquote {
+      border-left: 2px solid var(--navy-30);
+      padding: var(--sp-3) var(--sp-4);
+      margin: var(--sp-3) 0 var(--sp-4) 0;
+      font-size: 0.82rem;
+      color: var(--gray-500);
+      background: var(--gray-50);
+      border-radius: 0 6px 6px 0;
+    }
+    .content blockquote p {
+      margin-bottom: 2px;
+    }
+
+    /* Accent text */
+    .accent-text {
+      color: var(--accent);
+      font-weight: 700;
+    }
+    strong {
+      font-weight: 600;
+      color: var(--gray-900);
+    }
+
+    /* ============================================================
+       INFO BOX
+       ============================================================ */
+    .info-box {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      padding: var(--sp-4) var(--sp-5);
+      margin: var(--sp-4) 0;
+      font-size: 0.88rem;
+      line-height: 1.65;
+    }
+    .info-box.accent-box {
+      background: var(--accent-light);
+      border-color: rgba(192, 57, 43, 0.15);
+    }
+
+    /* ============================================================
+       KEY POINTS (bullet card)
+       ============================================================ */
+    .key-points {
+      background: var(--gray-50);
+      border-radius: 10px;
+      padding: var(--sp-5);
+      margin: var(--sp-5) 0;
+    }
+    .key-points .kp-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: var(--sp-3);
+    }
+    .key-points ul {
+      list-style: none;
+      padding: 0;
+    }
+    .key-points ul li {
+      padding: 4px 0 4px 20px;
+      position: relative;
+      font-size: 0.88rem;
+      line-height: 1.7;
+    }
+    .key-points ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 12px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--navy);
+    }
+
+    /* ============================================================
+       SPECIALTY CARD (for B-3 sections)
+       ============================================================ */
+    .spec-header {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-3);
+      margin: var(--sp-6) 0 var(--sp-4) 0;
+      padding-bottom: var(--sp-3);
+      border-bottom: 1px solid var(--gray-200);
+    }
+    .spec-rank {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      background: var(--navy);
+      color: var(--white);
+      font-size: 0.78rem;
+      font-weight: 700;
+      border-radius: 6px;
+    }
+    .spec-name {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: -0.01em;
+    }
+    .spec-badge {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 600;
+      padding: 2px 10px;
+      border-radius: 20px;
+      background: rgba(39, 174, 96, 0.1);
+      color: #27AE60;
+      vertical-align: middle;
+      line-height: 1.4;
+    }
+    .spec-badge.warn {
+      background: rgba(192, 57, 43, 0.08);
+      color: var(--accent);
+    }
+
+    /* ============================================================
+       IMAGES
+       ============================================================ */
+    img.chart {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: var(--sp-3) auto;
+      border-radius: 6px;
+    }
+    img.map {
+      width: 100%;
+      max-height: 130mm;
+      object-fit: contain;
+      display: block;
+      margin: var(--sp-3) auto;
+      border-radius: 6px;
+    }
+    img.review-img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: var(--sp-2) 0;
+      border: 1px solid var(--gray-200);
+      border-radius: 6px;
+    }
+    .review-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--sp-3);
+      margin: var(--sp-3) 0;
+    }
+    .review-grid img {
+      width: 100%;
+      border: 1px solid var(--gray-200);
+      border-radius: 6px;
+    }
+    .caption {
+      font-size: 0.72rem;
+      color: var(--gray-500);
+      margin: var(--sp-1) 0 var(--sp-4) 0;
+      line-height: 1.5;
+    }
+
+    /* ============================================================
+       CTA BLOCK
+       ============================================================ */
+    .cta-block {
+      text-align: center;
+      padding: var(--sp-7) var(--sp-5);
+      margin: var(--sp-7) 0;
+      background: var(--navy);
+      border-radius: 10px;
+    }
+    .cta-block p {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: var(--sp-2);
+      line-height: 1.5;
+    }
+    .cta-block .cta-sub {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.55);
+      font-weight: 400;
+    }
+
+    /* ============================================================
+       PAGE NUMBER
+       ============================================================ */
+    .page-number {
+      position: absolute;
+      bottom: 12mm;
+      right: var(--page-px);
+      font-size: 0.68rem;
+      color: var(--gray-300);
+      font-weight: 400;
+    }
+
+    /* ============================================================
+       DIVIDER
+       ============================================================ */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--gray-200);
+      margin: var(--sp-6) 0;
+    }
+
+    /* ============================================================
+       CHART BLOCK (avoid break)
+       ============================================================ */
+    .chart-block {
+      margin: var(--sp-4) 0;
+    }
+
+    /* ============================================================
+       STAT ROW (inline key stats)
+       ============================================================ */
+    .stat-row {
+      display: flex;
+      gap: var(--sp-4);
+      margin: var(--sp-4) 0;
+    }
+    .stat-item {
+      flex: 1;
+      background: var(--gray-50);
+      border-radius: 8px;
+      padding: var(--sp-3) var(--sp-4);
+      text-align: center;
+    }
+    .stat-item .stat-value {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--navy);
+      letter-spacing: -0.02em;
+      font-variant-numeric: tabular-nums;
+    }
+    .stat-item .stat-value.accent {
+      color: var(--accent);
+    }
+    .stat-item .stat-label {
+      font-size: 0.7rem;
+      color: var(--gray-500);
+      margin-top: 4px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+
+    /* ============================================================
+       PRINT / PDF STYLES
+       ============================================================ */
+    @page {
+      size: A4;
+      margin: 0;
+    }
+    @media print {
+      body {
+        background: white;
+        font-family: var(--font);
+        font-size: 0.92rem;
+        color: var(--gray-700);
+        line-height: 1.72;
+      }
+      .page {
+        box-shadow: none;
+        margin: 0;
+        padding: var(--page-py) var(--page-px);
+        width: var(--page-w);
+        height: var(--page-h);
+        overflow: hidden;
+        page-break-after: always;
+        page-break-inside: avoid;
+        position: relative;
+      }
+      .page:last-child {
+        page-break-after: auto;
+      }
+      .page-break { page-break-before: always; }
+      .no-break { page-break-inside: avoid; }
+      .cover-page {
+        margin: 0;
+        width: var(--page-w);
+        height: var(--page-h);
+        box-shadow: none;
+        page-break-after: always;
+      }
+      .interstitial {
+        page-break-before: always;
+        box-shadow: none;
+        margin: 0;
+        width: var(--page-w);
+        height: var(--page-h);
+        min-height: var(--page-h);
+      }
+      .chart-block { page-break-inside: avoid; }
+      table { page-break-inside: auto; }
+      img {
+        page-break-inside: avoid;
+        page-break-before: auto;
+        page-break-after: auto;
+        display: block;
+        max-width: 100%;
+      }
+      .page-number { display: none; }
+      h2, h3, h4 { page-break-after: avoid; }
+      .section-header { page-break-after: avoid; }
+      .spec-header { page-break-after: avoid; }
+      .catchphrase { page-break-after: avoid; }
+      .stat-row { page-break-inside: avoid; }
+      .key-points { page-break-inside: avoid; }
+      .info-box { page-break-inside: avoid; }
+      .review-grid { page-break-inside: avoid; }
+
+      /* Tighten spacing in print to fit more content per page */
+      .catchphrase { margin: var(--sp-3) 0; padding: var(--sp-2) var(--sp-5); }
+      .catchphrase p { font-size: 1.05rem; }
+      .section-header { margin-bottom: var(--sp-3); padding-bottom: var(--sp-2); }
+      .content { margin: var(--sp-2) 0; }
+      .content h3 { margin: var(--sp-3) 0 var(--sp-2) 0; }
+      .content h4 { margin: var(--sp-2) 0 var(--sp-1) 0; }
+      .content p { margin-bottom: 0.45em; }
+      .content ul { margin-bottom: 0.5em; }
+      .content blockquote { margin: var(--sp-2) 0 var(--sp-3) 0; padding: var(--sp-2) var(--sp-3); }
+      .info-box { padding: var(--sp-2) var(--sp-3); margin: var(--sp-2) 0; font-size: 0.85rem; }
+      .key-points { padding: var(--sp-3); margin: var(--sp-2) 0; }
+      .key-points ul li { padding: 2px 0 2px 18px; font-size: 0.85rem; }
+      .stat-row { margin: var(--sp-2) 0; }
+      .stat-item { padding: var(--sp-2) var(--sp-3); }
+      .divider { margin: var(--sp-3) 0; }
+      .spec-header { margin: var(--sp-3) 0 var(--sp-2) 0; }
+      img.map { max-height: 110mm; }
+      img.chart { margin: var(--sp-2) auto; }
+      .review-grid { gap: var(--sp-2); margin: var(--sp-2) 0; }
+      .review-grid img { max-height: 260px; object-fit: contain; }
+      .data-table { margin: var(--sp-2) 0 var(--sp-2) 0; }
+      .data-table tbody td { padding: 5px var(--sp-3); }
+      .data-table thead th { padding: 7px var(--sp-3); }
+      .cta-block { padding: var(--sp-5) var(--sp-4); margin: var(--sp-5) 0; }
+      .caption { margin: var(--sp-1) 0 var(--sp-2) 0; }
+      .toc-footnote { bottom: 10mm; }
+      .toc-group { margin-bottom: var(--sp-4); }
+      .toc-bar { margin-bottom: var(--sp-6); }
+    
+
+      /* === 긴 테이블 페이지 잘림 방지 (v2) === */
+      /* 테이블 전체는 페이지에 걸칠 수 있음 (긴 테이블 대응) */
+      table { page-break-inside: auto; }
+      /* 개별 행은 중간에 잘리지 않음 */
+      tr { page-break-inside: avoid; page-break-after: auto; }
+      /* 테이블 헤더가 매 페이지 상단에 반복 */
+      thead { display: table-header-group; }
+      /* 테이블 푸터가 매 페이지 하단에 반복 */
+      tfoot { display: table-footer-group; }
+      /* 짧은 테이블(10행 이하)은 기존처럼 페이지 중간에서 안 잘림 */
+      table.short-table { page-break-inside: avoid; }
+    
+      .chart-block, .map-block, figure { page-break-inside: avoid; display: block; }
+    }
+    @media screen {
+      .page + .page,
+      .page + .interstitial,
+      .interstitial + .page,
+      .cover-page + .page { margin-top: 16px; }
+    }
+
+    /* ============================================================
+       소화기내과 과목 분석 섹션 CSS
+       ============================================================ */
+
+    /* Scenario chart (inline SVG) */
+    .scenario-chart {
+      margin: var(--sp-5) 0;
+    }
+    .scenario-bar-group {
+      display: flex;
+      align-items: center;
+      margin-bottom: var(--sp-3);
+      gap: var(--sp-3);
+    }
+    .scenario-label {
+      width: 140px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--gray-700);
+      text-align: right;
+      flex-shrink: 0;
+    }
+    .scenario-bar-wrap {
+      flex: 1;
+      height: 28px;
+      background: var(--gray-100);
+      border-radius: 6px;
+      position: relative;
+      overflow: hidden;
+    }
+    .scenario-bar {
+      height: 100%;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 8px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--white);
+      transition: width 0.5s ease;
+    }
+    .scenario-bar.strong { background: var(--navy); }
+    .scenario-bar.good { background: var(--blue); }
+    .scenario-bar.caution { background: #E67E22; }
+    .scenario-bar.base { background: #27AE60; }
+    .scenario-threshold {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--accent);
+      z-index: 2;
+    }
+    .scenario-threshold-label {
+      position: absolute;
+      top: -16px;
+      font-size: 0.62rem;
+      color: var(--accent);
+      font-weight: 600;
+      white-space: nowrap;
+      transform: translateX(-50%);
+    }
+    .scenario-value {
+      width: 80px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--navy);
+      flex-shrink: 0;
+    }
+
+    /* Competitor comparison bar chart */
+    .comp-chart {
+      margin: var(--sp-4) 0;
+    }
+    .comp-row {
+      display: flex;
+      align-items: center;
+      margin-bottom: 6px;
+      gap: var(--sp-2);
+    }
+    .comp-name {
+      width: 120px;
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--gray-700);
+      text-align: right;
+      flex-shrink: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .comp-bar-wrap {
+      flex: 1;
+      display: flex;
+      gap: 2px;
+      align-items: center;
+    }
+    .comp-bar {
+      height: 18px;
+      border-radius: 3px;
+      display: inline-block;
+    }
+    .comp-val {
+      font-size: 0.68rem;
+      color: var(--gray-500);
+      margin-left: 4px;
+      white-space: nowrap;
+    }
+
+    /* Key insight */
+    .key-insight {
+      background: var(--navy-05);
+      border-left: 3px solid var(--navy);
+      border-radius: 0 8px 8px 0;
+      padding: var(--sp-4) var(--sp-5);
+      margin: var(--sp-5) 0;
+      font-size: 0.88rem;
+      line-height: 1.65;
+    }
+    .key-insight strong {
+      color: var(--navy);
+    }
+
+    /* Map number markers */
+    .map-marker-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+      border: 2px solid #fff;
+    }
+
+    /* Map legend (below map) */
+    .map-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 24px;
+      margin-top: var(--sp-3);
+      padding: var(--sp-3) var(--sp-4);
+      background: var(--gray-50);
+      border-radius: 8px;
+      font-size: 0.72rem;
+      color: var(--gray-700);
+    }
+    .map-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .map-legend-dot {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .map-legend-line {
+      display: inline-block;
+      width: 22px;
+      height: 0;
+      border-top: 2px dashed rgba(30,30,30,0.35);
+      flex-shrink: 0;
+    }
+
+    /* Map sub-title */
+    .map-sub-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: var(--sp-3);
+      letter-spacing: -0.01em;
+    }
+
+      .mc-report-nav {
+      position: sticky;
+      top: 0;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 12px 22px;
+      background: rgba(255,255,255,0.96);
+      border-bottom: 1px solid rgba(27,42,74,0.14);
+      font-family: Pretendard, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      backdrop-filter: blur(10px);
+    }
+    .mc-report-nav a { text-decoration: none; color: #1B2A4A; font-weight: 700; font-size: 14px; }
+    .mc-report-nav .mc-report-brand { font-weight: 900; letter-spacing: -0.02em; }
+    .mc-report-nav .mc-report-links { display: flex; gap: 18px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
+    .mc-report-nav .mc-report-cta { color: white; background: #1B2A4A; padding: 8px 12px; }
+    @media (max-width: 720px) {
+      .mc-report-nav { align-items: flex-start; flex-direction: column; padding: 12px 16px; }
+      .mc-report-nav .mc-report-links { justify-content: flex-start; gap: 12px; }
+      .mc-report-nav a { font-size: 13px; }
+    }
+  </style>
+</head>
+<body class="">
+<nav class="mc-report-nav" aria-label="메디커넥트 리포트 메뉴">
+  <a class="mc-report-brand" href="/">MEDICONNECT</a>
+  <div class="mc-report-links">
+    <a href="/listings/">추천매물</a>
+    <a href="/listings/gumi-hyeonggok-uriem/">매물 조건</a>
+    <a href="/contact/" class="mc-report-cta">문의하기</a>
+  </div>
+</nav>
+
+
+<!-- ================================================================
+     COVER PAGE
+     ================================================================ -->
+<section class="cover-page">
+<div class="cover-brand">MEDI CONNECT</div>
+<div class="cover-content">
+<div class="cover-label">Opening Strategy Report</div>
+<h1 class="cover-title">구미시 형곡동<br>우리엠빌딩</h1>
+<div class="cover-line"></div>
+<div class="cover-subtitle">개원전략 리포트</div>
+<div class="cover-meta" style="margin-top: 20px;">
+      2026-03-31 | HIRA + 건축물대장 + OSM + SGIS + 네이버 리뷰 + 전국 입지실증분석
+    </div>
+</div>
+<img alt="우리엠빌딩 전경" class="cover-photo" data-original-src="../최종리포트_v23/모든_차트/건물_전경.png" src="/assets/report-gumi/report_image_001.png">
+<div class="cover-photo-overlay"></div>
+</section>
+<!-- ================================================================
+     TABLE OF CONTENTS
+     ================================================================ -->
+<div class="page">
+<div class="toc-header">Table of Contents</div>
+<div class="toc-title">목차</div>
+<div class="toc-bar"></div>
+<div class="toc-group">
+<div class="toc-group-header">
+<span class="toc-letter">ES</span>
+<span class="toc-section-name">Executive Summary</span>
+</div>
+<div class="toc-items">
+<div class="toc-item">이 건물에서 가능한 과목 -- 한눈에 보기</div>
+</div>
+</div>
+<div class="toc-group">
+<div class="toc-group-header">
+<span class="toc-letter">A</span>
+<span class="toc-section-name">왜 지금 구미인가</span>
+</div>
+<div class="toc-items">
+<div class="toc-item">도시별 전문의 부족 현황</div>
+<div class="toc-item">구미시 vs 포항시 개원수 비교</div>
+<div class="toc-item">과목별 최근 개원 현황</div>
+</div>
+</div>
+<div class="toc-group">
+<div class="toc-group-header">
+<span class="toc-letter">B-1</span>
+<span class="toc-section-name">왜 형곡동인가</span>
+</div>
+<div class="toc-items">
+<div class="toc-item">도보 15분 배후세대 + 주요 아파트 단지</div>
+<div class="toc-item">연령 구조 + 주동선 검증</div>
+<div class="toc-item">메디컬 빌딩 시너지</div>
+</div>
+</div>
+<div class="toc-group">
+<div class="toc-group-header">
+<span class="toc-letter">B-2</span>
+<span class="toc-section-name">왜 이 건물인가</span>
+</div>
+<div class="toc-items">
+<div class="toc-item">건물 비교 (네이버 부동산 + 건축물대장)</div>
+</div>
+</div>
+<div class="toc-group">
+<div class="toc-group-header">
+<span class="toc-letter">B-3</span>
+<span class="toc-section-name">어떤 과목을 열 것인가</span>
+</div>
+<div class="toc-items">
+<div class="toc-item">- 안과 / 정신건강의학과 / 통증계열 /<span style="font-size: 0.88rem; background-color: transparent;">&nbsp;소화기내과 / 외과&nbsp;</span></div>
+<div class="toc-item"><br></div>
+</div>
+</div>
+<div class="toc-group">
+<div class="toc-group-header">
+<span class="toc-letter">D</span>
+<span class="toc-section-name">건물 조건 상세</span>
+</div>
+</div>
+<div class="toc-group">
+<div class="toc-group-header">
+<span class="toc-letter">E</span>
+<span class="toc-section-name">마케팅 환경</span>
+</div>
+</div>
+<div class="toc-group">
+<div class="toc-group-header">
+<span class="toc-letter">F</span>
+<span class="toc-section-name">결론</span>
+</div>
+</div>
+<div class="page-number">1</div>
+</div>
+<!-- ================================================================
+     ES: EXECUTIVE SUMMARY
+     ================================================================ -->
+
+<div class="page page-break">
+<div class="section-header">
+<div class="sh-left">
+<span class="sh-number">ES</span>
+<span class="sh-title">이 건물에서 가능한 과목 -- 한눈에 보기</span>
+</div>
+<span class="sh-category">Executive Summary</span>
+</div>
+<div class="catchphrase">
+<p>의료 공백지에 남은 마지막 의료시설 전용 빌딩.<br><strong>선생님의 과목이 들어갈 자리가 있습니다.</strong></p>
+<div class="catchphrase-bar"></div>
+</div>
+<div class="info-box">
+    구미시 형곡동 우리엠빌딩은 의료시설 전용 건물(전용 45~110.5평, 주차 32대, 엘리베이터 2대)입니다.
+    이미 3개 과목(이비인후과·비뇨의학과·신경과)이 운영 중인 메디컬 빌딩입니다.
+    도보 15분 + 차량 20분 환자 배분을 과목별로 산출하고, 전국 유사 도시(김해·거제·포항·양산·창원·아산 등)의 실제 운영 의원 프로파일과 6개 지표로 매칭 비교한 결과입니다. 도보 15분 배후 인구 중 40대 이상이 60% 이상이며, 메디컬 빌딩 시너지를 극대화할 수 있는 환경입니다.
+  </div>
+<div class="content">
+<h3>추천 과목 요약</h3>
+</div>
+<table class="data-table short-table" style="table-layout: fixed;">
+<thead>
+<tr class="">
+<th style="width: 40px; position: relative;"><br></th>
+<th style="position: relative;">과목</th>
+<th class="num" style="position: relative;">합산 유효세대</th>
+<th style="position: relative;">경쟁 (도보/전체)</th>
+<th>핵심 근거</th>
+</tr>
+</thead>
+<tbody>
+
+<tr class="row-highlight">
+<td><br></td>
+<td><strong>정신건강의학과</strong></td>
+<td class="num"><span class="accent">28,321세대</span></td>
+<td>1곳 / 5곳</td>
+<td>7.5년간 신규 0건, <br>기존 5곳 전원 포화</td>
+</tr>
+<tr class="row-highlight">
+<td><br></td>
+<td><strong>통증계열</strong></td>
+<td class="num"><span class="accent">4,340세대</span></td>
+<td>2~3곳 / 31곳</td>
+<td>도보권 경쟁 24년·32년 노후, 시설 우위</td>
+</tr>
+<tr class="row-highlight">
+<td><br></td>
+<td><strong>소화기내과</strong></td>
+<td class="num"><font color="#c0392b"><b>~6,947세대 (양분)</b></font></td>
+<td>1곳 / 7곳 (도보15분)</td>
+<td>속편한 1곳 독점, 대기 과다. 신규 진입 여지</td>
+</tr>
+<tr class="row-highlight">
+<td><br></td>
+<td><strong>외과</strong></td>
+<td class="num"><font color="#c0392b"><b>7,938세대</b></font></td>
+<td>6곳 / 18곳</td>
+<td>도보권 노후 100%, 최신 시설 차별화</td>
+</tr>
+
+</tbody>
+</table>
+<div class="content">
+</div>
+<div class="key-points">
+<div class="kp-title">이 건물의 핵심 조건</div>
+<ul class="">
+<li><strong>의료시설 전용 건물</strong> -- 형곡동 유일</li>
+<li><strong>메디컬 빌딩</strong> -- 이비인후과·비뇨의학과·신경과 운영 중 (리뷰 1,719건)</li>
+<li><strong>도보 15분 내 <span class="accent-text">13,893세대</span></strong> -- 충분한 배후</li>
+<li><strong>의료 밀집지 중심</strong> -- 환자가 이미 모이는 동선 위</li>
+<li><strong>주차 32대 + <font color="#c0392b">인근 공영주차장 주차비 지원</font></strong> -- 차량형 과목 가능</li>
+<li><strong>권리금 없음 + 렌탈프리 협의 가능</strong> -- 초기 부담 최소</li>
+</ul>
+</div>
+<div class="page-number">2</div>
+</div>
+<!-- ================================================================
+     A: 왜 지금 구미인가
+     ================================================================ -->
+<section class="interstitial page-break">
+<div class="int-label">Section A</div>
+<div class="int-title">왜 지금 구미인가</div>
+<div class="int-bar"></div>
+</section>
+<div class="page page-break">
+<div class="section-header">
+<div class="sh-left">
+<span class="sh-number">A</span>
+<span class="sh-title">왜 지금 구미인가</span>
+</div>
+<span class="sh-category">도시 개요</span>
+</div>
+<div class="catchphrase">
+<p>구미 인구는 줄고 있지 않나?<br><strong>데이터는 정반대를 말합니다.<br><br>형곡동은 아닙니다. 그리고 진짜 문제는 인구가 아닙니다<br><br></strong></p>
+<div class="catchphrase-bar"></div>
+</div>
+<div class="content">
+<p>특정 과목은 7년 넘게 아무도 열지 않았습니다. 그곳이 기회입니다.</p>
+<h3>경상북도 + 대구 도시별 전문의 1인당 인구수 비교</h3>
+<p>아래 표는 의원급 전문의 1인당 감당 인구를 보여줍니다. 숫자가 클수록 의사가 부족하다는 뜻입니다.</p>
+</div>
+<table class="data-table short-table" style="table-layout: fixed;">
+<thead>
+<tr class="">
+<th style="position: relative;">도시</th>
+<th class="num" style="position: relative;">인구</th>
+<th class="num" style="position: relative;">안과</th>
+<th class="num" style="position: relative;">정신건강</th>
+<th class="num" style="position: relative;">마취통증</th>
+<th class="num" style="position: relative;">정형외과</th>
+<th class="num">외과</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-highlight">
+<td><strong>구미시</strong></td>
+<td class="num"><strong>407,458</strong></td>
+<td class="num"><span class="accent">37,042</span></td>
+<td class="num"><span class="accent">81,492</span></td>
+<td class="num">33,955</td>
+<td class="num">19,403</td>
+<td class="num">22,637</td>
+</tr>
+<tr class="">
+<td>포항시</td>
+<td class="num">493,394</td>
+<td class="num">21,452</td>
+<td class="num">44,854</td>
+<td class="num">22,427</td>
+<td class="num">17,621</td>
+<td class="num">15,916</td>
+</tr>
+<tr class="">
+<td>경산시</td>
+<td class="num">296,453</td>
+<td class="num">32,939</td>
+<td class="num">74,113</td>
+<td class="num">32,939</td>
+<td class="num">17,438</td>
+<td class="num">26,950</td>
+</tr>
+<tr class="">
+<td>경주시</td>
+<td class="num">259,505</td>
+<td class="num">32,438</td>
+<td class="num">64,876</td>
+<td class="num">32,438</td>
+<td class="num">32,438</td>
+<td class="num">25,950</td>
+</tr>
+<tr class="">
+<td>안동시</td>
+<td class="num">154,581</td>
+<td class="num">25,764</td>
+<td class="num">154,581</td>
+<td class="num">19,323</td>
+<td class="num">38,645</td>
+<td class="num">25,764</td>
+</tr>
+<tr class="">
+<td>김천시</td>
+<td class="num">137,413</td>
+<td class="num">27,483</td>
+<td class="num">45,804</td>
+<td class="num">22,902</td>
+<td class="num">34,353</td>
+<td class="num">27,483</td>
+</tr>
+<tr class="">
+<td><strong>대구광역시</strong></td>
+<td class="num">2,364,334</td>
+<td class="num">13,827</td>
+<td class="num">21,300</td>
+<td class="num">17,514</td>
+<td class="num">13,063</td>
+<td class="num">14,964</td>
+</tr>
+</tbody>
+</table>
+<div class="content">
+<blockquote class=""><p>출처: HIRA 의원급 전문의 기준, 행정안전부 주민등록인구 (2025년)</p></blockquote>
+<p><strong>구미시의 안과 전문의 1인당 인구는 37,042명</strong>으로 경상북도에서 가장 높습니다. 대구(13,827명)의 <span class="accent-text">2.7배</span>입니다.
+    정신건강의학과는 81,492명으로 대구(21,300명)의 <span class="accent-text">3.8배</span> -- 공급 부족이 가장 심각한 과목입니다.</p>
+</div>
+<div class="page-number">3</div>
+</div>
+<div class="page page-break">
+<div class="section-header">
+<div class="sh-left">
+<span class="sh-number">A</span>
+<span class="sh-title">구미시 vs 포항시 개원수 비교</span>
+</div>
+<span class="sh-category">도시 개요</span>
+</div>
+<div class="content">
+<h3>구미시 vs 포항시 -- 최근 5년 과목별 개원수 비교</h3>
+<p>인구 규모가 비슷한 경상북도 2개 도시의 최근 5년 신규 개원 건수를 비교합니다. 개원이 활발한 과목은 시장이 열려 있다는 뜻이고, 개원이 멈춘 과목은 공급 공백이라는 뜻입니다.</p>
+</div>
+<table class="data-table compact" style="table-layout: fixed;">
+<thead>
+<tr class="">
+<th style="position: relative;">과목</th>
+<th class="num" style="position: relative;">구미시 (최근 5년)</th>
+<th class="num" style="position: relative;">포항시 (최근 5년)</th>
+<th class="num" style="position: relative;">구미시 기존 의원</th>
+<th>마지막 개원 경과</th>
+</tr>
+</thead>
+<tbody>
+<tr class=""><td>내과</td><td class="num">8건</td><td class="num">8건</td><td class="num">40곳</td><td>1.2년</td></tr>
+<tr class=""><td>외과</td><td class="num">1건</td><td class="num">4건</td><td class="num">15곳</td><td>3.2년</td></tr>
+<tr class=""><td>마취통증의학과</td><td class="num">3건</td><td class="num">1건</td><td class="num">9곳</td><td>2.6년</td></tr>
+<tr class=""><td>안과</td><td class="num">1건</td><td class="num">1건</td><td class="num">7곳</td><td>3.1년</td></tr>
+<tr class=""><td>가정의학과</td><td class="num">2건</td><td class="num">4건</td><td class="num">19곳</td><td>2.1년</td></tr>
+<tr class="row-highlight"><td><strong>정형외과</strong></td><td class="num"><span class="accent">0건</span></td><td class="num">5건</td><td class="num">18곳</td><td><span class="accent">6.6년</span></td></tr>
+<tr class="row-highlight"><td><strong>정신건강의학과</strong></td><td class="num"><span class="accent">0건</span></td><td class="num">1건</td><td class="num">5곳</td><td><span class="accent">7.5년</span></td></tr>
+<tr class="row-highlight"><td><strong>이비인후과</strong></td><td class="num"><span class="accent">0건</span></td><td class="num">3건</td><td class="num">18곳</td><td><span class="accent">7.9년</span></td></tr>
+<tr class="row-highlight"><td><strong>피부과</strong></td><td class="num"><span class="accent">0건</span></td><td class="num">2건</td><td class="num">4곳</td><td><span class="accent">7.5년</span></td></tr>
+<tr class="row-highlight"><td><strong>비뇨의학과</strong></td><td class="num"><span class="accent">0건</span></td><td class="num">1건</td><td class="num">8곳</td><td><span class="accent">11.3년</span></td></tr>
+</tbody>
+</table>
+<div class="content">
+<blockquote class=""><p>출처: HIRA 인허가일 기준 (2021~2026년), 구미시 인구 407,458 / 포항시 493,394</p></blockquote>
+<p>포항시(인구 49만)에서는 정형외과 5건, 이비인후과 3건, 피부과 2건이 열리는 동안, <strong>구미시(인구 41만)에서는 이 과목들의 개원이 0건</strong>입니다. 내과(8건)와 마취통증의학과(3건)만 비슷하거나 앞서며, 나머지 과목에서 구미시의 공급 공백이 뚜렷합니다.</p>
+<p>구미시는 인구 40만의 산업도시이지만, 특정 과목의 의료 공급이 멈춰 있습니다. <strong>개원이 멈춘 과목에 기회가 있습니다.</strong></p>
+</div>
+<div class="page-number">4</div>
+</div>
+<div class="page page-break">
+<div class="section-header">
+<div class="sh-left">
+<span class="sh-number">A</span>
+<span class="sh-title">과목별 최근 개원 현황</span>
+</div>
+<span class="sh-category">도시 개요</span>
+</div>
+<div class="content">
+<p>구미시에서 각 과목의 마지막 개원 시점을 HIRA 인허가일로 조회한 결과입니다.</p>
+</div>
+<table class="data-table" style="table-layout: fixed;">
+<thead>
+<tr class="">
+<th style="position: relative;">과목</th>
+<th style="position: relative;">마지막 개원</th>
+<th style="position: relative;">의원명</th>
+<th style="position: relative;">경과</th>
+<th class="num" style="position: relative;">기존 의원수</th>
+<th class="num">평균 업력</th>
+</tr>
+</thead>
+<tbody>
+<tr class=""><td>내과</td><td>2025.01</td><td>더 괜찮은 내과의원</td><td>1.2년</td><td class="num">40곳</td><td class="num">17.1년</td></tr>
+<tr><td colspan="6" style="font-size:0.78rem; color:var(--gray-500); padding-left:20px;">* 도보 15분권 내 소화기 전문 최근 개원은 없음 (속편한내과 20.1년 독점)</td></tr>
+<tr class=""><td>외과</td><td>2023.01</td><td>참바른의원</td><td>3.2년</td><td class="num">15곳</td><td class="num">19.0년</td></tr>
+<tr class=""><td>마취통증의학과</td><td>2023.08</td><td>오케이마취통증의학과의원</td><td>2.6년</td><td class="num">9곳</td><td class="num">10.0년</td></tr>
+<tr class=""><td>신경외과</td><td>2021.08</td><td>구미우리들신경외과의원</td><td>4.6년</td><td class="num">4곳</td><td class="num">12.2년</td></tr>
+<tr class=""><td>안과</td><td>2023.02</td><td>구미더원안과의원</td><td>3.1년</td><td class="num">7곳</td><td class="num">18.2년</td></tr>
+<tr class=""><td>가정의학과</td><td>2024.02</td><td>올바른속내과의원</td><td>2.1년</td><td class="num">19곳</td><td class="num">17.6년</td></tr>
+<tr class="row-highlight"><td><strong>정형외과</strong></td><td>2019.09</td><td>산동튼튼정형외과의원</td><td><span class="accent">6.6년</span></td><td class="num">18곳</td><td class="num">16.6년</td></tr>
+<tr class="row-highlight"><td><strong>정신건강의학과</strong></td><td>2018.09</td><td>다니엘정신건강의학과의원</td><td><span class="accent">7.5년</span></td><td class="num">5곳</td><td class="num">18.0년</td></tr>
+<tr class="row-highlight"><td><strong>이비인후과</strong></td><td>2018.04</td><td>이든이비인후과의원</td><td><span class="accent">7.9년</span></td><td class="num">18곳</td><td class="num">21.1년</td></tr>
+<tr class="row-highlight"><td><strong>피부과</strong></td><td>2018.10</td><td>리움피부과의원</td><td><span class="accent">7.5년</span></td><td class="num">4곳</td><td class="num">18.5년</td></tr>
+<tr class="row-highlight"><td><strong>비뇨의학과</strong></td><td>2014.12</td><td>제니스의원</td><td><span class="accent">11.3년</span></td><td class="num">8곳</td><td class="num">24.3년</td></tr>
+</tbody>
+</table>
+<div class="page-number">5</div>
+</div>
+<!-- ================================================================
+     B-1: 왜 형곡동인가
+     ================================================================ -->
+<section class="interstitial page-break">
+<div class="int-label">Section B-1</div>
+<div class="int-title">왜 형곡동인가</div>
+<div class="int-bar"></div>
+</section>
+<div class="page page-break">
+<div class="section-header">
+<div class="sh-left">
+<span class="sh-number">B-1</span>
+<span class="sh-title">왜 형곡동인가</span>
+</div>
+<span class="sh-category">위치 분석</span>
+</div>
+<div class="catchphrase">
+<p>메디컬 밀집지 형곡동,<br><strong>형곡동은 의원이 모여 있지만, 비어있는 기회가 있습니다.</strong></p>
+<div class="catchphrase-bar"></div>
+</div>
+<div class="content">
+<p>사람이 많은 곳이 좋은 자리라는 생각은 절반만 맞습니다. 의원이 몰린 곳은 환자가 많아도 내 몫이 줄어듭니다. 중요한 것은 "실제 도보 15분 내 세대수 대비 의원수"입니다.</p>
+<h3>우리엠빌딩 기준 도보 15분 배후세대</h3>
+<p>이 건물에서 실제 도로를 따라 도보 15분 이내에 도달할 수 있는 세대수를 직선 거리가 아닌, 실제 도보를 고려하여, 네트워크 분석으로 산출했습니다.</p>
+</div>
+<div class="stat-row">
+<div class="stat-item">
+<div class="stat-value">1,061</div>
+<div class="stat-label">5분 이내</div>
+</div>
+<div class="stat-item">
+<div class="stat-value">6,491</div>
+<div class="stat-label">10분 이내</div>
+</div>
+<div class="stat-item">
+<div class="stat-value accent">13,893</div>
+<div class="stat-label">15분 이내</div>
+</div>
+<div class="stat-item">
+<div class="stat-value">22,156</div>
+<div class="stat-label">20분 이내</div>
+</div>
+</div>
+<div class="content">
+<blockquote class=""><p>실제 도보 경로 기준 (직선 반경이 아닌 실제 도로를 따라 산출)</p></blockquote>
+</div>
+<div class="chart-block no-break">
+<img alt="주변 현황 지도" class="map" data-original-src="../최종리포트_v23/모든_차트/step1_주변현황.png" src="/assets/report-gumi/report_image_002.png">
+<p class="caption">도보 시간별 주거 건물 분포 (원=세대수, 색상=도보 시간) |&nbsp;</p>
+</div>
+<div class="page-number">6</div>
+</div>
+<div class="page page-break">
+<div class="section-header">
+<div class="sh-left">
+<span class="sh-number">B-1</span>
+<span class="sh-title">배후 아파트 단지</span>
+</div>
+<span class="sh-category">위치 분석</span>
+</div>
+<div class="content">
+<h3>도보 15분 내 배후 주거시설 -- 전체 목록</h3>
+<p style="font-weight:600; color:var(--navy); margin-bottom:4px;">대단지 (200세대 이상)</p>
+</div>
+<table class="data-table compact" style="table-layout: fixed;">
+<thead>
+<tr>
+<th style="position: relative;">아파트명</th>
+<th class="num" style="position: relative;">세대수</th>
+<th class="num" style="position: relative;">도보 거리</th>
+<th class="num">도보 시간</th>
+</tr>
+</thead>
+<tbody>
+<tr class=""><td>푸르지오 캐슬 A단지</td><td class="num">1,878세대</td><td class="num">913m</td><td class="num">약 14분</td></tr>
+<tr class=""><td>형곡금호어울림포레</td><td class="num">486세대</td><td class="num">563m</td><td class="num">약 9분</td></tr>
+<tr class=""><td>주공아파트</td><td class="num">430세대</td><td class="num">306m</td><td class="num">약 5분</td></tr>
+<tr class=""><td>형곡오딧세이아파트</td><td class="num">379세대</td><td class="num">123m</td><td class="num">약 5분</td></tr>
+<tr><td>풍림아파트 (1단지)</td><td class="num">340세대</td><td class="num">557m</td><td class="num">약 12분</td></tr>
+<tr class=""><td>공동주택 (형곡로 73)</td><td class="num">305세대</td><td class="num">498m</td><td class="num">약 11분</td></tr>
+<tr><td>금호어울림 포레 2차</td><td class="num">255세대</td><td class="num">657m</td><td class="num">약 11분</td></tr>
+<tr class=""><td>풍림아파트 (2단지)</td><td class="num">252세대</td><td class="num">423m</td><td class="num">약 9분</td></tr>
+<tr><td>형곡삼우타운</td><td class="num">204세대</td><td class="num">425m</td><td class="num">약 6분</td></tr>
+<tr style="border-top: 2px solid var(--gray-200);">
+<td><strong>대단지 소계 (9곳)</strong></td><td class="num"><strong>4,529세대</strong></td><td></td><td></td>
+</tr>
+</tbody>
+</table>
+<div class="content">
+<p style="font-weight:600; color:var(--navy); margin-top:12px; margin-bottom:4px;">중소 아파트/빌라 (30~199세대)</p>
+</div>
+</div><div class="page page-break"><table class="data-table compact" style="table-layout: fixed;">
+<thead>
+<tr class="">
+<th style="position: relative;">아파트/빌라명</th>
+<th class="num" style="position: relative;">세대수</th>
+<th class="num" style="position: relative;">도보 거리</th>
+<th class="num">도보 시간</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>대동 빌라트</td><td class="num">140세대</td><td class="num">133m</td><td class="num">약 2분</td></tr>
+<tr><td>대원로얄타운</td><td class="num">122세대</td><td class="num">585m</td><td class="num">약 9분</td></tr>
+<tr><td>형곡2차 두산맨션</td><td class="num">121세대</td><td class="num">204m</td><td class="num">약 8분</td></tr>
+<tr class=""><td>형곡 전원 리빙필</td><td class="num">98세대</td><td class="num">383m</td><td class="num">약 9분</td></tr>
+<tr><td>신세계</td><td class="num">87세대</td><td class="num">312m</td><td class="num">약 9분</td></tr>
+<tr><td>한가람 빌리지</td><td class="num">80세대</td><td class="num">901m</td><td class="num">약 15분</td></tr>
+<tr class=""><td>삼우형구타운</td><td class="num">78세대</td><td class="num">178m</td><td class="num">약 5분</td></tr>
+<tr><td>대림베스트빌 201동</td><td class="num">68세대</td><td class="num">503m</td><td class="num">약 8분</td></tr>
+<tr class=""><td>우공프라자</td><td class="num">56세대</td><td class="num">536m</td><td class="num">약 15분</td></tr>
+<tr class=""><td>반석드림파크</td><td class="num">49세대</td><td class="num">109m</td><td class="num">약 4분</td></tr>
+<tr class=""><td>대림베스트빌 301동</td><td class="num">48세대</td><td class="num">501m</td><td class="num">약 10분</td></tr>
+<tr><td>늘푸른아파트</td><td class="num">47세대</td><td class="num">504m</td><td class="num">약 12분</td></tr>
+<tr class=""><td>조일월드빌5차</td><td class="num">44세대</td><td class="num">132m</td><td class="num">약 5분</td></tr>
+<tr class=""><td>형곡금오맨션</td><td class="num">36세대</td><td class="num">461m</td><td class="num">약 9분</td></tr>
+<tr class=""><td>신화오페라하우스</td><td class="num">32세대</td><td class="num">875m</td><td class="num">약 14분</td></tr>
+<tr style="border-top: 2px solid var(--gray-200);" class="">
+<td><strong>중소 소계 (15곳)</strong></td><td class="num"><strong>1,106세대</strong></td><td></td><td></td>
+</tr>
+</tbody>
+</table><div class="content">
+<p style="font-weight:600; color:var(--navy); margin-top:12px; margin-bottom:4px;">소규모 (15~29세대) + 다세대/단독</p>
+</div><table class="data-table compact short-table" style="table-layout: fixed;">
+<thead>
+<tr class="">
+<th style="position: relative;">유형</th>
+<th class="num" style="position: relative;">건물수</th>
+<th class="num" style="position: relative;">세대수</th>
+<th class="num">도보 시간</th>
+</tr>
+</thead>
+<tbody>
+<tr class=""><td>소규모 아파트/빌라 (이름 있는 39곳)</td><td class="num">39곳</td><td class="num">719세대</td><td class="num">0~15분</td></tr>
+<tr class=""><td>무명 공동주택/빌라</td><td class="num">약 220곳</td><td class="num">약 2,740세대</td><td class="num">1~15분</td></tr>
+<tr class=""><td>빌라/연립/다가구</td><td class="num">약 140곳</td><td class="num">약 620세대</td><td class="num">1~15분</td></tr>
+<tr class=""><td>단독주택</td><td class="num">약 780곳</td><td class="num">약 4,240세대</td><td class="num">1~15분</td></tr>
+<tr style="border-top: 2px solid var(--gray-200);" class="">
+<td><strong>소형 주거 소계</strong></td><td class="num"><strong>약 1,180곳</strong></td><td class="num"><strong>약 8,320세대</strong></td><td></td>
+</tr>
+<tr style="border-top: 2px solid var(--navy);" class="">
+<td><strong>도보 15분 합계</strong></td><td class="num"><strong>약 1,200곳</strong></td><td class="num"><strong class="accent-text">13,893세대</strong></td><td></td>
+</tr>
+</tbody>
+</table><div class="content">
+
+</div></div><div class="page page-break"><div class="chart-block no-break">
+<img alt="배후세대 상세 분포 지도" class="map" data-original-src="배후세대_상세_지도.png" src="/assets/report-gumi/report_image_003.png">
+<p class="caption">도보 15분 내 배후세대 상세 분포 지도 -- 파랑=아파트/공동주택, 초록=빌라/연립, 회색=단독주택, 원 크기=세대수</p>
+</div><div class="content">
+<p>형곡오딧세이아파트(379세대)가 123m/5분으로 가장 가깝고, 주공아파트(430세대)가 306m/5분입니다. 도보 5분 이내에만 1,061세대가 있습니다. 대단지(200세대 이상) 9곳이 4,529세대, 중소 아파트/빌라(이름 있는 것) 54곳이 1,825세대, 나머지 약 7,600세대는 소규모 공동주택/다세대/단독에 분포합니다.</p>
+</div><hr class="divider"><div class="content">
+<h3>왜 의원이 이곳에 몰리는가</h3>
+<p>형곡동에. 의원 28개가 이곳에 모인 이유는 단순합니다 -- 도보 15분 범위 안에 13,893세대가 있고, 이 세대들이 형곡동을 넘어 인근 동까지 걸쳐 있기 때문입니다. 차량 20분까지 넓히면 구미시 전체로 확장됩니다.</p>
+<p>구미시 내 의원 밀집지 중 형곡동 클러스터(19개 의원)는 의원수 기준 2위이며, <strong>이전 의원 비율이 73.7%로 가장 높습니다.</strong> 다른 곳에서 개원했던 의사들이 형곡동으로 옮겨온다는 것 자체가 이 입지의 가치를 증명합니다.</p>
+</div><div class="page-number">7</div></div>
+<div class="page page-break">
+<div class="section-header">
+<div class="sh-left">
+<span class="sh-number">B-1</span>
+<span class="sh-title">연령 구조</span>
+</div>
+<span class="sh-category">위치 분석</span>
+</div>
+<div class="content">
+<h3>형곡동 연령 구조 -- 40대 이상이 64.7%</h3>
+</div>
+<table class="data-table compact short-table" style="table-layout: fixed;">
+<thead>
+<tr>
+<th style="position: relative;">연령대</th>
+<th class="num" style="position: relative;">인구</th>
+<th class="num" style="position: relative;">비율</th>
+<th>핵심 수요 과목</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>50대</td><td class="num">6,222명</td><td class="num"><strong>22.6%</strong></td><td>통증(근골격계), 안과(노안·백내장), 내과</td></tr>
+<tr class=""><td>60대</td><td class="num">5,139명</td><td class="num"><strong>18.7%</strong></td><td>안과(백내장), 통증(퇴행성), 비뇨의학과</td></tr>
+<tr class=""><td>40대</td><td class="num">3,886명</td><td class="num">14.1%</td><td>정신건강(직장 스트레스), 가정의학과, 안과</td></tr>
+<tr><td>70대 이상</td><td class="num">2,549명</td><td class="num">9.3%</td><td>안과(녹내장), 통증(만성), 재활</td></tr>
+<tr class=""><td>20~30대</td><td class="num">6,002명</td><td class="num">21.8%</td><td>정신건강(불안·우울), 피부과, 안과</td></tr>
+<tr><td>20세 미만</td><td class="num">3,720명</td><td class="num">13.5%</td><td>소아청소년과, 이비인후과</td></tr>
+</tbody>
+</table>
+<div class="content">
+<blockquote class=""><p>출처: SGIS</p></blockquote>
+<p><strong>40대 이상 64.7%</strong> -- 구미시 평균(55.9%)보다 높습니다. 60대 이상(27.9%)도 유사 도시 평균(19~23%)보다 5~9%p 높습니다.</p>
+<h4>밀집지별 연령 비교 -- 4060 비율</h4>
+</div>
+<table class="data-table compact short-table" style="table-layout: fixed;">
+<thead>
+<tr class="">
+<th style="position: relative;">밀집지</th>
+<th class="num" style="position: relative;">인구</th>
+<th class="num" style="position: relative;">40대 이상</th>
+<th class="num" style="position: relative;">60대 이상</th>
+<th class="num" style="position: relative;">4060 비율</th>
+<th>해석</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-highlight">
+<td><strong>형곡동</strong></td><td class="num"><strong>27,518명</strong></td><td class="num"><strong>64.7%</strong></td><td class="num"><strong>27.9%</strong></td><td class="num"><strong>36.8%</strong></td><td>통증/내과 수요 최적</td>
+</tr>
+<tr class=""><td>도량동</td><td class="num">26,478명</td><td class="num">63.6%</td><td class="num">27.3%</td><td class="num">36.3%</td><td>형곡과 유사</td></tr>
+<tr><td>송정동</td><td class="num">22,823명</td><td class="num">60.6%</td><td class="num">26.9%</td><td class="num">33.7%</td><td>고령 비율 높으나 의원 인프라 미비</td></tr>
+<tr><td>인동동</td><td class="num">46,502명</td><td class="num">52.3%</td><td class="num">15.7%</td><td class="num">36.6%</td><td>인구 최다, 젊은층 위주</td></tr>
+</tbody>
+</table>
+<div class="content">
+<p>형곡동은 40대 이상 비율이 구미시 주요 밀집지 중 가장 높습니다. <strong>의원 밀집 동선 + 세대수 우위 + 고령 인구 집중이 동시에 성립하는 곳은 형곡동뿐</strong>입니다.</p>
+</div>
+</div><div class="page page-break"><div class="chart-block no-break">
+<img alt="형곡동 연령별 인구 피라미드" class="chart" data-original-src="../최종리포트_v23/모든_차트/연령별_인구피라미드_형곡_상권.png" src="/assets/report-gumi/report_image_004.png">
+<p class="caption">형곡동 연령별 인구 분포 | 출처: SGIS</p>
+</div><div class="page-number">8</div></div>
+<div class="page page-break">
+<div class="section-header">
+<div class="sh-left">
+<span class="sh-number">B-1</span>
+<span class="sh-title">건축물 + 메디컬 빌딩 시너지</span>
+</div>
+<span class="sh-category">위치 분석</span>
+</div>
+<div class="content">
+<h3>형곡동 건축물 준공연도 분포</h3>
+</div>
+<table class="data-table compact short-table" style="table-layout: fixed;">
+<thead><tr class=""><th style="position: relative;">준공 시기</th><th class="num" style="position: relative;">건물 비율</th><th>특징</th></tr></thead>
+<tbody>
+<tr class=""><td>1990년대 이전</td><td class="num">약 15%</td><td>구시가, 재건축 대상</td></tr>
+<tr class=""><td>1990~2004년</td><td class="num">약 40%</td><td>형곡동 1차 개발기 (주공·풍림)</td></tr>
+<tr class=""><td>2005~2014년</td><td class="num">약 30%</td><td>금호어울림포레, 우리엠빌딩(2014)</td></tr>
+<tr class=""><td>2015년 이후</td><td class="num">약 15%</td><td>푸르지오캐슬(2017), 힐스테이트(2019)</td></tr>
+</tbody>
+</table>
+<div class="chart-block no-break">
+<img alt="건축물 준공연도 분포" class="chart" data-original-src="../최종리포트_v23/모든_차트/건축물_준공연도.png" src="/assets/report-gumi/report_image_005.png">
+<p class="caption">도보 15분 범위 내 건축물 준공연도 분포</p>
+</div>
+<div class="content">
+<p>2015년 이후 대규모 신규 아파트(푸르지오 캐슬 1,878세대, 힐스테이트 송정 433세대)가 입주하면서 형곡동 배후 인구가 크게 늘었습니다. 이 신규 세대들의 의료 수요가 기존 노후 의원(평균 업력 20년)으로 충분히 흡수되지 못하고 있습니다.</p>
+</div>
+<hr class="divider">
+<div class="content">
+<h3>같은 건물 시너지 -- 이미 검증된 메디컬 빌딩</h3>
+<p>우리엠빌딩에는 이미 3개 과목의 의원이 운영 중입니다. 이들의 존재 자체가 이 건물의 의료 입지를 증명합니다.</p>
+</div>
+<table class="data-table short-table" style="table-layout: fixed;">
+<thead>
+<tr class=""><th style="position: relative;">층</th><th style="position: relative;">의원명</th><th style="position: relative;">과목</th><th class="num" style="position: relative;">업력</th><th class="num" style="position: relative;">전문의</th><th class="num" style="position: relative;"><br></th><th class="num"><br></th></tr>
+</thead>
+<tbody>
+<tr class=""><td>2층</td><td>민연합이비인후과의원</td><td>이비인후과</td><td class="num">24.9년</td><td class="num">1명</td><td class="num"><br></td><td class="num"><br></td></tr>
+<tr class=""><td>3층</td><td>제니스의원</td><td>비뇨의학과</td><td class="num">11.3년</td><td class="num">1명</td><td class="num"><br></td><td class="num"><br></td></tr>
+<tr class=""><td>4층</td><td>구미김지훈신경과의원</td><td>신경과</td><td class="num">11.1년</td><td class="num">1명</td><td class="num"><br></td><td class="num"><br></td></tr>
+</tbody>
+</table>
+</div><div class="page page-break"><div class="content">
+
+<p><strong>3개 의원 리뷰 합계 1,719건, 평균 평점 4.40</strong> -- 이 건물을 찾는 환자가 이미 하루에도 수백 명입니다.</p>
+<h4>메디컬 빌딩 집객효과</h4>
+<ul class="">
+<li><strong>환자 동선 공유</strong>:&nbsp; 신경과 환자가 같은 건물 통증의학과를 알게 됩니다.</li>
+<li><strong>상호 전원</strong>: 김지훈신경과 -&gt; 통증계열, 제니스의원 -&gt; 내과/외과 전원 가능.</li>
+<li><strong>인지도 시너지</strong>: 네이버 검색 시 "우리엠빌딩"이 3개 의원을 통해 노출됩니다.</li>
+<li><strong>주차·엘리베이터 인프라 공유</strong>: 32대 주차 + 엘리베이터 2대를 복수 의원이 분담합니다.</li>
+</ul>
+</div><div class="page-number">9</div></div>
+<!-- 주동선 검증 -->
+<div class="page page-break">
+<div class="section-header">
+<div class="sh-left">
+<span class="sh-number">B-1</span>
+<span class="sh-title">주동선 검증</span>
+</div>
+<span class="sh-category">위치 분석</span>
+</div>
+<div class="catchphrase">
+<p>형곡동 의원이 몰린 이유는<br><strong>신시로 하나입니다.</strong></p>
+<div class="catchphrase-bar"></div>
+</div>
+<div class="content">
+<p>형곡동의 의원 28개 중 대부분이 신시로(형곡동 중심 상업가로)를 따라 밀집해 있습니다. 우리엠빌딩은 이 밀집 지역의 한가운데에 위치합니다.</p>
+</div>
+<div class="chart-block no-break">
+<img alt="주동선 지도" class="map" data-original-src="../최종리포트_v23/모든_차트/step_주동선.png" src="/assets/report-gumi/report_image_006.png">
+<p class="caption">의원 밀집 지역 내 건물 위치 | 우리엠빌딩은 밀집지 중심</p>
+</div>
+<div class="content">
+<p>의원이 밀집해 있다는 것은 그 자체가 입지 검증입니다. 환자들이 이 동선을 따라 의원을 찾습니다. 새로운 곳에 홀로 개원하는 것보다, 환자가 이미 모이는 동선 위에 개원하는 것이 유리합니다.</p>
+<p><b>형곡동 상권의 민이비인후과도 이 건물로 이전을 해 왔습니다. - 이 자리의 가치를 다른 원장님들도 이미 인식하고 있다는 뜻입니다.</b></p>
+</div>
+<div class="page-number">10</div>
+</div>
+<!-- ================================================================
+     B-2: 왜 이 건물인가
+     ================================================================ -->
+<section class="interstitial page-break">
+<div class="int-label">Section B-2</div>
+<div class="int-title">왜 이 건물인가</div>
+<div class="int-bar"></div>
+</section>
+<div class="page page-break">
+<div class="section-header">
+<div class="sh-left">
+<span class="sh-number">B-2</span>
+<span class="sh-title">형곡동 의원용 건물 비교</span>
+</div>
+<span class="sh-category">건물 분석</span>
+</div>
+<div class="catchphrase">
+<p>의료시설 전용 빌딩, 주차 32대, 전용 110평.<br><strong>형곡동에서 이 조건의 건물은 이것뿐입니다.</strong></p>
+<div class="catchphrase-bar"></div>
+</div>
+<div class="content">
+<h3>건물 기본 정보</h3>
+</div>
+<table class="data-table compact short-table" style="table-layout: fixed;">
+<thead><tr class=""><th style="width: 120px; position: relative;">항목</th><th>내용</th></tr></thead>
+<tbody>
+<tr class=""><td>주소</td><td>경북 구미시 신시로 67 (형곡동 144-9)</td></tr>
+<tr class=""><td>건물 용도</td><td>의료시설 + 제1종근린생활시설</td></tr>
+<tr><td>준공일</td><td>2014년 11월 (건물 11년차)</td></tr>
+<tr class=""><td>구조</td><td>철근콘크리트, 지상 9층 / 지하 1층</td></tr>
+<tr class=""><td>주차</td><td>옥내기계 30대 + 옥내자주 2대 + 공영주차장 지원</td></tr>
+<tr class=""><td>승강기</td><td>승용 2대</td></tr>
+<tr class=""><td>내진설계</td><td>적용</td></tr>
+<tr class=""><td>현재 입주</td><td>2층 이비인후과, 3층 비뇨의학과, 4층 전면부 신경과</td></tr>
+<tr class=""><td>임대 가능 층</td><td>1층 일부, 4층 후면부, 5~8층</td></tr>
+</tbody>
+</table>
+<div class="content">
+<h3>층별 임대 조건</h3>
+</div>
+<table class="data-table compact short-table" style="table-layout: fixed;">
+<thead>
+<tr class=""><th style="position: relative;">층</th><th class="num" style="position: relative;">계약면적</th><th class="num" style="position: relative;">전용면적</th><th class="num" style="position: relative;">보증금</th><th class="num">월세</th></tr>
+</thead>
+<tbody>
+<tr class=""><td>1층 일부</td><td class="num">50평</td><td class="num">35평</td><td class="num">1억 원</td><td class="num">450만 원</td></tr>
+<tr class=""><td>4층 후면부</td><td class="num">64평 (211m2)</td><td class="num">45평 (149m2)</td><td class="num">3,000만 원</td><td class="num">130만 원</td></tr>
+<tr><td>5층</td><td class="num">157평 (518m2)</td><td class="num">110.5평 (366m2)</td><td class="num">1억 원</td><td class="num">420만 원</td></tr>
+<tr class=""><td>6~8층 (각 층)</td><td class="num">150평 (494m2)</td><td class="num">106평 (349m2)</td><td class="num">1억 원</td><td class="num">400만 원</td></tr>
+</tbody>
+</table>
+<div class="content">
+<ul class="">
+<li>관리비: 평당 7,500~8,000원</li>
+<li>권리금: 없음</li>
+<li>렌탈프리: 협의 가능 (구체 기간은 상담 시 안내)</li>
+<li>2개 층 이상 임대 시 임대료 협의 가능</li>
+</ul>
+</div>
+<div class="page-number">11</div>
+</div>
+<div class="page page-break">
+<div class="section-header">
+<div class="sh-left">
+<span class="sh-number">B-2</span>
+<span class="sh-title">건물 비교 분석</span>
+</div>
+<span class="sh-category">건물 분석</span>
+</div>
+<div class="content">
+<h3>형곡동 의원용 건물 비교 -- 네이버 부동산 + 건축물대장</h3>
+<p>형곡동 반경 2km 내 네이버 부동산에 등록된 사무실/상가 매물 170건을 수집하고, 건축물대장과 크로스레퍼런스하여 의원 개원이 가능한 건물(2층 이상, 주차 충족, 100평 이상)을 선별했습니다. <strong>최종 4건이 통과했습니다.</strong></p>
+</div>
+<table class="data-table compact short-table" style="table-layout: fixed;">
+<thead>
+<tr class="">
+<th style="position: relative;">건물명</th>
+<th class="num" style="position: relative;">거리</th>
+<th class="num" style="position: relative;">전용면적</th>
+<th class="num" style="position: relative;">주차 여유</th>
+<th class="num" style="position: relative;">평당월세</th>
+<th style="position: relative;">의료전용</th>
+<th>주동선</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-highlight">
+<td><strong>우리엠빌딩</strong></td>
+<td class="num">0m</td>
+<td class="num">110.5평</td>
+<td class="num">+15대</td>
+<td class="num">3.8만</td>
+<td><strong>O</strong></td>
+<td><strong>O</strong></td>
+</tr>
+<tr class="">
+<td>효성주상복합 나오스빌</td>
+<td class="num">32m</td>
+<td class="num">298.3평</td>
+<td class="num">+13대</td>
+<td class="num">1.2만</td>
+<td>X</td>
+<td>O</td>
+</tr>
+<tr class="">
+<td>일반상가 (4층)</td>
+<td class="num">35m</td>
+<td class="num">104.1평</td>
+<td class="num">+1대</td>
+<td class="num">1.9만</td>
+<td>X</td>
+<td>O</td>
+</tr>
+<tr class="">
+<td>복합상가 (5층, 832m)</td>
+<td class="num">832m</td>
+<td class="num">119.2평</td>
+<td class="num">+2대</td>
+<td class="num">2.1만</td>
+<td>X</td>
+<td><span class="accent">X</span></td>
+</tr>
+<tr class="">
+<td>일반상가 (5층, 832m)</td>
+<td class="num">832m</td>
+<td class="num">149.4평</td>
+<td class="num">+2대</td>
+<td class="num">1.7만</td>
+<td>X</td>
+<td><span class="accent">X</span></td>
+</tr>
+</tbody>
+</table>
+<div class="content">
+
+<h4>비교 해석</h4>
+<p><strong>효성주상복합 나오스빌 (32m)</strong>: 바로 옆 건물. 면적 넓고 평당 월세 저렴하지만, <strong>주상복합(공동주택)으로 의료시설 전용이 아닙니다.</strong></p>
+<p><strong>일반상가 (35m)</strong>: 4층 건물이며 주차 여유가 1대뿐. 의원 개원 시 환자 주차 확보가 불확실합니다.</p>
+<p><strong>복합상가/일반상가 (832m, 2건)</strong>: 형곡동 의원 밀집지에서 832m 떨어져 <strong>주동선(신시로)에서 벗어납니다.</strong></p>
+<p><strong>결론: 형곡동에서 100평 이상 + 주차 충족 + 주동선 위에 위치한 의원 개원 가능 건물은 우리엠빌딩이 유일합니다.</strong></p>
+</div>
+</div><div class="page page-break"><div class="chart-block no-break">
+<img alt="건물 비교 분석 지도" class="map" data-original-src="건물비교_지도.png" src="/assets/report-gumi/report_image_007.png">
+<p class="caption">건물 비교 분석 지도 | 네이버 부동산 170건 -&gt; 최종 4건 필터링</p>
+</div><div class="page-number">12</div></div>
+<!-- ================================================================
+     B-3: 어떤 과목을 열 것인가
+     ================================================================ -->
+<section class="interstitial page-break">
+<div class="int-label">Section B-3</div>
+<div class="int-title">어떤 과목을 열 것인가</div>
+<div class="int-bar"></div>
+</section>
+<div class="page page-break">
+<div class="section-header">
+<div class="sh-left">
+<span class="sh-number">B-3</span>
+<span class="sh-title">과목별 분석 결과 요약</span>
+</div>
+<span class="sh-category">과목 분석</span>
+</div>
+<div class="content">
+<p>전국 유사 도시(김해·거제·포항·양산·창원·아산 등)에서 실제로 운영 중인 같은 과목 의원들의 입지 조건과 비교했습니다. 데이터가 말해주는 것은 명확합니다 -- 이 건물은 경쟁이 적고, 환자가 많고, 고령 인구가 두텁습니다.</p>
+</div>
+<table class="data-table short-table" style="table-layout: fixed;">
+<thead>
+<tr class="">
+<th style="position: relative;">과목</th>
+<th class="num" style="position: relative;">도보 <br>유효세대</th>
+<th class="num" style="position: relative;">차량 <br>유효세대</th>
+<th class="num" style="position: relative;">합산</th>
+<th class="num" style="position: relative;">도보 경쟁</th>
+<th class="num" style="position: relative;">전체 경쟁</th>
+<th>판정</th>
+</tr>
+</thead>
+<tbody>
+
+<tr class="row-highlight"><td><strong>정신건강의학과</strong></td><td class="num">7,258</td><td class="num">21,063</td><td class="num"><span class="accent">28,321</span></td><td class="num">1곳</td><td class="num">5곳</td><td><span class="spec-badge">추천</span></td></tr>
+<tr class="row-highlight"><td><strong>통증계열</strong></td><td class="num">3,021</td><td class="num">1,319</td><td class="num"><span class="accent">4,340</span></td><td class="num">2~3곳</td><td class="num">31곳</td><td><span class="spec-badge">추천</span></td></tr>
+<tr class="row-highlight"><td><strong>외과</strong></td><td class="num">2,914</td><td class="num">5,024</td><td class="num"><font color="#c0392b"><b>7,938</b></font></td><td class="num">6곳</td><td class="num">18곳</td><td><span class="spec-badge">추천</span></td></tr>
+
+<tr class="row-highlight"><td><strong>소화기내과</strong></td><td class="num">-</td><td class="num">-</td><td class="num"><font color="#c0392b"><b>~6,947 (양분)</b></font></td><td class="num">1곳</td><td class="num">7곳 (도보)</td><td><span class="spec-badge">추천</span></td></tr>
+</tbody>
+</table>
+<div class="content">
+<blockquote class=""><p>통증계열 = 마취통증의학과 + 정형외과 + 신경외과를 하나의 비수술 척추/관절 통증 클리닉으로 통합 분석</p></blockquote>
+</div>
+<div class="chart-block no-break">
+
+<p class="caption"><br></p>
+</div>
+<div class="content">
+
+</div>
+<div class="page-number">13</div>
+</div>
+
+
+<!-- ──── 안과 환자 흐름 분석 (v39 추가) ──── -->
+
+
+
+
+
+
+<!-- -------- 2순위: 정신건강의학과 -------- -->
+<div class="page page-break">
+<div class="spec-header">
+<span class="spec-rank">1<br></span>
+<span class="spec-name">정신건강의학과</span>
+<span class="spec-badge">추천</span>
+</div>
+<div class="catchphrase">
+<p>차량 유효세대 21,063 -- 전국 유사 도시 24곳 중 1위.<br><strong>경쟁 5곳 -- 전국 유사 도시 24곳 중 최저.</strong></p>
+<div class="catchphrase-bar"></div>
+</div>
+<div class="stat-row">
+<div class="stat-item">
+<div class="stat-value accent">7.5년</div>
+<div class="stat-label">개원 공백</div>
+</div>
+<div class="stat-item">
+<div class="stat-value">7,258</div>
+<div class="stat-label">도보 유효세대</div>
+</div>
+<div class="stat-item">
+<div class="stat-value">28,321</div>
+<div class="stat-label">합산 유효세대</div>
+</div>
+<div class="stat-item">
+<div class="stat-value">5곳</div>
+<div class="stat-label">전체 경쟁 (전원 포화)</div>
+</div>
+</div>
+<div class="content">
+<p>차량 유효세대 21,063은 유사 도시 평균(5,989)의 <span class="accent-text">3.5배</span>이며, 24곳 중 <strong>1위</strong>입니다. 동시에 경쟁 5곳은 유사 도시 평균(15.8곳)의 1/3이며 최저입니다.</p>
+<h3>기존 의원 전수 분석</h3>
+</div>
+<table class="data-table compact short-table" style="table-layout: fixed;">
+<thead><tr class=""><th style="position: relative;">의원명</th><th class="num" style="position: relative;">거리</th><th class="num" style="position: relative;">업력</th><th class="num" style="position: relative;">전문의</th><th class="num" style="position: relative;">리뷰</th><th class="num" style="position: relative;">대기리뷰</th><th>상태</th></tr></thead>
+<tbody>
+<tr class=""><td>맑은마음정신과의원</td><td class="num">74m</td><td class="num">24.2년</td><td class="num">1명</td><td class="num">319건</td><td class="num">5건</td><td><span class="accent-text">포화</span></td></tr>
+<tr class=""><td>장정신과의원</td><td class="num">1,609m</td><td class="num">5.4년</td><td class="num">1명</td><td class="num">143건</td><td class="num">1건</td><td>운영중</td></tr>
+<tr class=""><td>열린마음정신과의원</td><td class="num">1,805m</td><td class="num">22.0년</td><td class="num">1명</td><td class="num">14건</td><td class="num">0건</td><td>운영중</td></tr>
+<tr class=""><td>펴나난정신건강의학과</td><td class="num">3,719m</td><td class="num">2.9년</td><td class="num">1명</td><td class="num">353건</td><td class="num">11건</td><td><span class="accent-text">포화</span></td></tr>
+<tr class=""><td>다니엘정신건강의학과</td><td class="num">9,097m</td><td class="num">7.5년</td><td class="num">1명</td><td class="num">167건</td><td class="num">10건</td><td><span class="accent-text">포화</span></td></tr>
+</tbody>
+</table>
+<div class="content">
+<p>5곳 중 3곳(맑은마음, 펴나난, 다니엘)에서 대기 관련 리뷰가 다수입니다. 전원 1인 전문의 체제입니다.</p>
+<h4>리뷰 -- 수요 초과 증거</h4>
+<p><br></p>
+</div>
+<div class="page-number">15</div>
+</div>
+<div class="page page-break">
+<div class="section-header">
+<div class="sh-left">
+<span class="sh-number">2순위</span>
+<span class="sh-title">정신건강의학과 -- 상세 + 입지실증</span>
+</div>
+<span class="sh-category">과목 분석</span>
+</div>
+<div class="review-grid">
+<img alt="맑은마음정신과의원 리뷰" data-original-src="리뷰_스크린샷/정신건강의학과_맑은마음정신과의원.png" src="/assets/report-gumi/report_image_008.png">
+<img alt="펴나난정신건강의학과의원 리뷰" data-original-src="리뷰_스크린샷/정신건강의학과_펴나난정신건강의학과의원.png" src="/assets/report-gumi/report_image_009.png">
+</div>
+<div class="review-grid" style="grid-template-columns: 1fr;">
+<img alt="다니엘정신건강의학과의원 리뷰" data-original-src="리뷰_스크린샷/정신건강의학과_다니엘정신건강의학과의원.png" src="/assets/report-gumi/report_image_010.png" style="width: 284px; height: 275px; max-width: none;" class="">
+</div>
+<p class="caption">네이버 플레이스 대기 관련 리뷰 캡처</p>
+<div class="content">
+<h3>입지실증분석 -- 전국 유사 도시 24곳 정신건강의학과 비교</h3>
+</div>
+<table class="data-table compact short-table" style="table-layout: fixed;">
+<thead><tr class=""><th style="position: relative;">비교 의원</th><th style="position: relative;">도시</th><th class="num" style="position: relative;">도보 세대</th><th class="num" style="position: relative;">차량 세대</th><th class="num" style="position: relative;">경쟁</th><th class="num" style="position: relative;">40대+</th><th class="num">2030비율</th></tr></thead>
+<tbody>
+<tr class=""><td>부원정신건강의학과의원</td><td>김해시 부원동</td><td class="num">5,837</td><td class="num">14,060</td><td class="num">8곳</td><td class="num">65.3%</td><td class="num">23.9%</td></tr>
+<tr class=""><td>조우동정신건강의학과의원</td><td>포항시 죽도동</td><td class="num">3,536</td><td class="num">20,775</td><td class="num">8곳</td><td class="num">70.0%</td><td class="num">22.1%</td></tr>
+<tr class=""><td>보듬앤 정신건강의학과의원</td><td>김해시 북부동</td><td class="num">3,328</td><td class="num">14,469</td><td class="num">8곳</td><td class="num">57.7%</td><td class="num">23.2%</td></tr>
+<tr class="row-highlight"><td><strong>이 건물 (형곡동)</strong></td><td><strong>구미시</strong></td><td class="num"><strong>7,258</strong></td><td class="num"><strong>21,063</strong></td><td class="num"><strong>5곳</strong></td><td class="num"><strong>64.7%</strong></td><td class="num"><strong>21.8%</strong></td></tr>
+</tbody>
+</table>
+<div class="content">
+<blockquote class=""><p>유사 도시 정신건강의학과 평균: 도보 4,041세대, 차량 5,989세대, 경쟁 15.8곳</p></blockquote>
+<p><strong>이 건물은 차량 세대(21,063)가 유사 도시 전체 1위이면서 경쟁(5곳)이 전체 최저입니다.</strong> 7.5년 동안 아무도 열지 않은 이유가 수요 부족이 아닌 것은, 기존 5곳 전원이 포화 상태라는 사실이 증명합니다.</p>
+</div>
+<div class="content">
+<h4><br>면적 기준<br><table class="data-table compact short-table" style="margin: 16px 0px 24px; width: 582.049px; color: rgb(74, 74, 90); font-weight: 400; table-layout: fixed;"><thead><tr class=""><th style="padding: 4px 8px; color: rgba(27, 42, 74, 0.6); border-bottom: 1.66667px solid rgb(27, 42, 74); position: relative;">컨셉</th><th class="num" style="padding: 4px 8px; color: rgba(27, 42, 74, 0.6); border-bottom: 1.66667px solid rgb(27, 42, 74); position: relative;">전용면적</th><th class="num" style="padding: 4px 8px; color: rgba(27, 42, 74, 0.6); border-bottom: 1.66667px solid rgb(27, 42, 74); position: relative;">최근 개원 중위수</th><th style="padding: 4px 8px; color: rgba(27, 42, 74, 0.6); border-bottom: 1.66667px solid rgb(27, 42, 74); position: relative;">이 건물</th><th style="padding: 4px 8px; color: rgba(27, 42, 74, 0.6); border-bottom: 1.66667px solid rgb(27, 42, 74);">필수 장비</th></tr></thead><tbody><tr class=""><td style="padding: 5px 8px; border-bottom: 0.555556px solid rgb(240, 240, 244); color: rgb(74, 74, 90);">정신건강의학과</td><td class="num" style="padding: 5px 8px; border-bottom: 0.555556px solid rgb(240, 240, 244); color: rgb(74, 74, 90);">20~40평</td><td class="num" style="padding: 5px 8px; border-bottom: 0.555556px solid rgb(240, 240, 244); color: rgb(74, 74, 90);">30평</td><td style="padding: 5px 8px; border-bottom: 0.555556px solid rgb(240, 240, 244); color: rgb(74, 74, 90);">4층 후면부 45평 (충분)<br>1층 전용면적 35평</td><td style="padding: 5px 8px; border-bottom: 0.555556px solid rgb(240, 240, 244); color: rgb(74, 74, 90);">상담실, 심리검사실 (장비 최소)</td></tr></tbody></table><div class="content" style="margin: 16px 0px; color: rgb(74, 74, 90); font-weight: 400;"><p>정신건강의학과는&nbsp; 4층 후면부(전용 45평) 또는 1층 (전용면적 35평)으로 시작 가능합니다.</p></div></h4>
+</div>
+</div><div class="page page-break"><br><div class="content">
+</div><div class="page-number">16</div></div>
+<div class="page page-break">
+<div class="section-header">
+<div class="sh-left">
+<span class="sh-number">2순위</span>
+<span class="sh-title">정신건강의학과 -- 경쟁현황 지도</span>
+</div>
+<span class="sh-category">과목 분석</span>
+</div>
+<div class="chart-block no-break">
+<img alt="정신건강의학과 경쟁현황 지도" class="map" data-original-src="../최종리포트_v23/모든_차트/경쟁분할_정신건강의학과.png" src="/assets/report-gumi/report_image_011.png">
+<p class="caption">정신건강의학과 경쟁 현황 지도 | 경쟁 의원 5곳만 표시</p>
+</div>
+<div class="page-number">17</div>
+</div>
+
+<!-- ──── 정신건강의학과 환자 흐름 분석 (v39 추가) ──── -->
+<div class="page page-break">
+<div class="section-header">
+<div class="sh-left">
+<span class="sh-number">B-3</span>
+<span class="sh-title">정신건강의학과 -- 도로 네트워크 환자 흐름 분석</span>
+</div>
+<span class="sh-category">환자 흐름</span>
+</div>
+<div class="content">
+<p><strong style="background-color: transparent; font-size: 0.92rem;">현재 상태 (Before)</strong><span style="background-color: transparent; font-size: 0.92rem;">: 3개 의원이 20,509세대를 배분받고 있습니다.</span></p>
+</div>
+<div class="chart-block no-break">
+<img alt="정신건강의학과 Before 환자 흐름" class="map" src="/assets/report-gumi/report_image_012.png" style="width: 100%; border: 1px solid rgb(224, 224, 224); border-radius: 8px;">
+<p class="caption">정신건강의학과 -- 현재 환자 흐름 (Before) | 도로 굵기 = 환자 수, 색상 = 의원 영역</p>
+</div>
+</div>
+
+<div class="page page-break">
+<div class="content">
+<p><strong>신규 의원 삽입 후 (After)</strong>: 우리엠빌딩에 신규 의원이 개원하면, <span class="accent-text">9,131세대</span>를 확보합니다.</p>
+</div>
+<div class="chart-block no-break">
+<img alt="정신건강의학과 After 환자 흐름" class="map" src="/assets/report-gumi/report_image_013.png" style="width: 100%; border: 1px solid rgb(224, 224, 224); border-radius: 8px;">
+<p class="caption">정신건강의학과 -- 신규 의원 삽입 후 (After) | 빨간색 = 신규 의원 환자 영역</p>
+</div>
+</div>
+
+
+
+<!-- -------- 3순위: 통증계열 -------- -->
+<div class="page page-break">
+<div class="spec-header">
+<span class="spec-rank">2<br></span>
+<span class="spec-name">통증계열 (비수술 척추/관절)</span>
+<span class="spec-badge">추천</span>
+</div>
+<div class="catchphrase">
+<p>유사 도시 39곳 정형외과 중 40대+ 비율이 이 건물보다 높은 곳은 5.4%뿐.<br><strong>전국에서 가장 고령인 환자 기반에, 경쟁은 평균의 절반.</strong></p>
+<div class="catchphrase-bar"></div>
+</div>
+<div class="stat-row">
+<div class="stat-item">
+<div class="stat-value">3,021</div>
+<div class="stat-label">도보 유효세대</div>
+</div>
+<div class="stat-item">
+<div class="stat-value">4,340</div>
+<div class="stat-label">합산 유효세대</div>
+</div>
+<div class="stat-item">
+<div class="stat-value">2~3곳</div>
+<div class="stat-label">도보 경쟁 (노후)</div>
+</div>
+<div class="stat-item">
+<div class="stat-value">64.7%</div>
+<div class="stat-label">40대+ 비율</div>
+</div>
+</div>
+<div class="content">
+<p>마취통증의학과(2.6년 전 개원) + 정형외과(6.6년 공백) + 신경외과(4.6년 전 개원)를 하나의 "비수술 척추/관절 통증 클리닉"으로 접근합니다.</p>
+<p>도보 경쟁 의원 중 형곡정형외과(24년)와 구미정형외과(32년)는 시설 노후화가 진행되어, 최신 C-arm 등 장비로 차별화할 여지가 큽니다.</p>
+</div>
+<div class="content">
+<h3>경쟁의원 현황 (도보 15분 내)</h3>
+</div>
+<table class="data-table compact short-table" style="table-layout: fixed;">
+<thead><tr><th style="position: relative;">의원명</th><th class="num" style="position: relative;">거리</th><th class="num" style="position: relative;">업력</th><th style="position: relative;">과목</th><th>비고</th></tr></thead>
+<tbody>
+<tr class=""><td>더튼튼마취통증의학과의원</td><td class="num">53m</td><td class="num">3.0년</td><td>마취통증</td><td>신규</td></tr>
+<tr class=""><td>형곡정형외과의원</td><td class="num">259m</td><td class="num"><strong>24.4년</strong></td><td>정형외과</td><td>시설 노후</td></tr>
+<tr class=""><td>구미정형외과의원</td><td class="num">1,363m</td><td class="num"><strong>32.2년</strong></td><td>정형외과</td><td>시설 노후</td></tr>
+<tr class=""><td>마디와신경외과의원</td><td class="num">1,364m</td><td class="num">9.0년</td><td>신경외과</td><td>-</td></tr>
+<tr class=""><td>고려마취통증의학과의원</td><td class="num">1,496m</td><td class="num">13.2년</td><td>마취통증</td><td>-</td></tr>
+</tbody>
+</table>
+<div class="content">
+<p><br></p>
+</div>
+<div class="review-grid" style="grid-template-columns: 1fr;">
+
+</div>
+<p class="caption"><br></p>
+<div class="page-number">18</div>
+</div>
+<div class="page page-break">
+<div class="section-header">
+<div class="sh-left">
+<span class="sh-number">3순위</span>
+<span class="sh-title">통증계열 -- 입지실증분석</span>
+</div>
+<span class="sh-category">과목 분석</span>
+</div>
+<div class="content">
+<h3>입지실증분석 -- 전국 유사 도시 마취통증 29곳 + 정형외과 39곳 + 신경외과 16곳</h3>
+</div>
+<table class="data-table compact short-table" style="table-layout: fixed;">
+<thead><tr><th style="position: relative;">과목</th><th style="position: relative;">비교 의원</th><th style="position: relative;">도시</th><th class="num" style="position: relative;">도보 세대</th><th class="num" style="position: relative;">경쟁</th><th class="num">40대+</th></tr></thead>
+<tbody>
+<tr class=""><td>마취통증</td><td>양산마디척마취통증의학과</td><td>양산시 양주동</td><td class="num">1,760</td><td class="num">30곳</td><td class="num">63.4%</td></tr>
+<tr class=""><td>마취통증</td><td>활기찬마취통증의학과</td><td>김해시 내외동</td><td class="num">2,694</td><td class="num">39곳</td><td class="num">60.0%</td></tr>
+<tr class=""><td>정형외과</td><td>거제무릅어께정형외과</td><td>거제시 옥포2동</td><td class="num">3,184</td><td class="num">19곳</td><td class="num">63.4%</td></tr>
+<tr class=""><td>정형외과</td><td>이성윤정형외과의원</td><td>포항시 우창동</td><td class="num">5,033</td><td class="num">49곳</td><td class="num">62.0%</td></tr>
+<tr class=""><td>신경외과</td><td>참좋은신경외과의원</td><td>김해시 북부동</td><td class="num">2,198</td><td class="num">39곳</td><td class="num">57.7%</td></tr>
+<tr class="row-highlight"><td><strong>통증계열</strong></td><td><strong>이 건물 (형곡동)</strong></td><td><strong>구미시</strong></td><td class="num"><strong>3,021</strong></td><td class="num"><strong>31곳</strong></td><td class="num"><strong>64.7%</strong></td></tr>
+</tbody>
+</table>
+<div class="content">
+<blockquote class=""><p>유사 도시 마취통증 평균: 도보 2,560세대, 경쟁 61.1곳 / 정형외과 평균: 도보 2,961세대, 경쟁 58.5곳</p></blockquote>
+<p>이 건물의 도보 세대(3,021)는 마취통증 평균(2,560)과 정형외과 평균(2,961)을 모두 상회하며, 경쟁(31곳)은 두 과목 평균(58~61곳)의 절반입니다. <strong>유사 도시에서 60곳 경쟁 속에서도 돌아가는 시장이, 31곳으로 줄어들면 무엇이 달라지는지</strong> -- 그것이 이 건물 통증계열의 기회입니다.</p>
+</div>
+<div class="chart-block no-break">
+
+<p class="caption"><br></p>
+</div>
+<div class="page-number">19</div>
+</div>
+
+
+<!-- ──── 통증계열 환자 흐름 분석 (v39 추가) ──── -->
+<div class="page page-break">
+<div class="section-header">
+<div class="sh-left">
+<span class="sh-number">B-3</span>
+<span class="sh-title">통증계열 -- 도로 네트워크 환자 흐름 분석</span>
+</div>
+<span class="sh-category">환자 흐름</span>
+</div>
+<div class="content">
+<p><strong style="background-color: transparent; font-size: 0.92rem;">현재 상태 (Before)</strong><span style="background-color: transparent; font-size: 0.92rem;">: 12개 의원이 24,403세대를 배분받고 있습니다.</span></p>
+</div>
+<div class="chart-block no-break">
+<img alt="통증계열 Before 환자 흐름" class="map" src="/assets/report-gumi/report_image_014.png" style="width: 100%; border: 1px solid rgb(224, 224, 224); border-radius: 8px;">
+<p class="caption">통증계열 -- 현재 환자 흐름 (Before) | 도로 굵기 = 환자 수, 색상 = 의원 영역</p>
+</div>
+</div>
+
+<div class="page page-break">
+<div class="content">
+<p><strong>신규 의원 삽입 후 (After)</strong>: 우리엠빌딩에 신규 의원이 개원하면, <span class="accent-text">3,126세대</span>를 확보합니다.</p>
+</div>
+<div class="chart-block no-break">
+<img alt="통증계열 After 환자 흐름" class="map" src="/assets/report-gumi/report_image_015.png" style="width: 100%; border: 1px solid rgb(224, 224, 224); border-radius: 8px;">
+<p class="caption">통증계열 -- 신규 의원 삽입 후 (After) | 빨간색 = 신규 의원 환자 영역</p>
+</div>
+</div>
+
+
+
+<!-- ================================================================
+     4순위: 소화기내과 — 인터스티셜
+     ================================================================ -->
+
+
+<!-- ================================================================
+     PAGE 1: 경쟁 현황
+     ================================================================ -->
+<div class="page page-break">
+
+<div class="spec-header">
+<span class="spec-rank">3<br></span>
+<span class="spec-name">소화기내과</span>
+<span class="spec-badge">추천</span>
+</div>
+
+<div class="catchphrase">
+<p>도보 15분권 내 소화기내과 경쟁 분석을 실시했습니다.<br><strong>도보권 소화기 경쟁자는 속편한내과 1곳뿐입니다.</strong></p>
+<div class="catchphrase-bar"></div>
+</div>
+
+<div class="stat-row">
+<div class="stat-item">
+<div class="stat-value">7곳</div>
+<div class="stat-label">도보 15분권 내과</div>
+</div>
+<div class="stat-item">
+<div class="stat-value accent">1곳</div>
+<div class="stat-label">도보권 실질 경쟁자</div>
+</div>
+<div class="stat-item">
+<div class="stat-value">13,893</div>
+<div class="stat-label">도보 15분 세대</div>
+</div>
+<div class="stat-item">
+<div class="stat-value">1곳</div>
+<div class="stat-label">홈페이지 보유</div>
+</div>
+</div>
+
+<div class="content">
+<h3>도보 15분권 내 소화기내과 경쟁 분석</h3>
+<p>형곡동 우리엠빌딩 도보 15분권 이내 내과를 분석했습니다.&nbsp;</p>
+</div>
+
+<table class="data-table compact short-table" style="table-layout: fixed;">
+<thead>
+<tr class="">
+<th style="position: relative;">의원명</th>
+<th class="num" style="position: relative;">거리</th>
+<th class="num" style="position: relative;">전문의</th>
+<th class="num" style="position: relative;">면적</th>
+<th class="num" style="position: relative;">업력</th>
+<th style="position: relative;">홈페이지</th>
+<th>내시경 / 소화기</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-highlight">
+<td><strong>속편한내과의원</strong></td>
+<td class="num">21m</td>
+<td class="num"><strong>3명</strong></td>
+<td class="num">114평</td>
+<td class="num">20.1년</td>
+<td style="text-align:center;">유 (sok88.com)</td>
+<td style="text-align:center;"><span class="accent">위+대장&nbsp;</span></td>
+</tr>
+<tr class="row-muted">
+<td>강내과의원</td>
+<td class="num">37m</td>
+<td class="num">1명</td>
+<td class="num">103평</td>
+<td class="num">17.3년</td>
+<td style="text-align:center;">무</td>
+<td style="text-align:center;">미보유</td>
+</tr>
+<tr class="">
+<td>중앙내과의원</td>
+<td class="num">809m</td>
+<td class="num">1명</td>
+<td class="num">60.1평</td>
+<td class="num">26.6년</td>
+<td style="text-align:center;">무</td>
+<td style="text-align:center;">위+대장 / 확인필요</td>
+</tr>
+
+
+
+
+</tbody>
+</table>
+
+<div class="content">
+
+</div>
+
+<div class="page-number">S-1</div>
+</div>
+
+<!-- ================================================================
+     PAGE S-1b: 지도 A — 우리엠빌딩 주변 확대 (1~5번)
+     ================================================================ -->
+<div class="page page-break">
+
+<div class="section-header">
+<div class="sh-left">
+<span class="sh-number">소화기</span>
+<span class="sh-title">경쟁 지도 A -- 우리엠빌딩 주변 (도보 5분 이내)</span>
+</div>
+<span class="sh-category">과목 분석</span>
+</div>
+
+<!-- 지도 A: 확대 (1~5번) -->
+<div style="width:100%; height:450px; border-radius:8px; overflow:hidden; border:1px solid var(--gray-200); position:relative;">
+  <img id="comp-map-a" src="/assets/report-gumi/report_image_016.png" style="width:100%; height:100%; object-fit:cover;">
+</div>
+
+<!-- 범례 (지도 A 아래) -->
+<div class="map-legend">
+  <div class="map-legend-item"><span class="map-legend-dot" style="background:#FF3B30;"></span> 우리엠빌딩 (타겟)</div>
+  <div class="map-legend-item"><span class="map-legend-dot" style="background:#E74C3C;"></span> 확정 소화기 (위+대장)</div>
+  <div class="map-legend-item"><span class="map-legend-dot" style="background:#3498DB;"></span> 위내시경만 보유</div>
+  <div class="map-legend-item"><span class="map-legend-dot" style="background:#BDC3C7;"></span> 내시경 미보유</div>
+</div>
+<p class="caption">우리엠빌딩 반경 약 200m 이내 내과 의원 분포. 도보 5분 이내 거리에 5곳이 밀집해 있습니다. 마커 클릭 시 상세 정보 표시.</p>
+
+<div class="content">
+<blockquote class="">
+<p>도보 5분 이내(208m까지)에 내과 5곳이 밀집해 있으나, <strong>소화기 전문이 확정되는 의원은 속편한내과 1곳뿐</strong>입니다. 강내과/맑은샘내과는 내시경 미보유, 서영배강심내과/황종현내과는 위내시경만 보유하여 대장내시경 환자와는 직접 경쟁하지 않습니다.</p>
+</blockquote>
+</div>
+
+<div class="page-number">S-1b</div>
+</div>
+
+<!-- ================================================================
+     PAGE S-1b-2: 지도 B — 도보 15분권 전체 (1~10번)
+     ================================================================ -->
+<div class="page page-break">
+
+<div class="section-header">
+<div class="sh-left">
+<span class="sh-number">소화기</span>
+<span class="sh-title">경쟁 지도 B -- 도보 15분권 전체</span>
+</div>
+<span class="sh-category">과목 분석</span>
+</div>
+
+<!-- 지도 B: 전체 범위 (1~10번) -->
+<div style="width:100%; height:450px; border-radius:8px; overflow:hidden; border:1px solid var(--gray-200); position:relative;">
+  <img id="comp-map-b" src="/assets/report-gumi/report_image_017.png" style="width: 100%; height: 100%; object-fit: cover;">
+</div>
+
+<!-- 범례 (지도 B 아래) -->
+<div class="map-legend">
+  <div class="map-legend-item"><span class="map-legend-dot" style="background:#FF3B30;"></span> 우리엠빌딩 (타겟)</div>
+  <div class="map-legend-item"><span class="map-legend-dot" style="background:#E74C3C;"></span> 확정 소화기 (위+대장)</div>
+  <div class="map-legend-item"><span class="map-legend-dot" style="background:#F39C12;"></span> 위+대장 보유 (확인 필요)</div>
+  <div class="map-legend-item"><span class="map-legend-dot" style="background:#3498DB;"></span> 위내시경만 보유</div>
+  <div class="map-legend-item"><span class="map-legend-dot" style="background:#BDC3C7;"></span> 내시경 미보유</div>
+  <div class="map-legend-item"><span class="map-legend-line"></span> 도보 15분 등시선</div>
+</div>
+<p class="caption">카카오맵 기반 도보 15분권 내과 의원 전체 분포. 번호는 아래 테이블(S-1c)과 매칭. 마커 클릭 시 상세 정보 표시.</p>
+
+<div class="page-number">S-1b-2</div>
+</div>
+
+<!-- 카카오맵 SDK (1회만 로드) -->
+
+
+<!-- ================================================================
+     PAGE 1.5c: 경쟁 의원 상세 테이블 (지도 다음 별도 페이지)
+     ================================================================ -->
+<div class="page page-break">
+
+<div class="section-header">
+<div class="sh-left">
+<span class="sh-number">소화기</span>
+<span class="sh-title">경쟁 의원 상세 -- 지도 번호 매칭</span>
+</div>
+<span class="sh-category">과목 분석</span>
+</div>
+
+<div class="content">
+<p>아래 표의 번호는 이전 페이지 지도의 마커 번호와 동일합니다. T는 우리엠빌딩(타겟)입니다.</p>
+</div>
+
+<table class="data-table compact short-table" style="font-size: 11px; white-space: nowrap; table-layout: fixed;">
+<thead>
+<tr>
+<th style="width: 26px; text-align: center; position: relative;">No.</th>
+<th style="text-align: left; position: relative;">의원명</th>
+<th style="text-align: center; position: relative;">거리</th>
+<th style="text-align: center; position: relative;">전문의</th>
+<th style="text-align: center; position: relative;">면적</th>
+<th style="text-align: center; position: relative;">업력</th>
+<th style="text-align: center; position: relative;">홈페이지</th>
+<th style="text-align:center;">내시경 유형</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-highlight">
+<td><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;background:#E74C3C;border-radius:50%;color:#fff;font-size:10px;font-weight:700;">1</span></td>
+<td><strong>속편한내과의원</strong></td>
+<td class="num">21m</td>
+<td class="num"><strong>3명</strong></td>
+<td class="num">114평</td>
+<td class="num">20.1년</td>
+<td style="text-align:center;">유 (sok88.com)</td>
+<td style="text-align:center;"><span class="accent">위+대장 / 확정</span></td>
+</tr>
+<tr class="row-muted">
+<td><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;background:#BDC3C7;border-radius:50%;color:#fff;font-size:10px;font-weight:700;">2</span></td>
+<td>강내과의원</td>
+<td class="num">37m</td>
+<td class="num">1명</td>
+<td class="num">103평</td>
+<td class="num">17.3년</td>
+<td style="text-align:center;">무</td>
+<td style="text-align:center;">미보유</td>
+</tr>
+<tr class="row-muted">
+<td><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;background:#BDC3C7;border-radius:50%;color:#fff;font-size:10px;font-weight:700;">3</span></td>
+<td>맑은샘내과의원</td>
+<td class="num">53m</td>
+<td class="num">1명</td>
+<td class="num">86평</td>
+<td class="num">9.0년</td>
+<td style="text-align:center;">무</td>
+<td style="text-align:center;">미보유</td>
+</tr>
+<tr class="">
+<td><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;background:#3498DB;border-radius:50%;color:#fff;font-size:10px;font-weight:700;">4</span></td>
+<td>서영배강심내과의원</td>
+<td class="num">109m</td>
+<td class="num">1명</td>
+<td class="num">-</td>
+<td class="num">20.3년</td>
+<td style="text-align:center;">무</td>
+<td style="text-align:center;">위내시경만</td>
+</tr>
+<tr class="">
+<td><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;background:#3498DB;border-radius:50%;color:#fff;font-size:10px;font-weight:700;">5</span></td>
+<td>황종현내과의원</td>
+<td class="num">208m</td>
+<td class="num">1명</td>
+<td class="num">90평</td>
+<td class="num">24.2년</td>
+<td style="text-align:center;">유</td>
+<td style="text-align:center;">위 내시경만</td>
+</tr>
+<tr class="">
+<td><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;background:#F39C12;border-radius:50%;color:#fff;font-size:10px;font-weight:700;">6</span></td>
+<td>중앙내과의원</td>
+<td class="num">809m</td>
+<td class="num">1명</td>
+<td class="num">60.1평</td>
+<td class="num">26.6년</td>
+<td style="text-align:center;">무</td>
+<td style="text-align:center;"><br></td>
+</tr>
+<tr class="">
+<td><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;background:#F39C12;border-radius:50%;color:#fff;font-size:10px;font-weight:700;">7</span></td>
+<td>한재호내과의원</td>
+<td class="num">1,089m</td>
+<td class="num">1명</td>
+<td class="num">34.8평</td>
+<td class="num">25.1년</td>
+<td style="text-align:center;">무</td>
+<td style="text-align:center;"><br></td>
+</tr>
+<tr class="">
+<td><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;background:#3498DB;border-radius:50%;color:#fff;font-size:10px;font-weight:700;">8</span></td>
+<td>연세윤내과의원</td>
+<td class="num">1,364m</td>
+<td class="num">1명</td>
+<td class="num">185.5평</td>
+<td class="num">21.6년</td>
+<td style="text-align:center;">무</td>
+<td style="text-align:center;"><br></td>
+</tr>
+<tr class="">
+<td><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;background:#F39C12;border-radius:50%;color:#fff;font-size:10px;font-weight:700;">9</span></td>
+<td>김두환내과의원</td>
+<td class="num">1,526m</td>
+<td class="num">2명</td>
+<td class="num">132.2평</td>
+<td class="num">41.9년</td>
+<td style="text-align:center;">무</td>
+<td style="text-align:center;"><br></td>
+</tr>
+<tr class="">
+<td><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;background:#F39C12;border-radius:50%;color:#fff;font-size:10px;font-weight:700;">10</span></td>
+<td>이용원내과의원</td>
+<td class="num">1,768m</td>
+<td class="num">1명</td>
+<td class="num">34.3평</td>
+<td class="num">34.9년</td>
+<td style="text-align:center;">무</td>
+<td style="text-align:center;"><br></td>
+</tr>
+</tbody>
+</table>
+
+<div class="content">
+
+</div>
+
+<div class="page-number">S-1c</div>
+</div>
+
+<!-- ================================================================
+     PAGE 2: 실질 경쟁 분석
+     ================================================================ -->
+<div class="page page-break">
+
+<div class="section-header">
+<div class="sh-left">
+<span class="sh-number">소화기</span>
+<span class="sh-title">실질 경쟁 분석 -- 도보 15분권 경쟁 구도</span>
+</div>
+<span class="sh-category">과목 분석</span>
+</div>
+
+<div class="content">
+<h3>도보 15분권 내 실질 경쟁자 분석</h3>
+<p>소화기내과 환자는 "내시경 가능한 곳"을 찾아갑니다. 도보 15분권 13,893세대 기준으로, 이 생활권 내에서 실질적으로 소화기 환자를 유치할 수 있는 의원을 분석합니다.</p>
+</div>
+
+<table class="data-table compact short-table" style="text-align: center; table-layout: fixed;">
+<thead>
+<tr class=""><th style="text-align: left; position: relative;">구분</th><th style="text-align: center; position: relative;">속편한내과</th><th style="text-align:center;">강내과</th></tr>
+</thead>
+<tbody>
+<tr class=""><td style="text-align:left;"><strong>거리</strong></td><td style="text-align:center;">21m</td><td style="text-align:center;">37m</td></tr>
+<tr class=""><td style="text-align:left;"><strong>전문의</strong></td><td style="text-align:center;">3명</td><td style="text-align:center;">1명</td></tr>
+<tr class=""><td style="text-align:left;"><strong>면적</strong></td><td style="text-align:center;">114평</td><td style="text-align:center;">103평</td></tr>
+<tr class=""><td style="text-align:left;"><strong>업력</strong></td><td style="text-align:center;">20.1년</td><td style="text-align:center;">17.3년</td></tr>
+<tr><td style="text-align:left;"><strong>내시경</strong></td><td style="text-align:center;">위+대장 보유</td><td style="text-align:center;"><span class="accent-text">미보유</span></td></tr>
+<tr class=""><td style="text-align:left;"><strong>홈페이지</strong></td><td style="text-align:center;">유 (네트워크 브랜드)</td><td style="text-align:center;">무</td></tr>
+<tr class=""><td style="text-align:left;"><strong>소화기 여부</strong></td><td style="text-align:center;"><strong>확정 (소화기 전문)</strong></td><td style="text-align:center;">내시경 없음</td></tr>
+</tbody>
+</table>
+
+<div class="key-insight">
+<strong>핵심 판단: 도보 15분권 내 소화기 경쟁자는 속편한내과 1곳뿐입니다.</strong><br>
+강내과는 내시경 자체가 없어 내시경 환자를 유치할 수 없습니다. 도보 15분권 13,893세대를 속편한내과 1곳이 독점하고 있는 구도입니다.
+</div>
+
+<hr class="divider">
+
+<div class="content">
+<h3>도보 15분권 외곽 의원 -- 세대교체 대상</h3>
+<p>도보 15분권 가장자리에 있는 의원들은 거리상 직접 경쟁 강도가 낮습니다. 특히 노후 의원들은 세대교체 수요의 원천이 됩니다. 한재호내과는 거리상 형곡동 생활권과 일부 겹치므로, 해당 의원 환자 중 일부는 흡수 가능합니다.</p>
+</div>
+
+<table class="data-table compact short-table" style="table-layout: fixed;">
+<thead>
+<tr><th style="position: relative;">의원명</th><th class="num" style="position: relative;">거리</th><th class="num" style="position: relative;">업력</th><th class="num" style="position: relative;">면적</th><th>특징</th></tr>
+</thead>
+<tbody>
+<tr class=""><td>중앙내과</td><td class="num">809m</td><td class="num">26.6년</td><td class="num">60.1평</td><td>1인, 소규모, 노후 -- 환자 이탈 가능</td></tr>
+<tr class=""><td>한재호내과</td><td class="num">1,089m</td><td class="num">25.1년</td><td class="num">34.8평</td><td>1인, 34.8평 -- 내시경 공간 부족 추정</td></tr>
+<tr class=""><td>김두환내과</td><td class="num">1,526m</td><td class="num">41.9년</td><td class="num">132.2평</td><td>2인이나 42년차 -- 세대교체 시 환자 유출</td></tr>
+<tr class=""><td>이용원내과</td><td class="num">1,768m</td><td class="num">34.9년</td><td class="num">34.3평</td><td>1인, 34.3평, 35년차 -- 소규모 노후</td></tr>
+</tbody>
+</table>
+
+<div class="page-number">S-2</div>
+</div>
+
+<!-- ================================================================
+     PAGE 3: 수요 근거 + 생존 시나리오
+     ================================================================ -->
+<div class="page page-break">
+
+<div class="section-header">
+<div class="sh-left">
+<span class="sh-number">소화기</span>
+<span class="sh-title">수요 근거 -- 세대수와 리뷰가 말하는 것</span>
+</div>
+<span class="sh-category">과목 분석</span>
+</div>
+
+<div class="stat-row">
+<div class="stat-item">
+<div class="stat-value">13,893</div>
+<div class="stat-label">도보 15분 세대</div>
+</div>
+<div class="stat-item">
+<div class="stat-value accent">~7,000</div>
+<div class="stat-label">속편한과 양분 시</div>
+</div>
+<div class="stat-item">
+<div class="stat-value">2,250</div>
+<div class="stat-label">전국 시급도시 중위값</div>
+</div>
+<div class="stat-item">
+<div class="stat-value">3.1배</div>
+<div class="stat-label">중위값 대비</div>
+</div>
+</div>
+
+<div class="content">
+<h3>1. 도보 15분권 세대 -- 속편한과 양분해도 3배</h3>
+<p>도보 15분 내 13,893세대가 거주합니다. 형곡동 도보권 내시경 보유 소화기 전문의원은 <strong>속편한내과 1곳뿐</strong>이므로, 새로운 소화기내과가 개원하면 두 곳이 양분하는 구도가 됩니다.</p>
+
+<p>단순 양분 시 1곳당 약 6,947세대입니다. 전국 시급도시 내과 의원의 도보 15분 세대 중위값이 2,250세대임을 감안하면, 양분 후에도 중위값의 <span class="accent-text">3.1배</span>에 해당합니다.</p>
+</div>
+
+<div class="content">
+<h3>2. 시나리오 분석</h3>
+<p>내과 전체가 아닌 "소화기 내시경 수요"만 추출한 기본 시나리오도 함께 제시합니다.</p>
+</div>
+
+<!-- 시나리오 바 차트 (2개만) -->
+<div class="scenario-chart">
+
+<div class="scenario-bar-group">
+<div class="scenario-label">낙관 (양분)</div>
+<div class="scenario-bar-wrap">
+<div class="scenario-bar strong" style="width: 92.8%;">6,947</div>
+</div>
+<div class="scenario-value">6,947세대</div>
+</div>
+
+<div class="scenario-bar-group">
+<div class="scenario-label">기본 (소화기 50%<br>x 경쟁 2곳)</div>
+<div class="scenario-bar-wrap">
+<div class="scenario-bar good" style="width: 46.4%;">3,473</div>
+</div>
+<div class="scenario-value">3,473세대</div>
+</div>
+
+</div>
+
+<div class="content">
+<blockquote class="">
+<p><strong>시나리오 산출 기준</strong></p>
+<p>낙관: 도보 13,893세대 / 속편한+신규 2곳 = 6,947세대</p>
+<p>기본: 도보 13,893세대 x 소화기 비율 50% / 경쟁 2곳 = 3,473세대</p>
+</blockquote>
+<p><strong>기본 시나리오(3,473세대)에서도 전국 시급도시 중위값(2,250세대)의 1.5배</strong>입니다. 소화기내과로서의 성립 조건은 충분합니다.</p>
+</div>
+
+<hr class="divider">
+
+<div class="content">
+<h3>3. 리뷰에서 보이는 수요 초과</h3>
+<p>속편한내과의원은 구미 형곡동에서 20년 이상 운영된 소화기 전문 네트워크 브랜드입니다. 의료 정보 플랫폼에서 확인되는 리뷰를 보면 수요 초과의 징후가 뚜렷합니다.</p>
+</div>
+
+<!-- 리뷰 카드: 빈 슬롯 3개 (사용자 선택 후 교체) -->
+<div style="background:#fff; border-radius:12px; padding:20px 24px; box-shadow:0 2px 8px rgba(0,0,0,0.08); border:1px solid var(--gray-200); margin:var(--sp-3) 0;">
+  <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px; padding-bottom:10px; border-bottom:1px solid #eee;">
+    <span style="background:#03C75A; color:white; font-size:11px; font-weight:700; padding:3px 8px; border-radius:4px;">대기 관련</span>
+    <span style="font-size:15px; font-weight:700; color:#222;">속편한내과의원</span>
+  </div>
+  <div style="font-size:12px; color:#888; margin-bottom:14px;">네이버 플레이스 리뷰 중 대기 관련 발췌</div>
+
+  <div style="margin-bottom:12px; padding:10px 14px; background:#f8f9fa; border-radius:8px; border-left:3px solid #03C75A;">
+    <div style="font-size:13px; color:#333; line-height:1.6;">"<mark style="background:#fff3cd; padding:1px 2px; border-radius:2px;">대기시간이 길지만</mark>..."</div>
+    <div style="font-size:10px; color:#aaa; margin-top:4px;">네이버 플레이스 (The우아한삶, 2025.07) · 대기 30분 이내</div>
+  </div>
+
+  <div style="margin-bottom:12px; padding:10px 14px; background:#f8f9fa; border-radius:8px; border-left:3px solid #03C75A;">
+    <div style="font-size:13px; color:#333; line-height:1.6;">"사람도 많이 없는 시간대 방문했으나 <mark style="background:#fff3cd; padding:1px 2px; border-radius:2px;">1시간 대기 기본</mark>이고..."</div>
+    <div style="font-size:10px; color:#aaa; margin-top:4px;">네이버 플레이스 (skfk0, 2025.07) · 예약 없이 이용 / 대기 1시간 이상</div>
+  </div>
+
+  <div style="margin-bottom:12px; padding:10px 14px; background:#f8f9fa; border-radius:8px; border-left:3px solid #03C75A;">
+    <div style="font-size:13px; color:#333; line-height:1.6;">"<mark style="background:#fff3cd; padding:1px 2px; border-radius:2px;">환자 너무 많고</mark> 복잡하고 주차 어려워요"</div>
+    <div style="font-size:10px; color:#aaa; margin-top:4px;">네이버 플레이스 (gs****, 2024.10) · 대기 30분 이상</div>
+  </div>
+
+  <div style="margin-bottom:0; padding:10px 14px; background:#f8f9fa; border-radius:8px; border-left:3px solid #03C75A;">
+    <div style="font-size:13px; color:#333; line-height:1.6;">"...<mark style="background:#fff3cd; padding:1px 2px; border-radius:2px;">기다리는시간이 2시간가량</mark> 너무길어서..."</div>
+    <div style="font-size:10px; color:#aaa; margin-top:4px;">네이버 플레이스 (이영환6, 2024.01)</div>
+  </div>
+
+  <div style="margin-top:10px; font-size:10px; color:#aaa; text-align:right;">출처: 네이버 플레이스 + 모두닥 (2026년 4월 기준)</div>
+</div>
+<p class="caption">속편한내과의원(형곡동, 전문의 3명, 평점 4.2) 대기 관련 리뷰 발췌. 리뷰_후보_10개.md에서 3개를 선택해주세요.</p>
+
+<div class="content">
+<p>여러 리뷰에서 "붐빈다", "대기가 길다"는 내용이 반복됩니다. 이는 <strong>1곳이 감당하기에 수요가 넘치고 있다</strong>는 직접적인 증거입니다.</p>
+
+<p>현재 형곡동 도보 15분권에서 소화기 내시경을 받을 수 있는 곳이 속편한내과 1곳뿐이라는 점을 감안하면, "대기가 길다"는 리뷰는 곧 <strong>"소화기내과가 1곳 더 필요하다"</strong>는 시장 신호입니다.</p>
+</div>
+
+<div class="page-number">S-3</div>
+</div>
+
+<!-- ================================================================
+     PAGE 4: 포지셔닝 전략
+     ================================================================ -->
+<div class="page page-break">
+
+<div class="section-header">
+<div class="sh-left">
+<span class="sh-number">소화기</span>
+<span class="sh-title">포지셔닝 전략 -- 속편한과의 공존</span>
+</div>
+<span class="sh-category">과목 분석</span>
+</div>
+
+<div class="content">
+
+<h4>1. 양분 구도가 자연스럽게 형성됩니다</h4>
+<p>속편한내과(20년, 3명, 114평)는 기존 환자 기반이 단단합니다. 초기에는 속편한의 브랜드 인지도가 우세할 수밖에 없습니다. 그러나 "대기 불만 환자"가 자연스럽게 이동하면서 양분 구도가 형성됩니다.</p>
+
+<h4>2. 시설 차별화가 즉시 가능합니다</h4>
+<ul class="">
+<li><strong style="background-color: transparent; font-size: 0.92rem;">넓은 면적</strong><span style="background-color: transparent; font-size: 0.92rem;">: 우리엠빌딩 층당 100평으로, 속편한(114평)과 유사하면서도 최신 인테리어가 가능합니다.</span></li>
+<li><strong>주차 환경</strong>: 속편한이 입주한 미르빌딩은 건축물대장 기준 주차 60대이나, 치과병원(4~10층)과 공용입니다. 특히, <font color="#c0392b"><b>지상 주차장은 치과 전용이고, 지하 타워만 이용이 가능합니다. 주차가 어려운 점이 있습니다.</b></font><br><br><font color="#c0392b"><b>우리엠빌딩은 32대(기계식 30대 + 자주식 2대)이며, 별도로 공영주차장 주차비 일부를 지원합니다.</b></font> 내시경 환자(보호자 동반)에게 주차 접근성은 중요한 선택 기준이므로, 개원 시 주차 안내를 적극 활용할 필요가 있습니다.</li>
+</ul>
+
+<h4>3. 온라인 마케팅이 즉각적인 차별 요소입니다</h4>
+<p>도보 15분권 내시경 보유 의원 중 <strong>홈페이지를 가진 의원은 속편한내과 1곳뿐</strong>입니다. 나머지 의원들은 온라인 존재감이 거의 없습니다. 네이버 플레이스 최적화, 블로그, 검색광고만으로도 초기 환자 유입에서 상당한 우위를 확보할 수 있습니다.</p>
+</div>
+
+<div class="page-number">S-4</div>
+</div>
+
+<!-- ================================================================
+     PAGE 5: 종합 판단 + 주의사항
+     ================================================================ -->
+
+
+
+
+
+
+<!-- ──── 소화기내과 환자 흐름 분석 (v39 추가) ──── -->
+
+
+
+
+
+
+<!-- -------- 5순위: 외과 -------- -->
+<div class="page page-break">
+<div class="spec-header">
+<span class="spec-rank">4<br></span>
+<span class="spec-name">외과</span>
+<span class="spec-badge">추천</span>
+</div>
+<div class="catchphrase">
+<p>차량 유효세대 5,024 -- 유사 도시 8곳 중 1위.<br><strong>도보 15분 내 6곳 전원 15년 이상 노후.</strong></p>
+<div class="catchphrase-bar"></div>
+</div>
+<div class="stat-row">
+<div class="stat-item">
+<div class="stat-value">2,914</div>
+<div class="stat-label">도보 유효세대</div>
+</div>
+<div class="stat-item">
+<div class="stat-value">7,938</div>
+<div class="stat-label">합산 유효세대</div>
+</div>
+<div class="stat-item">
+<div class="stat-value accent">100%</div>
+<div class="stat-label">도보 노후율</div>
+</div>
+<div class="stat-item">
+<div class="stat-value">18곳</div>
+<div class="stat-label">전체 경쟁</div>
+</div>
+</div>
+<div class="content">
+<p>차량 유효세대 5,024는 유사 도시 외과 평균(2,006)의 <span class="accent-text">2.5배</span>이며, 8곳 중 1위입니다. 도보 15분 내 6곳 전원이 15년 이상 노후라는 점과 결합하면, 최신 시설 하나만으로 차량 환자 5,024세대의 선택지가 됩니다.</p>
+</div>
+<div class="content">
+<h3>경쟁의원 현황 (도보 15분 내)</h3>
+</div>
+<table class="data-table compact short-table" style="table-layout: fixed;">
+<thead><tr class=""><th style="position: relative;">의원명</th><th class="num" style="position: relative;">거리</th><th class="num" style="position: relative;">업력</th><th class="num" style="position: relative;">전문의</th><th class="num" style="position: relative;">리뷰</th><th>비고</th></tr></thead>
+<tbody>
+<tr class=""><td>쾌항외과의원</td><td class="num">289m</td><td class="num">19.0년</td><td class="num">1명</td><td class="num">254건</td><td>노후</td></tr>
+<tr class=""><td>구미항외과의원</td><td class="num">500m</td><td class="num">33.7년</td><td class="num">1명</td><td class="num">147건</td><td>노후</td></tr>
+<tr class=""><td>형곡굿모닝의원</td><td class="num">603m</td><td class="num">22.4년</td><td class="num">1명</td><td class="num">-</td><td>노후</td></tr>
+<tr class=""><td>김송외과의원</td><td class="num">777m</td><td class="num">32.1년</td><td class="num">1명</td><td class="num">-</td><td>노후</td></tr>
+<tr class=""><td>김광렬학문외과의원</td><td class="num">1,364m</td><td class="num">26.0년</td><td class="num">1명</td><td class="num">-</td><td>노후</td></tr>
+<tr class=""><td>성피부과의원</td><td class="num">1,364m</td><td class="num">22.7년</td><td class="num">1명</td><td class="num">-</td><td>노후</td></tr>
+</tbody>
+</table>
+<div class="content">
+<p><br></p>
+</div>
+<div class="review-grid" style="grid-template-columns: 1fr;">
+
+</div>
+<p class="caption"><br><br><br></p></div>
+<div class="page page-break">
+<div class="section-header">
+<div class="sh-left">
+<span class="sh-number">5순위</span>
+<span class="sh-title">외과 -- 입지실증분석</span>
+</div>
+<span class="sh-category">과목 분석</span>
+</div>
+<div class="content">
+<h3>입지실증분석 -- 전국 유사 도시 8곳 외과 비교</h3>
+</div>
+<table class="data-table compact short-table" style="table-layout: fixed;">
+<thead><tr class=""><th style="position: relative;">비교 의원</th><th style="position: relative;">도시</th><th class="num" style="position: relative;">도보 세대</th><th class="num" style="position: relative;">차량 세대</th><th class="num" style="position: relative;">경쟁</th><th class="num">40대+</th></tr></thead>
+<tbody>
+<tr class=""><td>베스트포유외과의원</td><td>아산시 온양3동</td><td class="num">7,500</td><td class="num">3,191</td><td class="num">9곳</td><td class="num">55.6%</td></tr>
+<tr class=""><td>노영철외과의원</td><td>포항시 죽도동</td><td class="num">2,376</td><td class="num">2,439</td><td class="num">30곳</td><td class="num">70.7%</td></tr>
+<tr class=""><td>아산더블유외과의원</td><td>창원시 중앙동</td><td class="num">672</td><td class="num">2,252</td><td class="num">49곳</td><td class="num">55.6%</td></tr>
+<tr class="row-highlight"><td><strong>이 건물 (형곡동)</strong></td><td><strong>구미시</strong></td><td class="num"><strong>2,914</strong></td><td class="num"><strong>5,024</strong></td><td class="num"><strong>18곳</strong></td><td class="num"><strong>64.7%</strong></td></tr>
+</tbody>
+</table>
+<div class="content">
+<blockquote class=""><p>유사 도시 외과 평균: 도보 4,006세대, 차량 2,006세대, 경쟁 22.9곳, 40대+ 55.7%</p></blockquote>
+<p>창원시 아산더블유외과는 경쟁 49곳, 차량 세대 2,252에서도 운영 중입니다. 이 건물은 경쟁(18곳)이 이들보다 적으면서, 차량 유효세대(5,024)가 유사 도시 평균의 2.5배입니다. <strong>49곳 경쟁에서도 돌아가는 시장이, 18곳 경쟁 + 차량 2.5배 환경이라면</strong> -- 노후 6곳과의 시설 차별화만으로 충분한 기회입니다.</p>
+</div>
+<div class="page-number">21</div>
+</div>
+
+<!-- ──── 외과 환자 흐름 분석 (v39 추가) ──── -->
+
+
+
+
+
+
+<!-- -------- 6순위: 가정의학과 -------- -->
+
+
+<!-- ──── 가정의학과 환자 흐름 분석 (v39 추가) ──── -->
+
+
+
+
+
+
+<!-- -------- 공백 과목 참고 -------- -->
+
+<!-- ================================================================
+     D: 건물 조건 상세
+     ================================================================ -->
+<section class="interstitial page-break">
+<div class="int-label">Section D</div>
+<div class="int-title">건물 조건 상세</div>
+<div class="int-bar"></div>
+</section>
+<div class="page page-break">
+<div class="section-header">
+<div class="sh-left">
+<span class="sh-number">D</span>
+<span class="sh-title">건물 조건 평가</span>
+</div>
+<span class="sh-category">건물 상세</span>
+</div>
+<div class="catchphrase">
+<p>의료시설 전용 건물, 권리금 없음, 렌탈프리 협의.<br><strong>개원 초기 부담을 최소화합니다.</strong></p>
+<div class="catchphrase-bar"></div>
+</div>
+<div class="content">
+<h3>건물 조건 평가 (100점 만점)</h3>
+</div>
+<table class="data-table short-table" style="table-layout: fixed;">
+<thead><tr class=""><th style="position: relative;">평가 항목</th><th class="num" style="position: relative;">배점</th><th class="num" style="position: relative;">점수</th><th>비고</th></tr></thead>
+<tbody>
+<tr class=""><td>전용면적</td><td class="num">25점</td><td class="num"><strong>25점</strong></td><td>110.5평 (5층 기준) -- 대부분 과목 충분</td></tr>
+<tr class=""><td>주차</td><td class="num">20점</td><td class="num"><strong>18점</strong></td><td>32대 + 공영주차장 -- 양호</td></tr>
+<tr class=""><td>층수/접근성</td><td class="num">15점</td><td class="num">12점</td><td>5~8층 -- 엘리베이터 2대 보완</td></tr>
+<tr class=""><td>주변환경</td><td class="num">15점</td><td class="num">14점</td><td>의료 밀집지 중심, 신시로 대로변</td></tr>
+<tr><td>건물상태</td><td class="num">10점</td><td class="num">9점</td><td>준공 11년, 내진설계 적용</td></tr>
+<tr><td>임대조건</td><td class="num">15점</td><td class="num">14점</td><td>권리금 없음, 렌탈프리 협의</td></tr>
+<tr style="border-top: 2px solid var(--navy);">
+<td><strong>합계</strong></td><td class="num"><strong>100점</strong></td><td class="num"><strong class="accent-text">92점</strong></td><td></td>
+</tr>
+</tbody>
+</table>
+<div class="page-number">24</div>
+</div>
+<!-- ================================================================
+     E: 마케팅 환경
+     ================================================================ -->
+<div class="page page-break">
+<div class="section-header">
+<div class="sh-left">
+<span class="sh-number">E</span>
+<span class="sh-title">마케팅 환경</span>
+</div>
+<span class="sh-category">마케팅</span>
+</div>
+<div class="content">
+<p>형곡동 의원 밀집 지역에서 신규 개원 시 마케팅 전략의 핵심은 <strong>"새로 생긴 병원"이 아니라 "이 동네에 없던 과목"</strong>입니다.</p>
+<ul class="">
+<li><strong style="background-color: transparent; font-size: 0.92rem;">정신건강의학과</strong><span style="background-color: transparent; font-size: 0.92rem;">: 기존 5곳 모두 포화 상태이므로, "예약 빠른 정신과" 포지셔닝이 핵심입니다. 7.5년 공백은 마케팅 메시지가 됩니다.</span></li>
+<li><strong>통증계열</strong>: 노후 경쟁 대비 "최신 장비" 차별화가 핵심입니다. 네이버/블로그 시술 후기 중심 마케팅이 효과적입니다.</li>
+<li><strong>소화기내과</strong>: 속편한내과 대기 과다(리뷰 70% 대기 언급)를 활용한 "대기 없는 내시경" 포지셔닝.<br>경쟁의원 대비 주차가 편함.</li>
+<li><strong>외과</strong>: 전문 시술 목적 방문형 키워드 마케팅이 핵심입니다.</li>
+</ul>
+</div>
+<div class="page-number">25</div>
+</div>
+<!-- ================================================================
+     F: 결론
+     ================================================================ -->
+<section class="interstitial page-break">
+<div class="int-label">Section F</div>
+<div class="int-title">결론</div>
+<div class="int-bar"></div>
+</section>
+<div class="page page-break">
+<div class="section-header">
+<div class="sh-left">
+<span class="sh-number">F</span>
+<span class="sh-title">선생님의 과목이 이 건물에서 유리한 이유</span>
+</div>
+<span class="sh-category">결론</span>
+</div>
+<div class="catchphrase">
+<p>이 건물의 가치는 단순합니다.<br><strong>형곡동 유일한 의료시설 전용 빌딩에, 아직 없는 과목이 있다는 것.</strong></p>
+<div class="catchphrase-bar"></div>
+</div>
+<div class="content">
+<p>구미시 형곡동 우리엠빌딩은 다음 조건을 동시에 갖추고 있습니다:</p>
+</div>
+<div class="key-points">
+<ul class="">
+<li><strong>의료시설 전용 건물</strong> -- 형곡동 유일</li>
+<li><strong>메디컬 빌딩</strong> -- 이비인후과·비뇨의학과·신경과 운영 중 (리뷰 1,719건)</li>
+<li><strong>도보 15분 내 13,893세대</strong> -- 충분한 배후</li>
+<li><strong>의료 밀집지 중심</strong> -- 환자가 이미 모이는 동선 위</li>
+<li><strong>주차 32대 + 공영주차장 주차비 지원&nbsp;</strong>&nbsp;-- 차량형 과목 가능</li>
+<li><strong>권리금 없음 + 렌탈프리 협의 가능</strong> -- 초기 부담 최소</li>
+<li><strong>40대 이상 64.7%</strong> -- 통증/안과/내과 핵심 수요층 집중</li>
+</ul>
+</div>
+<div class="content">
+<p>선생님이 어떤 과목이든, 이 건물에는 데이터로 검증된 이유가 있습니다.</p>
+</div>
+<table class="data-table short-table" style="table-layout: fixed;">
+<thead><tr class=""><th style="position: relative;">과목</th><th style="position: relative;">핵심 근거</th><th>선생님께 드리는 이유</th></tr></thead>
+<tbody>
+
+<tr class=""><td><strong>정신건강의학과</strong></td><td>5곳뿐, 전원 포화, 7.5년 공백</td><td>예약이 2주 뒤인 도시에서, 바로 진료할 수 있는 곳이 필요합니다.</td></tr>
+<tr class=""><td><strong>통증계열</strong></td><td>도보 노후 24년·32년, 정형 6.6년 공백</td><td>최신 장비 하나가 24년 된 시설과의 차이를 만듭니다.</td></tr>
+<tr class=""><td><strong>소화기내과</strong></td><td>속편한 1곳 독점, 대기 70%, 홈페이지 0곳</td><td>20년간 1곳이 독점한 시장. 대기 불만 환자가 바로 옵니다.</td></tr>
+<tr class=""><td><strong>외과</strong></td><td>도보 노후 100%, 전문 시술 차별화</td><td>6곳 모두 노후. 새 시설만으로 선택의 이유가 됩니다.</td></tr>
+
+</tbody>
+</table>
+<div class="page-number">26</div>
+</div>
+<div class="page page-break">
+<div class="content">
+<p><br></p>
+<p>모든 임대 조건은 협의 가능합니다. 2개 층 이상 임대 시 임대료 추가 협의가 가능합니다.</p>
+</div>
+<div class="cta-block">
+<p>선생님의 과목이 이 건물에 맞는지, 데이터로 확인해 드립니다.</p>
+<p>지금 연락 주십시오.</p>
+<div class="cta-sub">&nbsp;</div>
+
+<div style="margin-top:24px; border:3px solid #27AE60; border-radius:12px; padding:32px 40px; text-align:center; background:#ffffff;">
+  <p style="font-size:28px; font-weight:800; color:#1a1a2e; margin:0 0 12px 0; letter-spacing:-0.02em;">
+    <span style="color:#ffffff; background:#27AE60; padding:4px 14px; border-radius:6px; font-size:18px; font-weight:700; vertical-align:middle; margin-right:10px;">문의</span>
+    <span style="font-size:36px; letter-spacing:0.05em;">010-7565-2209</span>
+  </p>
+  <p style="font-size:20px; font-weight:700; color:#333; margin:0; letter-spacing:0.02em;">메디커넥트 공인중개사무소<br><br>모든 임대 조건 협의 가능</p>
+</div>
+</div>
+<div class="page-number">27</div>
+</div>
+<!-- ================================================================
+     부록
+     ================================================================ -->
+<div class="page page-break">
+<div class="section-header">
+<div class="sh-left">
+<span class="sh-number">부록</span>
+<span class="sh-title">과목별 개원 면적 (HIRA 실측) + 층별 면적</span>
+</div>
+<span class="sh-category">Appendix</span>
+</div>
+<div class="content">
+<h3>부록 A. 과목별 개원 면적 -- 최근 5년 실제 데이터</h3>
+<p>전국 9개 시도 HIRA 의원급 시설면적에서 <strong>최근 5년(2021~2026) 신규 개원</strong> 의원의 면적을 집계한 결과입니다. 선생님의 과목과 컨셉에 따라 적합한 층을 선택하시기 바랍니다.</p>
+</div>
+<table class="data-table compact" style="table-layout: fixed;">
+<thead>
+<tr>
+<th style="position: relative;">과목</th>
+<th class="num" style="position: relative;">중위값</th>
+<th class="num" style="position: relative;">Q25~Q75</th>
+<th class="num" style="position: relative;">표본</th>
+<th class="num" style="position: relative;">4층 후면부 (45평)</th>
+<th class="num" style="position: relative;">5층 (110.5평)</th>
+<th class="num">6~8층 (106평)</th>
+</tr>
+</thead>
+<tbody>
+<tr class=""><td>안과</td><td class="num">100.7평</td><td class="num">77~141평</td><td class="num">71건</td><td class="num">부족</td><td class="num"><strong>적합</strong></td><td class="num"><strong>적합</strong></td></tr>
+<tr class=""><td>정신건강의학과</td><td class="num">52.4평</td><td class="num">43~67평</td><td class="num">89건</td><td class="num"><strong>적합</strong></td><td class="num">여유</td><td class="num">여유</td></tr>
+<tr class=""><td>마취통증의학과</td><td class="num">118.7평</td><td class="num">88~148평</td><td class="num">119건</td><td class="num">부족</td><td class="num"><strong>적합</strong></td><td class="num"><strong>적합</strong></td></tr>
+<tr class=""><td>정형외과</td><td class="num">130.5평</td><td class="num">105~187평</td><td class="num">159건</td><td class="num">부족</td><td class="num"><strong>적합</strong></td><td class="num"><strong>적합</strong></td></tr>
+<tr class=""><td>외과</td><td class="num">97.9평</td><td class="num">62~149평</td><td class="num">75건</td><td class="num">부족</td><td class="num"><strong>적합</strong></td><td class="num"><strong>적합</strong></td></tr>
+<tr class=""><td>가정의학과</td><td class="num">83.0평</td><td class="num">55~121평</td><td class="num">123건</td><td class="num">부족</td><td class="num"><strong>적합</strong></td><td class="num"><strong>적합</strong></td></tr>
+<tr class=""><td>내과</td><td class="num">107.9평</td><td class="num">80~149평</td><td class="num">279건</td><td class="num">부족</td><td class="num"><strong>적합</strong></td><td class="num"><strong>적합</strong></td></tr>
+<tr class=""><td>이비인후과</td><td class="num">70.0평</td><td class="num">56~114평</td><td class="num">86건</td><td class="num">부족</td><td class="num"><strong>적합</strong></td><td class="num"><strong>적합</strong></td></tr>
+<tr class=""><td>피부과</td><td class="num">83.9평</td><td class="num">65~114평</td><td class="num">53건</td><td class="num">부족</td><td class="num"><strong>적합</strong></td><td class="num"><strong>적합</strong></td></tr>
+<tr><td>비뇨의학과</td><td class="num">76.1평</td><td class="num">61~92평</td><td class="num">36건</td><td class="num">부족</td><td class="num"><strong>적합</strong></td><td class="num"><strong>적합</strong></td></tr>
+</tbody>
+</table>
+<div class="content">
+<blockquote class=""><p>출처: HIRA 의원급 시설면적 (경상북도·경상남도·대구·부산·충남·충북·전남·전북·강원, 2021~2026년 인허가). 중위값 = 50번째 백분위. 정신건강의학과만 4층 후면부(45평)에 적합, 나머지 과목은 5층 이상 권장.</p></blockquote>
+</div>
+<div class="page-number">28</div>
+</div>
+<div class="page page-break">
+<div class="section-header">
+<div class="sh-left">
+<span class="sh-number">부록</span>
+<span class="sh-title">층별 면적 + 도면 + 데이터 출처</span>
+</div>
+<span class="sh-category">Appendix</span>
+</div>
+<div class="content">
+<h3>부록 B. 층별 전용면적</h3>
+</div>
+<table class="data-table compact short-table" style="table-layout: fixed;">
+<thead><tr class=""><th style="position: relative;">층</th><th class="num" style="position: relative;">전용면적</th><th class="num" style="position: relative;">계약면적</th><th class="num" style="position: relative;">보증금</th><th class="num" style="position: relative;">월세</th><th>비고</th></tr></thead>
+<tbody>
+<tr><td>4층 후면부</td><td class="num">45평 (149m2)</td><td class="num">64평 (211m2)</td><td class="num">3,000만</td><td class="num">130만</td><td>소규모 과목 적합</td></tr>
+<tr class=""><td>5층</td><td class="num">110.5평 (366m2)</td><td class="num">157평 (518m2)</td><td class="num">1억</td><td class="num">420만</td><td>대규모 과목/검진</td></tr>
+<tr class=""><td>6층</td><td class="num">106평 (349m2)</td><td class="num">150평 (494m2)</td><td class="num">1억</td><td class="num">400만</td><td></td></tr>
+<tr><td>7층</td><td class="num">106평 (349m2)</td><td class="num">150평 (494m2)</td><td class="num">1억</td><td class="num">400만</td><td></td></tr>
+<tr><td>8층</td><td class="num">106평 (349m2)</td><td class="num">150평 (494m2)</td><td class="num">1억</td><td class="num">400만</td><td></td></tr>
+</tbody>
+</table>
+<div class="content">
+<blockquote class="">
+<p>관리비: 평당 7,500~8,000원 / 권리금: 없음 / 렌탈프리: 협의 가능<br>
+      2개 층 이상 임대 시 임대료 협의 가능</p>
+</blockquote>
+<h3>층별 도면</h3>
+</div>
+<div class="chart-block no-break">
+<img alt="5층 도면" class="chart" data-original-src="../최종리포트_v23/모든_차트/도면_5층.png" src="/assets/report-gumi/report_image_018.png">
+<p class="caption">5층 전용 110.5평 (366m2)</p>
+</div>
+</div><div class="page page-break"><div class="chart-block no-break">
+<img alt="6층 도면" class="chart" data-original-src="../최종리포트_v23/모든_차트/도면_6층.png" src="/assets/report-gumi/report_image_019.png">
+<p class="caption">6층 전용 106평 (349m2)</p>
+</div><div class="page-number">29</div></div>
+<div class="page page-break">
+<div class="section-header">
+<div class="sh-left">
+<span class="sh-number">부록</span>
+<span class="sh-title">도면 + 데이터 출처</span>
+</div>
+<span class="sh-category">Appendix</span>
+</div>
+<div class="chart-block no-break">
+<img alt="7-8층 도면" class="chart" data-original-src="../최종리포트_v23/모든_차트/도면_7_8층.png" src="/assets/report-gumi/report_image_020.png">
+<p class="caption">7~8층 전용 106평 (349m2)</p>
+</div>
+<hr class="divider">
+<div class="content" style="margin-top: var(--sp-6);">
+
+</div>
+<div class="page-number">30</div>
+</div>
+
+<!-- Inline Editor v6 -->
+
+
+
+
+
+
+</body>
+</html>
+
+
