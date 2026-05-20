@@ -52,10 +52,12 @@ a.card:hover,a.item:hover{border-color:#60a5fa}
 .credential{border:1px solid rgba(255,255,255,.12);background:rgba(0,0,0,.18);padding:14px 16px;font-weight:800}
 @media(max-width:760px){
   .wrap{padding:0 18px}
-  .nav-inner{min-height:auto;align-items:flex-start;gap:14px;flex-direction:column;padding:16px 0}
-  .brand{font-size:18px}
+  .nav{background:rgba(2,5,10,.96);z-index:100}
+  .nav .wrap{padding:10px}
+  .nav-inner{min-height:178px;align-items:flex-start;gap:12px;flex-direction:column;padding:12px}
+  .brand{font-family:'Courier New',monospace;font-size:28px;line-height:1.15;letter-spacing:-.04em;color:#fff}
   .menu{width:100%;max-width:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-  .menu a{font-size:15px;border:1px solid rgba(255,255,255,.12);padding:10px 12px;background:rgba(15,23,42,.72)}
+  .menu a{font-size:15px;border:1px solid rgba(255,255,255,.18);padding:12px 10px;background:rgba(15,23,42,.86);min-height:48px;display:flex;align-items:center;justify-content:center;text-align:center;color:rgba(255,255,255,.78)}
   .hero{padding:46px 0 30px}
   h1{font-size:32px}
   h2{font-size:24px;margin-top:40px}
