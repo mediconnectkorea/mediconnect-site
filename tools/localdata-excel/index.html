@@ -1,0 +1,539 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LOCALDATA 종료 후 의원·병원·약국 개폐업 엑셀 다운로드 | 메디커넥트</title>
+  <meta name="description" content="지방행정인허가데이터(LOCALDATA) 폐쇄 이후, 공공데이터포털 API 기반 의원·병원·약국 개업/폐업 현황을 17개 시도별 엑셀로 정리해 무료로 공유합니다. 출처 행정안전부 data.go.kr.">
+  <link rel="canonical" href="https://mediconnect.co.kr/tools/localdata-excel/">
+  <link rel="shortcut icon" href="https://mediconnect.co.kr/assets/og/mediconnect-favicon.png">
+  <link rel="icon" type="image/png" href="https://mediconnect.co.kr/assets/og/mediconnect-favicon.png">
+  <meta property="og:title" content="LOCALDATA 종료 후 의원·병원·약국 개폐업 엑셀 다운로드 | 메디커넥트">
+  <meta property="og:description" content="LOCALDATA 폐쇄 이후 의원·병원·약국 개폐업 데이터를 시도별 엑셀로 정리해 공유합니다.">
+  <meta property="og:url" content="https://mediconnect.co.kr/tools/localdata-excel/">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://mediconnect.co.kr/assets/og/mediconnect-og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <link rel="stylesheet" href="/assets/site.css">
+  <style>
+    .hero h1{font-size:clamp(24px,3.4vw,38px);line-height:1.25}
+    .ld-notice{background:#f4f7fa;border:1px solid #e2e8f0;border-left:4px solid #2d6da8;
+      border-radius:8px;padding:18px 20px;margin:18px 0;color:#33414f;font-size:.95rem;line-height:1.7;white-space:pre-line}
+    .ld-meta-list{margin:14px 0;padding-left:18px;line-height:1.9}
+    .ld-tree{margin:22px 0}
+    .ld-sido{border:1px solid #e2e8f0;border-radius:10px;margin:10px 0;background:#fff;overflow:hidden}
+    .ld-sido[open]{box-shadow:0 2px 10px rgba(26,58,92,.06)}
+    .ld-sido>summary{list-style:none;cursor:pointer;padding:16px 18px;display:flex;
+      align-items:center;justify-content:space-between;gap:12px;font-weight:600;color:#1a3a5c}
+    .ld-sido>summary::-webkit-details-marker{display:none}
+    .ld-sido>summary::after{content:"▾";color:#94a3b8;transition:transform .2s}
+    .ld-sido[open]>summary::after{transform:rotate(180deg)}
+    .ld-sido-sum{font-weight:400;font-size:.85rem;color:#64748b;margin-left:auto}
+    .ld-jong-wrap{padding:4px 18px 16px;border-top:1px solid #f1f5f9}
+    .ld-jong{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:10px 0;border-bottom:1px dashed #eef2f6}
+    .ld-jong:last-child{border-bottom:none}
+    .ld-jong-name{min-width:48px;font-weight:600;color:#33414f}
+    .ld-dls{display:flex;gap:8px;flex-wrap:wrap}
+    .ld-dl{display:inline-block;padding:6px 12px;border-radius:6px;font-size:.88rem;
+      text-decoration:none;border:1px solid #d7e1ea;color:#2d6da8;background:#f8fafb}
+    .ld-dl b{font-weight:700}
+    .ld-dl.open{border-color:#bcd6c6;color:#2f7d54;background:#f4faf6}
+    .ld-dl.close{border-color:#e6cccc;color:#a8504f;background:#fbf5f5}
+    .ld-dl:hover{filter:brightness(.97)}
+    .ld-src{font-size:.85rem;color:#64748b;margin-top:8px;line-height:1.7}
+    .ld-cta{background:#1a3a5c;color:#fff;border-radius:12px;padding:24px;margin:28px 0}
+    .ld-cta h2{color:#fff;margin:0 0 8px}
+    .ld-cta a{color:#9fd0ff}
+    .ld-free{color:#ffd24a;font-size:1.1em;font-weight:700}
+    .ld-cta a.ld-cta-btn{display:inline-block;margin-top:6px;background:#4a9eda;color:#fff;padding:11px 22px;border-radius:8px;text-decoration:none;font-weight:600}
+    .ld-cta a.ld-cta-btn:hover{background:#3b8fcb}
+  </style>
+</head>
+<body>
+  <nav class="nav"><div class="wrap nav-inner"><a class="brand" href="/">MEDICONNECT</a><div class="menu"><a href="/about/">회사소개</a><a href="/listings/">추천매물</a><a href="/insights/">입지분석칼럼</a><a href="/tools/localdata-excel/">자료실</a><a href="/contact/">문의</a></div></div></nav>
+  <main class="wrap">
+    <section class="hero">
+      <div class="eyebrow">데이터 자료실</div>
+      <h1>LOCALDATA 종료 후 의원·병원·약국 개·폐업 엑셀 자료실</h1>
+    </section>
+
+    <section class="block">
+      <p>예전 지방행정인허가데이터개방시스템(LOCALDATA)에서 내려받던 의원·병원·약국 인허가 및 개·폐업 자료를 공공데이터포털 API 기준으로 다시 정리했습니다.</p>
+      <p>전국 17개 시도별, 업종별, 개업/폐업별 엑셀 파일로 나누어 두었으니 개원·개국 입지 검토에 참고하시면 됩니다. 개원·개국 후보지를 살펴보며 제가 직접 쓰려고 만든 자료를 그대로 공유합니다.</p>
+    </section>
+
+    <section class="block">
+      <h2>왜 이 자료를 올렸나</h2>
+      <p>그동안 많은 원장님과 약사님이 개원·개국 자리를 알아볼 때 LOCALDATA(지방행정인허가데이터개방시스템)에서 의원·병원·약국 인허가와 개·폐업 현황을 엑셀로 내려받아 확인하셨습니다.</p>
+      <p>하지만 해당 시스템은 2026년 4월 16일 0시부로 폐쇄되었습니다.</p>
+      <div class="ld-notice">지방행정인허가데이터개방시스템을 이용해주신 모든 분들께 진심으로 감사드립니다.
+2026년 4월 16일 0시 부로 지방행정인허가데이터개방시스템은 폐쇄되었습니다.
+아울러, '지방행정 인허가정보' 및 '생활편의정보'는 공공데이터포털(data.go.kr)에서 이용하실 수 있습니다.</div>
+      <p>이제 관련 데이터는 공공데이터포털 Open API를 통해 확인할 수 있습니다. 다만 API 호출 방식이 익숙하지 않은 분들에게는 필요한 자료를 직접 내려받고 정리하는 과정이 번거로울 수 있습니다.</p>
+      <p>예전처럼 엑셀 파일로 한눈에 확인하는 방식이 더 편한 분들이 많을 것 같아, 공공데이터포털 API에서 받은 자료를 시도·업종·상태별 엑셀로 정리해 올려둡니다.</p>
+    </section>
+
+    <section class="block">
+      <h2>이용 전 참고사항</h2>
+      <p>이 자료는 공공데이터포털에서 제공하는 지방행정 인허가정보를 바탕으로 정리한 참고용 자료입니다.</p>
+      <p>인허가일자 기준으로 정리했으며, 지자체 신고 이후 공공데이터에 반영되기까지 시차가 있을 수 있습니다. 특히 최근 1~2개월 자료는 일부 누락되거나 반영이 지연될 수 있습니다.</p>
+    </section>
+
+    <section class="block">
+      <h2>시도별 다운로드</h2>
+      <p>시도를 펼치면 의원·병원·약국의 개업/폐업 엑셀 파일을 받을 수 있습니다. 괄호 안 숫자는 해당 시도 파일 전체에 포함된 의원·병원·약국 데이터 건수입니다.</p>
+<section class="ld-tree">
+  <details class="ld-sido">
+    <summary><span class="ld-sido-name">서울특별시</span><span class="ld-sido-sum">의원·병원·약국 · 총 60,618건</span></summary>
+    <div class="ld-jong-wrap">
+      <div class="ld-jong">
+        <span class="ld-jong-name">의원</span>
+        <span class="ld-dls">
+          <a class="ld-dl open" href="files/%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C_%EA%B1%B4%EA%B0%95_%EC%9D%98%EC%9B%90_%EA%B0%9C%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>개업 <b>19,963</b>건</a>
+          <a class="ld-dl close" href="files/%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C_%EA%B1%B4%EA%B0%95_%EC%9D%98%EC%9B%90_%ED%8F%90%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>폐업 <b>17,396</b>건</a>
+        </span>
+      </div>
+      <div class="ld-jong">
+        <span class="ld-jong-name">병원</span>
+        <span class="ld-dls">
+          <a class="ld-dl open" href="files/%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C_%EA%B1%B4%EA%B0%95_%EB%B3%91%EC%9B%90_%EA%B0%9C%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>개업 <b>567</b>건</a>
+          <a class="ld-dl close" href="files/%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C_%EA%B1%B4%EA%B0%95_%EB%B3%91%EC%9B%90_%ED%8F%90%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>폐업 <b>361</b>건</a>
+        </span>
+      </div>
+      <div class="ld-jong">
+        <span class="ld-jong-name">약국</span>
+        <span class="ld-dls">
+          <a class="ld-dl open" href="files/%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C_%EA%B1%B4%EA%B0%95_%EC%95%BD%EA%B5%AD_%EA%B0%9C%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>개업 <b>5,883</b>건</a>
+          <a class="ld-dl close" href="files/%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C_%EA%B1%B4%EA%B0%95_%EC%95%BD%EA%B5%AD_%ED%8F%90%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>폐업 <b>16,448</b>건</a>
+        </span>
+      </div>
+    </div>
+  </details>
+  <details class="ld-sido">
+    <summary><span class="ld-sido-name">부산광역시</span><span class="ld-sido-sum">의원·병원·약국 · 총 14,909건</span></summary>
+    <div class="ld-jong-wrap">
+      <div class="ld-jong">
+        <span class="ld-jong-name">의원</span>
+        <span class="ld-dls">
+          <a class="ld-dl open" href="files/%EB%B6%80%EC%82%B0%EA%B4%91%EC%97%AD%EC%8B%9C_%EA%B1%B4%EA%B0%95_%EC%9D%98%EC%9B%90_%EA%B0%9C%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>개업 <b>5,314</b>건</a>
+          <a class="ld-dl close" href="files/%EB%B6%80%EC%82%B0%EA%B4%91%EC%97%AD%EC%8B%9C_%EA%B1%B4%EA%B0%95_%EC%9D%98%EC%9B%90_%ED%8F%90%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>폐업 <b>4,043</b>건</a>
+        </span>
+      </div>
+      <div class="ld-jong">
+        <span class="ld-jong-name">병원</span>
+        <span class="ld-dls">
+          <a class="ld-dl open" href="files/%EB%B6%80%EC%82%B0%EA%B4%91%EC%97%AD%EC%8B%9C_%EA%B1%B4%EA%B0%95_%EB%B3%91%EC%9B%90_%EA%B0%9C%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>개업 <b>408</b>건</a>
+          <a class="ld-dl close" href="files/%EB%B6%80%EC%82%B0%EA%B4%91%EC%97%AD%EC%8B%9C_%EA%B1%B4%EA%B0%95_%EB%B3%91%EC%9B%90_%ED%8F%90%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>폐업 <b>247</b>건</a>
+        </span>
+      </div>
+      <div class="ld-jong">
+        <span class="ld-jong-name">약국</span>
+        <span class="ld-dls">
+          <a class="ld-dl open" href="files/%EB%B6%80%EC%82%B0%EA%B4%91%EC%97%AD%EC%8B%9C_%EA%B1%B4%EA%B0%95_%EC%95%BD%EA%B5%AD_%EA%B0%9C%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>개업 <b>1,738</b>건</a>
+          <a class="ld-dl close" href="files/%EB%B6%80%EC%82%B0%EA%B4%91%EC%97%AD%EC%8B%9C_%EA%B1%B4%EA%B0%95_%EC%95%BD%EA%B5%AD_%ED%8F%90%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>폐업 <b>3,159</b>건</a>
+        </span>
+      </div>
+    </div>
+  </details>
+  <details class="ld-sido">
+    <summary><span class="ld-sido-name">대구광역시</span><span class="ld-sido-sum">의원·병원·약국 · 총 9,255건</span></summary>
+    <div class="ld-jong-wrap">
+      <div class="ld-jong">
+        <span class="ld-jong-name">의원</span>
+        <span class="ld-dls">
+          <a class="ld-dl open" href="files/%EB%8C%80%EA%B5%AC%EA%B4%91%EC%97%AD%EC%8B%9C_%EA%B1%B4%EA%B0%95_%EC%9D%98%EC%9B%90_%EA%B0%9C%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>개업 <b>4,134</b>건</a>
+          <a class="ld-dl close" href="files/%EB%8C%80%EA%B5%AC%EA%B4%91%EC%97%AD%EC%8B%9C_%EA%B1%B4%EA%B0%95_%EC%9D%98%EC%9B%90_%ED%8F%90%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>폐업 <b>1,724</b>건</a>
+        </span>
+      </div>
+      <div class="ld-jong">
+        <span class="ld-jong-name">병원</span>
+        <span class="ld-dls">
+          <a class="ld-dl open" href="files/%EB%8C%80%EA%B5%AC%EA%B4%91%EC%97%AD%EC%8B%9C_%EA%B1%B4%EA%B0%95_%EB%B3%91%EC%9B%90_%EA%B0%9C%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>개업 <b>245</b>건</a>
+          <a class="ld-dl close" href="files/%EB%8C%80%EA%B5%AC%EA%B4%91%EC%97%AD%EC%8B%9C_%EA%B1%B4%EA%B0%95_%EB%B3%91%EC%9B%90_%ED%8F%90%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>폐업 <b>125</b>건</a>
+        </span>
+      </div>
+      <div class="ld-jong">
+        <span class="ld-jong-name">약국</span>
+        <span class="ld-dls">
+          <a class="ld-dl open" href="files/%EB%8C%80%EA%B5%AC%EA%B4%91%EC%97%AD%EC%8B%9C_%EA%B1%B4%EA%B0%95_%EC%95%BD%EA%B5%AD_%EA%B0%9C%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>개업 <b>1,401</b>건</a>
+          <a class="ld-dl close" href="files/%EB%8C%80%EA%B5%AC%EA%B4%91%EC%97%AD%EC%8B%9C_%EA%B1%B4%EA%B0%95_%EC%95%BD%EA%B5%AD_%ED%8F%90%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>폐업 <b>1,626</b>건</a>
+        </span>
+      </div>
+    </div>
+  </details>
+  <details class="ld-sido">
+    <summary><span class="ld-sido-name">인천광역시</span><span class="ld-sido-sum">의원·병원·약국 · 총 9,231건</span></summary>
+    <div class="ld-jong-wrap">
+      <div class="ld-jong">
+        <span class="ld-jong-name">의원</span>
+        <span class="ld-dls">
+          <a class="ld-dl open" href="files/%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C_%EA%B1%B4%EA%B0%95_%EC%9D%98%EC%9B%90_%EA%B0%9C%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>개업 <b>3,735</b>건</a>
+          <a class="ld-dl close" href="files/%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C_%EA%B1%B4%EA%B0%95_%EC%9D%98%EC%9B%90_%ED%8F%90%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>폐업 <b>2,008</b>건</a>
+        </span>
+      </div>
+      <div class="ld-jong">
+        <span class="ld-jong-name">병원</span>
+        <span class="ld-dls">
+          <a class="ld-dl open" href="files/%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C_%EA%B1%B4%EA%B0%95_%EB%B3%91%EC%9B%90_%EA%B0%9C%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>개업 <b>247</b>건</a>
+          <a class="ld-dl close" href="files/%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C_%EA%B1%B4%EA%B0%95_%EB%B3%91%EC%9B%90_%ED%8F%90%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>폐업 <b>177</b>건</a>
+        </span>
+      </div>
+      <div class="ld-jong">
+        <span class="ld-jong-name">약국</span>
+        <span class="ld-dls">
+          <a class="ld-dl open" href="files/%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C_%EA%B1%B4%EA%B0%95_%EC%95%BD%EA%B5%AD_%EA%B0%9C%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>개업 <b>1,329</b>건</a>
+          <a class="ld-dl close" href="files/%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C_%EA%B1%B4%EA%B0%95_%EC%95%BD%EA%B5%AD_%ED%8F%90%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>폐업 <b>1,735</b>건</a>
+        </span>
+      </div>
+    </div>
+  </details>
+  <details class="ld-sido">
+    <summary><span class="ld-sido-name">광주광역시</span><span class="ld-sido-sum">의원·병원·약국 · 총 7,565건</span></summary>
+    <div class="ld-jong-wrap">
+      <div class="ld-jong">
+        <span class="ld-jong-name">의원</span>
+        <span class="ld-dls">
+          <a class="ld-dl open" href="files/%EA%B4%91%EC%A3%BC%EA%B4%91%EC%97%AD%EC%8B%9C_%EA%B1%B4%EA%B0%95_%EC%9D%98%EC%9B%90_%EA%B0%9C%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>개업 <b>2,087</b>건</a>
+          <a class="ld-dl close" href="files/%EA%B4%91%EC%A3%BC%EA%B4%91%EC%97%AD%EC%8B%9C_%EA%B1%B4%EA%B0%95_%EC%9D%98%EC%9B%90_%ED%8F%90%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>폐업 <b>2,229</b>건</a>
+        </span>
+      </div>
+      <div class="ld-jong">
+        <span class="ld-jong-name">병원</span>
+        <span class="ld-dls">
+          <a class="ld-dl open" href="files/%EA%B4%91%EC%A3%BC%EA%B4%91%EC%97%AD%EC%8B%9C_%EA%B1%B4%EA%B0%95_%EB%B3%91%EC%9B%90_%EA%B0%9C%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>개업 <b>512</b>건</a>
+          <a class="ld-dl close" href="files/%EA%B4%91%EC%A3%BC%EA%B4%91%EC%97%AD%EC%8B%9C_%EA%B1%B4%EA%B0%95_%EB%B3%91%EC%9B%90_%ED%8F%90%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>폐업 <b>343</b>건</a>
+        </span>
+      </div>
+      <div class="ld-jong">
+        <span class="ld-jong-name">약국</span>
+        <span class="ld-dls">
+          <a class="ld-dl open" href="files/%EA%B4%91%EC%A3%BC%EA%B4%91%EC%97%AD%EC%8B%9C_%EA%B1%B4%EA%B0%95_%EC%95%BD%EA%B5%AD_%EA%B0%9C%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>개업 <b>747</b>건</a>
+          <a class="ld-dl close" href="files/%EA%B4%91%EC%A3%BC%EA%B4%91%EC%97%AD%EC%8B%9C_%EA%B1%B4%EA%B0%95_%EC%95%BD%EA%B5%AD_%ED%8F%90%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>폐업 <b>1,647</b>건</a>
+        </span>
+      </div>
+    </div>
+  </details>
+  <details class="ld-sido">
+    <summary><span class="ld-sido-name">대전광역시</span><span class="ld-sido-sum">의원·병원·약국 · 총 5,597건</span></summary>
+    <div class="ld-jong-wrap">
+      <div class="ld-jong">
+        <span class="ld-jong-name">의원</span>
+        <span class="ld-dls">
+          <a class="ld-dl open" href="files/%EB%8C%80%EC%A0%84%EA%B4%91%EC%97%AD%EC%8B%9C_%EA%B1%B4%EA%B0%95_%EC%9D%98%EC%9B%90_%EA%B0%9C%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>개업 <b>2,312</b>건</a>
+          <a class="ld-dl close" href="files/%EB%8C%80%EC%A0%84%EA%B4%91%EC%97%AD%EC%8B%9C_%EA%B1%B4%EA%B0%95_%EC%9D%98%EC%9B%90_%ED%8F%90%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>폐업 <b>1,219</b>건</a>
+        </span>
+      </div>
+      <div class="ld-jong">
+        <span class="ld-jong-name">병원</span>
+        <span class="ld-dls">
+          <a class="ld-dl open" href="files/%EB%8C%80%EC%A0%84%EA%B4%91%EC%97%AD%EC%8B%9C_%EA%B1%B4%EA%B0%95_%EB%B3%91%EC%9B%90_%EA%B0%9C%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>개업 <b>195</b>건</a>
+          <a class="ld-dl close" href="files/%EB%8C%80%EC%A0%84%EA%B4%91%EC%97%AD%EC%8B%9C_%EA%B1%B4%EA%B0%95_%EB%B3%91%EC%9B%90_%ED%8F%90%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>폐업 <b>78</b>건</a>
+        </span>
+      </div>
+      <div class="ld-jong">
+        <span class="ld-jong-name">약국</span>
+        <span class="ld-dls">
+          <a class="ld-dl open" href="files/%EB%8C%80%EC%A0%84%EA%B4%91%EC%97%AD%EC%8B%9C_%EA%B1%B4%EA%B0%95_%EC%95%BD%EA%B5%AD_%EA%B0%9C%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>개업 <b>803</b>건</a>
+          <a class="ld-dl close" href="files/%EB%8C%80%EC%A0%84%EA%B4%91%EC%97%AD%EC%8B%9C_%EA%B1%B4%EA%B0%95_%EC%95%BD%EA%B5%AD_%ED%8F%90%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>폐업 <b>990</b>건</a>
+        </span>
+      </div>
+    </div>
+  </details>
+  <details class="ld-sido">
+    <summary><span class="ld-sido-name">울산광역시</span><span class="ld-sido-sum">의원·병원·약국 · 총 3,442건</span></summary>
+    <div class="ld-jong-wrap">
+      <div class="ld-jong">
+        <span class="ld-jong-name">의원</span>
+        <span class="ld-dls">
+          <a class="ld-dl open" href="files/%EC%9A%B8%EC%82%B0%EA%B4%91%EC%97%AD%EC%8B%9C_%EA%B1%B4%EA%B0%95_%EC%9D%98%EC%9B%90_%EA%B0%9C%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>개업 <b>1,346</b>건</a>
+          <a class="ld-dl close" href="files/%EC%9A%B8%EC%82%B0%EA%B4%91%EC%97%AD%EC%8B%9C_%EA%B1%B4%EA%B0%95_%EC%9D%98%EC%9B%90_%ED%8F%90%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>폐업 <b>686</b>건</a>
+        </span>
+      </div>
+      <div class="ld-jong">
+        <span class="ld-jong-name">병원</span>
+        <span class="ld-dls">
+          <a class="ld-dl open" href="files/%EC%9A%B8%EC%82%B0%EA%B4%91%EC%97%AD%EC%8B%9C_%EA%B1%B4%EA%B0%95_%EB%B3%91%EC%9B%90_%EA%B0%9C%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>개업 <b>97</b>건</a>
+          <a class="ld-dl close" href="files/%EC%9A%B8%EC%82%B0%EA%B4%91%EC%97%AD%EC%8B%9C_%EA%B1%B4%EA%B0%95_%EB%B3%91%EC%9B%90_%ED%8F%90%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>폐업 <b>71</b>건</a>
+        </span>
+      </div>
+      <div class="ld-jong">
+        <span class="ld-jong-name">약국</span>
+        <span class="ld-dls">
+          <a class="ld-dl open" href="files/%EC%9A%B8%EC%82%B0%EA%B4%91%EC%97%AD%EC%8B%9C_%EA%B1%B4%EA%B0%95_%EC%95%BD%EA%B5%AD_%EA%B0%9C%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>개업 <b>446</b>건</a>
+          <a class="ld-dl close" href="files/%EC%9A%B8%EC%82%B0%EA%B4%91%EC%97%AD%EC%8B%9C_%EA%B1%B4%EA%B0%95_%EC%95%BD%EA%B5%AD_%ED%8F%90%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>폐업 <b>796</b>건</a>
+        </span>
+      </div>
+    </div>
+  </details>
+  <details class="ld-sido">
+    <summary><span class="ld-sido-name">세종특별자치시</span><span class="ld-sido-sum">의원·병원·약국 · 총 900건</span></summary>
+    <div class="ld-jong-wrap">
+      <div class="ld-jong">
+        <span class="ld-jong-name">의원</span>
+        <span class="ld-dls">
+          <a class="ld-dl open" href="files/%EC%84%B8%EC%A2%85%ED%8A%B9%EB%B3%84%EC%9E%90%EC%B9%98%EC%8B%9C_%EA%B1%B4%EA%B0%95_%EC%9D%98%EC%9B%90_%EA%B0%9C%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>개업 <b>447</b>건</a>
+          <a class="ld-dl close" href="files/%EC%84%B8%EC%A2%85%ED%8A%B9%EB%B3%84%EC%9E%90%EC%B9%98%EC%8B%9C_%EA%B1%B4%EA%B0%95_%EC%9D%98%EC%9B%90_%ED%8F%90%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>폐업 <b>108</b>건</a>
+        </span>
+      </div>
+      <div class="ld-jong">
+        <span class="ld-jong-name">병원</span>
+        <span class="ld-dls">
+          <a class="ld-dl open" href="files/%EC%84%B8%EC%A2%85%ED%8A%B9%EB%B3%84%EC%9E%90%EC%B9%98%EC%8B%9C_%EA%B1%B4%EA%B0%95_%EB%B3%91%EC%9B%90_%EA%B0%9C%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>개업 <b>17</b>건</a>
+          <a class="ld-dl close" href="files/%EC%84%B8%EC%A2%85%ED%8A%B9%EB%B3%84%EC%9E%90%EC%B9%98%EC%8B%9C_%EA%B1%B4%EA%B0%95_%EB%B3%91%EC%9B%90_%ED%8F%90%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>폐업 <b>14</b>건</a>
+        </span>
+      </div>
+      <div class="ld-jong">
+        <span class="ld-jong-name">약국</span>
+        <span class="ld-dls">
+          <a class="ld-dl open" href="files/%EC%84%B8%EC%A2%85%ED%8A%B9%EB%B3%84%EC%9E%90%EC%B9%98%EC%8B%9C_%EA%B1%B4%EA%B0%95_%EC%95%BD%EA%B5%AD_%EA%B0%9C%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>개업 <b>163</b>건</a>
+          <a class="ld-dl close" href="files/%EC%84%B8%EC%A2%85%ED%8A%B9%EB%B3%84%EC%9E%90%EC%B9%98%EC%8B%9C_%EA%B1%B4%EA%B0%95_%EC%95%BD%EA%B5%AD_%ED%8F%90%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>폐업 <b>151</b>건</a>
+        </span>
+      </div>
+    </div>
+  </details>
+  <details class="ld-sido">
+    <summary><span class="ld-sido-name">경기도</span><span class="ld-sido-sum">의원·병원·약국 · 총 42,476건</span></summary>
+    <div class="ld-jong-wrap">
+      <div class="ld-jong">
+        <span class="ld-jong-name">의원</span>
+        <span class="ld-dls">
+          <a class="ld-dl open" href="files/%EA%B2%BD%EA%B8%B0%EB%8F%84_%EA%B1%B4%EA%B0%95_%EC%9D%98%EC%9B%90_%EA%B0%9C%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>개업 <b>17,433</b>건</a>
+          <a class="ld-dl close" href="files/%EA%B2%BD%EA%B8%B0%EB%8F%84_%EA%B1%B4%EA%B0%95_%EC%9D%98%EC%9B%90_%ED%8F%90%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>폐업 <b>8,823</b>건</a>
+        </span>
+      </div>
+      <div class="ld-jong">
+        <span class="ld-jong-name">병원</span>
+        <span class="ld-dls">
+          <a class="ld-dl open" href="files/%EA%B2%BD%EA%B8%B0%EB%8F%84_%EA%B1%B4%EA%B0%95_%EB%B3%91%EC%9B%90_%EA%B0%9C%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>개업 <b>909</b>건</a>
+          <a class="ld-dl close" href="files/%EA%B2%BD%EA%B8%B0%EB%8F%84_%EA%B1%B4%EA%B0%95_%EB%B3%91%EC%9B%90_%ED%8F%90%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>폐업 <b>550</b>건</a>
+        </span>
+      </div>
+      <div class="ld-jong">
+        <span class="ld-jong-name">약국</span>
+        <span class="ld-dls">
+          <a class="ld-dl open" href="files/%EA%B2%BD%EA%B8%B0%EB%8F%84_%EA%B1%B4%EA%B0%95_%EC%95%BD%EA%B5%AD_%EA%B0%9C%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>개업 <b>6,096</b>건</a>
+          <a class="ld-dl close" href="files/%EA%B2%BD%EA%B8%B0%EB%8F%84_%EA%B1%B4%EA%B0%95_%EC%95%BD%EA%B5%AD_%ED%8F%90%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>폐업 <b>8,665</b>건</a>
+        </span>
+      </div>
+    </div>
+  </details>
+  <details class="ld-sido">
+    <summary><span class="ld-sido-name">강원특별자치도</span><span class="ld-sido-sum">의원·병원·약국 · 총 4,377건</span></summary>
+    <div class="ld-jong-wrap">
+      <div class="ld-jong">
+        <span class="ld-jong-name">의원</span>
+        <span class="ld-dls">
+          <a class="ld-dl open" href="files/%EA%B0%95%EC%9B%90%ED%8A%B9%EB%B3%84%EC%9E%90%EC%B9%98%EB%8F%84_%EA%B1%B4%EA%B0%95_%EC%9D%98%EC%9B%90_%EA%B0%9C%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>개업 <b>1,909</b>건</a>
+          <a class="ld-dl close" href="files/%EA%B0%95%EC%9B%90%ED%8A%B9%EB%B3%84%EC%9E%90%EC%B9%98%EB%8F%84_%EA%B1%B4%EA%B0%95_%EC%9D%98%EC%9B%90_%ED%8F%90%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>폐업 <b>828</b>건</a>
+        </span>
+      </div>
+      <div class="ld-jong">
+        <span class="ld-jong-name">병원</span>
+        <span class="ld-dls">
+          <a class="ld-dl open" href="files/%EA%B0%95%EC%9B%90%ED%8A%B9%EB%B3%84%EC%9E%90%EC%B9%98%EB%8F%84_%EA%B1%B4%EA%B0%95_%EB%B3%91%EC%9B%90_%EA%B0%9C%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>개업 <b>124</b>건</a>
+          <a class="ld-dl close" href="files/%EA%B0%95%EC%9B%90%ED%8A%B9%EB%B3%84%EC%9E%90%EC%B9%98%EB%8F%84_%EA%B1%B4%EA%B0%95_%EB%B3%91%EC%9B%90_%ED%8F%90%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>폐업 <b>95</b>건</a>
+        </span>
+      </div>
+      <div class="ld-jong">
+        <span class="ld-jong-name">약국</span>
+        <span class="ld-dls">
+          <a class="ld-dl open" href="files/%EA%B0%95%EC%9B%90%ED%8A%B9%EB%B3%84%EC%9E%90%EC%B9%98%EB%8F%84_%EA%B1%B4%EA%B0%95_%EC%95%BD%EA%B5%AD_%EA%B0%9C%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>개업 <b>716</b>건</a>
+          <a class="ld-dl close" href="files/%EA%B0%95%EC%9B%90%ED%8A%B9%EB%B3%84%EC%9E%90%EC%B9%98%EB%8F%84_%EA%B1%B4%EA%B0%95_%EC%95%BD%EA%B5%AD_%ED%8F%90%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>폐업 <b>705</b>건</a>
+        </span>
+      </div>
+    </div>
+  </details>
+  <details class="ld-sido">
+    <summary><span class="ld-sido-name">충청북도</span><span class="ld-sido-sum">의원·병원·약국 · 총 5,632건</span></summary>
+    <div class="ld-jong-wrap">
+      <div class="ld-jong">
+        <span class="ld-jong-name">의원</span>
+        <span class="ld-dls">
+          <a class="ld-dl open" href="files/%EC%B6%A9%EC%B2%AD%EB%B6%81%EB%8F%84_%EA%B1%B4%EA%B0%95_%EC%9D%98%EC%9B%90_%EA%B0%9C%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>개업 <b>2,107</b>건</a>
+          <a class="ld-dl close" href="files/%EC%B6%A9%EC%B2%AD%EB%B6%81%EB%8F%84_%EA%B1%B4%EA%B0%95_%EC%9D%98%EC%9B%90_%ED%8F%90%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>폐업 <b>1,315</b>건</a>
+        </span>
+      </div>
+      <div class="ld-jong">
+        <span class="ld-jong-name">병원</span>
+        <span class="ld-dls">
+          <a class="ld-dl open" href="files/%EC%B6%A9%EC%B2%AD%EB%B6%81%EB%8F%84_%EA%B1%B4%EA%B0%95_%EB%B3%91%EC%9B%90_%EA%B0%9C%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>개업 <b>170</b>건</a>
+          <a class="ld-dl close" href="files/%EC%B6%A9%EC%B2%AD%EB%B6%81%EB%8F%84_%EA%B1%B4%EA%B0%95_%EB%B3%91%EC%9B%90_%ED%8F%90%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>폐업 <b>99</b>건</a>
+        </span>
+      </div>
+      <div class="ld-jong">
+        <span class="ld-jong-name">약국</span>
+        <span class="ld-dls">
+          <a class="ld-dl open" href="files/%EC%B6%A9%EC%B2%AD%EB%B6%81%EB%8F%84_%EA%B1%B4%EA%B0%95_%EC%95%BD%EA%B5%AD_%EA%B0%9C%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>개업 <b>753</b>건</a>
+          <a class="ld-dl close" href="files/%EC%B6%A9%EC%B2%AD%EB%B6%81%EB%8F%84_%EA%B1%B4%EA%B0%95_%EC%95%BD%EA%B5%AD_%ED%8F%90%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>폐업 <b>1,188</b>건</a>
+        </span>
+      </div>
+    </div>
+  </details>
+  <details class="ld-sido">
+    <summary><span class="ld-sido-name">충청남도</span><span class="ld-sido-sum">의원·병원·약국 · 총 7,032건</span></summary>
+    <div class="ld-jong-wrap">
+      <div class="ld-jong">
+        <span class="ld-jong-name">의원</span>
+        <span class="ld-dls">
+          <a class="ld-dl open" href="files/%EC%B6%A9%EC%B2%AD%EB%82%A8%EB%8F%84_%EA%B1%B4%EA%B0%95_%EC%9D%98%EC%9B%90_%EA%B0%9C%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>개업 <b>2,725</b>건</a>
+          <a class="ld-dl close" href="files/%EC%B6%A9%EC%B2%AD%EB%82%A8%EB%8F%84_%EA%B1%B4%EA%B0%95_%EC%9D%98%EC%9B%90_%ED%8F%90%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>폐업 <b>1,281</b>건</a>
+        </span>
+      </div>
+      <div class="ld-jong">
+        <span class="ld-jong-name">병원</span>
+        <span class="ld-dls">
+          <a class="ld-dl open" href="files/%EC%B6%A9%EC%B2%AD%EB%82%A8%EB%8F%84_%EA%B1%B4%EA%B0%95_%EB%B3%91%EC%9B%90_%EA%B0%9C%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>개업 <b>292</b>건</a>
+          <a class="ld-dl close" href="files/%EC%B6%A9%EC%B2%AD%EB%82%A8%EB%8F%84_%EA%B1%B4%EA%B0%95_%EB%B3%91%EC%9B%90_%ED%8F%90%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>폐업 <b>154</b>건</a>
+        </span>
+      </div>
+      <div class="ld-jong">
+        <span class="ld-jong-name">약국</span>
+        <span class="ld-dls">
+          <a class="ld-dl open" href="files/%EC%B6%A9%EC%B2%AD%EB%82%A8%EB%8F%84_%EA%B1%B4%EA%B0%95_%EC%95%BD%EA%B5%AD_%EA%B0%9C%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>개업 <b>1,016</b>건</a>
+          <a class="ld-dl close" href="files/%EC%B6%A9%EC%B2%AD%EB%82%A8%EB%8F%84_%EA%B1%B4%EA%B0%95_%EC%95%BD%EA%B5%AD_%ED%8F%90%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>폐업 <b>1,564</b>건</a>
+        </span>
+      </div>
+    </div>
+  </details>
+  <details class="ld-sido">
+    <summary><span class="ld-sido-name">전북특별자치도</span><span class="ld-sido-sum">의원·병원·약국 · 총 6,682건</span></summary>
+    <div class="ld-jong-wrap">
+      <div class="ld-jong">
+        <span class="ld-jong-name">의원</span>
+        <span class="ld-dls">
+          <a class="ld-dl open" href="files/%EC%A0%84%EB%B6%81%ED%8A%B9%EB%B3%84%EC%9E%90%EC%B9%98%EB%8F%84_%EA%B1%B4%EA%B0%95_%EC%9D%98%EC%9B%90_%EA%B0%9C%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>개업 <b>2,735</b>건</a>
+          <a class="ld-dl close" href="files/%EC%A0%84%EB%B6%81%ED%8A%B9%EB%B3%84%EC%9E%90%EC%B9%98%EB%8F%84_%EA%B1%B4%EA%B0%95_%EC%9D%98%EC%9B%90_%ED%8F%90%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>폐업 <b>1,249</b>건</a>
+        </span>
+      </div>
+      <div class="ld-jong">
+        <span class="ld-jong-name">병원</span>
+        <span class="ld-dls">
+          <a class="ld-dl open" href="files/%EC%A0%84%EB%B6%81%ED%8A%B9%EB%B3%84%EC%9E%90%EC%B9%98%EB%8F%84_%EA%B1%B4%EA%B0%95_%EB%B3%91%EC%9B%90_%EA%B0%9C%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>개업 <b>286</b>건</a>
+          <a class="ld-dl close" href="files/%EC%A0%84%EB%B6%81%ED%8A%B9%EB%B3%84%EC%9E%90%EC%B9%98%EB%8F%84_%EA%B1%B4%EA%B0%95_%EB%B3%91%EC%9B%90_%ED%8F%90%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>폐업 <b>290</b>건</a>
+        </span>
+      </div>
+      <div class="ld-jong">
+        <span class="ld-jong-name">약국</span>
+        <span class="ld-dls">
+          <a class="ld-dl open" href="files/%EC%A0%84%EB%B6%81%ED%8A%B9%EB%B3%84%EC%9E%90%EC%B9%98%EB%8F%84_%EA%B1%B4%EA%B0%95_%EC%95%BD%EA%B5%AD_%EA%B0%9C%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>개업 <b>1,015</b>건</a>
+          <a class="ld-dl close" href="files/%EC%A0%84%EB%B6%81%ED%8A%B9%EB%B3%84%EC%9E%90%EC%B9%98%EB%8F%84_%EA%B1%B4%EA%B0%95_%EC%95%BD%EA%B5%AD_%ED%8F%90%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>폐업 <b>1,107</b>건</a>
+        </span>
+      </div>
+    </div>
+  </details>
+  <details class="ld-sido">
+    <summary><span class="ld-sido-name">전라남도</span><span class="ld-sido-sum">의원·병원·약국 · 총 6,205건</span></summary>
+    <div class="ld-jong-wrap">
+      <div class="ld-jong">
+        <span class="ld-jong-name">의원</span>
+        <span class="ld-dls">
+          <a class="ld-dl open" href="files/%EC%A0%84%EB%9D%BC%EB%82%A8%EB%8F%84_%EA%B1%B4%EA%B0%95_%EC%9D%98%EC%9B%90_%EA%B0%9C%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>개업 <b>2,407</b>건</a>
+          <a class="ld-dl close" href="files/%EC%A0%84%EB%9D%BC%EB%82%A8%EB%8F%84_%EA%B1%B4%EA%B0%95_%EC%9D%98%EC%9B%90_%ED%8F%90%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>폐업 <b>1,278</b>건</a>
+        </span>
+      </div>
+      <div class="ld-jong">
+        <span class="ld-jong-name">병원</span>
+        <span class="ld-dls">
+          <a class="ld-dl open" href="files/%EC%A0%84%EB%9D%BC%EB%82%A8%EB%8F%84_%EA%B1%B4%EA%B0%95_%EB%B3%91%EC%9B%90_%EA%B0%9C%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>개업 <b>318</b>건</a>
+          <a class="ld-dl close" href="files/%EC%A0%84%EB%9D%BC%EB%82%A8%EB%8F%84_%EA%B1%B4%EA%B0%95_%EB%B3%91%EC%9B%90_%ED%8F%90%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>폐업 <b>177</b>건</a>
+        </span>
+      </div>
+      <div class="ld-jong">
+        <span class="ld-jong-name">약국</span>
+        <span class="ld-dls">
+          <a class="ld-dl open" href="files/%EC%A0%84%EB%9D%BC%EB%82%A8%EB%8F%84_%EA%B1%B4%EA%B0%95_%EC%95%BD%EA%B5%AD_%EA%B0%9C%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>개업 <b>855</b>건</a>
+          <a class="ld-dl close" href="files/%EC%A0%84%EB%9D%BC%EB%82%A8%EB%8F%84_%EA%B1%B4%EA%B0%95_%EC%95%BD%EA%B5%AD_%ED%8F%90%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>폐업 <b>1,170</b>건</a>
+        </span>
+      </div>
+    </div>
+  </details>
+  <details class="ld-sido">
+    <summary><span class="ld-sido-name">경상북도</span><span class="ld-sido-sum">의원·병원·약국 · 총 7,610건</span></summary>
+    <div class="ld-jong-wrap">
+      <div class="ld-jong">
+        <span class="ld-jong-name">의원</span>
+        <span class="ld-dls">
+          <a class="ld-dl open" href="files/%EA%B2%BD%EC%83%81%EB%B6%81%EB%8F%84_%EA%B1%B4%EA%B0%95_%EC%9D%98%EC%9B%90_%EA%B0%9C%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>개업 <b>3,211</b>건</a>
+          <a class="ld-dl close" href="files/%EA%B2%BD%EC%83%81%EB%B6%81%EB%8F%84_%EA%B1%B4%EA%B0%95_%EC%9D%98%EC%9B%90_%ED%8F%90%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>폐업 <b>1,510</b>건</a>
+        </span>
+      </div>
+      <div class="ld-jong">
+        <span class="ld-jong-name">병원</span>
+        <span class="ld-dls">
+          <a class="ld-dl open" href="files/%EA%B2%BD%EC%83%81%EB%B6%81%EB%8F%84_%EA%B1%B4%EA%B0%95_%EB%B3%91%EC%9B%90_%EA%B0%9C%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>개업 <b>275</b>건</a>
+          <a class="ld-dl close" href="files/%EA%B2%BD%EC%83%81%EB%B6%81%EB%8F%84_%EA%B1%B4%EA%B0%95_%EB%B3%91%EC%9B%90_%ED%8F%90%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>폐업 <b>212</b>건</a>
+        </span>
+      </div>
+      <div class="ld-jong">
+        <span class="ld-jong-name">약국</span>
+        <span class="ld-dls">
+          <a class="ld-dl open" href="files/%EA%B2%BD%EC%83%81%EB%B6%81%EB%8F%84_%EA%B1%B4%EA%B0%95_%EC%95%BD%EA%B5%AD_%EA%B0%9C%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>개업 <b>1,146</b>건</a>
+          <a class="ld-dl close" href="files/%EA%B2%BD%EC%83%81%EB%B6%81%EB%8F%84_%EA%B1%B4%EA%B0%95_%EC%95%BD%EA%B5%AD_%ED%8F%90%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>폐업 <b>1,256</b>건</a>
+        </span>
+      </div>
+    </div>
+  </details>
+  <details class="ld-sido">
+    <summary><span class="ld-sido-name">경상남도</span><span class="ld-sido-sum">의원·병원·약국 · 총 9,871건</span></summary>
+    <div class="ld-jong-wrap">
+      <div class="ld-jong">
+        <span class="ld-jong-name">의원</span>
+        <span class="ld-dls">
+          <a class="ld-dl open" href="files/%EA%B2%BD%EC%83%81%EB%82%A8%EB%8F%84_%EA%B1%B4%EA%B0%95_%EC%9D%98%EC%9B%90_%EA%B0%9C%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>개업 <b>3,932</b>건</a>
+          <a class="ld-dl close" href="files/%EA%B2%BD%EC%83%81%EB%82%A8%EB%8F%84_%EA%B1%B4%EA%B0%95_%EC%9D%98%EC%9B%90_%ED%8F%90%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>폐업 <b>2,061</b>건</a>
+        </span>
+      </div>
+      <div class="ld-jong">
+        <span class="ld-jong-name">병원</span>
+        <span class="ld-dls">
+          <a class="ld-dl open" href="files/%EA%B2%BD%EC%83%81%EB%82%A8%EB%8F%84_%EA%B1%B4%EA%B0%95_%EB%B3%91%EC%9B%90_%EA%B0%9C%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>개업 <b>354</b>건</a>
+          <a class="ld-dl close" href="files/%EA%B2%BD%EC%83%81%EB%82%A8%EB%8F%84_%EA%B1%B4%EA%B0%95_%EB%B3%91%EC%9B%90_%ED%8F%90%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>폐업 <b>214</b>건</a>
+        </span>
+      </div>
+      <div class="ld-jong">
+        <span class="ld-jong-name">약국</span>
+        <span class="ld-dls">
+          <a class="ld-dl open" href="files/%EA%B2%BD%EC%83%81%EB%82%A8%EB%8F%84_%EA%B1%B4%EA%B0%95_%EC%95%BD%EA%B5%AD_%EA%B0%9C%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>개업 <b>1,423</b>건</a>
+          <a class="ld-dl close" href="files/%EA%B2%BD%EC%83%81%EB%82%A8%EB%8F%84_%EA%B1%B4%EA%B0%95_%EC%95%BD%EA%B5%AD_%ED%8F%90%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>폐업 <b>1,887</b>건</a>
+        </span>
+      </div>
+    </div>
+  </details>
+  <details class="ld-sido">
+    <summary><span class="ld-sido-name">제주특별자치도</span><span class="ld-sido-sum">의원·병원·약국 · 총 2,063건</span></summary>
+    <div class="ld-jong-wrap">
+      <div class="ld-jong">
+        <span class="ld-jong-name">의원</span>
+        <span class="ld-dls">
+          <a class="ld-dl open" href="files/%EC%A0%9C%EC%A3%BC%ED%8A%B9%EB%B3%84%EC%9E%90%EC%B9%98%EB%8F%84_%EA%B1%B4%EA%B0%95_%EC%9D%98%EC%9B%90_%EA%B0%9C%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>개업 <b>1,029</b>건</a>
+          <a class="ld-dl close" href="files/%EC%A0%9C%EC%A3%BC%ED%8A%B9%EB%B3%84%EC%9E%90%EC%B9%98%EB%8F%84_%EA%B1%B4%EA%B0%95_%EC%9D%98%EC%9B%90_%ED%8F%90%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>폐업 <b>353</b>건</a>
+        </span>
+      </div>
+      <div class="ld-jong">
+        <span class="ld-jong-name">병원</span>
+        <span class="ld-dls">
+          <a class="ld-dl open" href="files/%EC%A0%9C%EC%A3%BC%ED%8A%B9%EB%B3%84%EC%9E%90%EC%B9%98%EB%8F%84_%EA%B1%B4%EA%B0%95_%EB%B3%91%EC%9B%90_%EA%B0%9C%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>개업 <b>43</b>건</a>
+          <a class="ld-dl close" href="files/%EC%A0%9C%EC%A3%BC%ED%8A%B9%EB%B3%84%EC%9E%90%EC%B9%98%EB%8F%84_%EA%B1%B4%EA%B0%95_%EB%B3%91%EC%9B%90_%ED%8F%90%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>폐업 <b>20</b>건</a>
+        </span>
+      </div>
+      <div class="ld-jong">
+        <span class="ld-jong-name">약국</span>
+        <span class="ld-dls">
+          <a class="ld-dl open" href="files/%EC%A0%9C%EC%A3%BC%ED%8A%B9%EB%B3%84%EC%9E%90%EC%B9%98%EB%8F%84_%EA%B1%B4%EA%B0%95_%EC%95%BD%EA%B5%AD_%EA%B0%9C%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>개업 <b>327</b>건</a>
+          <a class="ld-dl close" href="files/%EC%A0%9C%EC%A3%BC%ED%8A%B9%EB%B3%84%EC%9E%90%EC%B9%98%EB%8F%84_%EA%B1%B4%EA%B0%95_%EC%95%BD%EA%B5%AD_%ED%8F%90%EC%97%85_%EC%A1%B0%ED%9A%8C%EC%9D%BC20260520.xlsx" download>폐업 <b>291</b>건</a>
+        </span>
+      </div>
+    </div>
+  </details>
+</section>
+    </section>
+
+    <section class="ld-cta">
+      <h2>특정 지역·과목 분석이 필요하시면</h2>
+      <p>메디커넥트는 대구·경북·경상권 병의원 개원 입지와 메디컬빌딩 매물을 데이터로 검토합니다. 개원 후보지나 과목을 알려주시면, <strong class="ld-free">100% 무료</strong>로 상담해 드립니다.</p>
+      <p><a class="ld-cta-btn" href="/contact/">무료 상담 문의하기 →</a></p>
+    </section>
+  </main>
+</body>
+</html>

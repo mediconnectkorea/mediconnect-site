@@ -148,18 +148,17 @@
         }
 
         .menu {
-            display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
+            display: flex;
+            justify-content: flex-end;
             align-items: center;
             gap: 18px;
             flex: 1;
-            max-width: 760px;
         }
 
         .menu a {
             text-decoration: none;
             color: #dbeafe;
-            font-size: 19px;
+            font-size: 18px;
             font-weight: 900;
             letter-spacing: -.03em;
             white-space: nowrap;
@@ -170,6 +169,8 @@
         .menu a:hover {
             color: #fff;
         }
+
+        @media(min-width:1024px){.menu{gap:30px}.menu a{font-size:21px;padding:10px 14px}}
 
         .logo-group {
             display: flex;
@@ -830,6 +831,7 @@
                 <a href="/about/">회사소개</a>
                 <a href="/listings/">추천매물</a>
                 <a href="/insights/">입지분석칼럼</a>
+                <a href="/tools/localdata-excel/">자료실</a>
                 <a href="/contact/">문의</a>
             </div>
         </div>
