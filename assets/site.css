@@ -1,8 +1,9 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css');
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;background:#02050a;color:#f8fafc;font-family:Arial,'Malgun Gothic',sans-serif;line-height:1.75;word-break:keep-all}
+html{scroll-behavior:smooth;overflow-y:scroll}
+body{margin:0;background:#02050a;color:#f8fafc;font-family:'Pretendard',Arial,'Malgun Gothic',sans-serif;line-height:1.75;word-break:keep-all}
 a{color:inherit}
-.wrap{max-width:1120px;margin:0 auto;padding:0 28px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
 .nav{position:sticky;top:0;z-index:10;background:rgba(2,5,10,.94);border-bottom:1px solid rgba(255,255,255,.12);backdrop-filter:blur(10px)}
 .nav-inner{min-height:78px;display:flex;align-items:center;justify-content:space-between;gap:48px}
 .brand{text-decoration:none;font-weight:900;letter-spacing:-.02em;font-size:20px;white-space:nowrap}
