@@ -11,6 +11,7 @@ a{color:inherit}
 .menu a{text-decoration:none;color:#dbeafe;font-size:18px;font-weight:900;letter-spacing:-.03em;white-space:nowrap;text-align:center;padding:10px 12px}
 @media(min-width:1024px){.menu{gap:30px}.menu a{font-size:21px;padding:10px 14px}}
 .menu a:hover{color:#fff}
+.mobile-menu-toggle,.mobile-menu-close,.mobile-contact,.mobile-menu-backdrop{display:none}
 .hero{padding:86px 0 48px;border-bottom:1px solid rgba(255,255,255,.1)}
 .eyebrow{font-size:12px;color:#60a5fa;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
 h1{font-size:44px;line-height:1.2;margin:14px 0 18px;letter-spacing:-.04em}
@@ -74,11 +75,21 @@ a.card:hover,a.item:hover{border-color:#60a5fa}
 @media(max-width:760px){
   .wrap{padding:0 18px}
   .nav{background:rgba(2,5,10,.96);z-index:100}
-  .nav .wrap{padding:10px}
-  .nav-inner{min-height:178px;align-items:flex-start;gap:12px;flex-direction:column;padding:12px}
-  .brand{font-family:'Courier New',monospace;font-size:28px;line-height:1.15;letter-spacing:-.04em;color:#fff}
-  .menu{width:100%;max-width:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-  .menu a{font-size:15px;border:1px solid rgba(255,255,255,.18);padding:12px 10px;background:rgba(15,23,42,.86);min-height:48px;display:flex;align-items:center;justify-content:center;text-align:center;color:rgba(255,255,255,.78)}
+  body.menu-open{overflow:hidden}
+  .nav .wrap{padding:0 16px}
+  .nav-inner{position:relative;min-height:64px;display:flex;align-items:center;justify-content:center;padding:0}
+  .brand{font-family:'Courier New',monospace;font-size:20px;line-height:1;letter-spacing:0;color:#fff}
+  .mobile-menu-toggle,.mobile-menu-close{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border:0;background:transparent;color:#fff;cursor:pointer}
+  .mobile-menu-toggle{position:absolute;left:0;top:10px;flex-direction:column;gap:5px}
+  .mobile-menu-toggle span{display:block;width:21px;height:2px;background:#fff}
+  .mobile-contact{display:inline-flex;position:absolute;right:0;top:13px;align-items:center;justify-content:center;min-width:54px;height:38px;padding:0 12px;background:#2563eb;color:#fff;text-decoration:none;font-size:14px;font-weight:900}
+  .menu{position:fixed;top:0;left:0;z-index:130;width:min(82vw,320px);height:100vh;display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;gap:0;padding:78px 18px 24px;background:#07101f;border-right:1px solid rgba(255,255,255,.16);transform:translateX(-102%);transition:transform .24s ease;overflow-y:auto}
+  .nav.menu-open .menu{transform:translateX(0)}
+  .menu a{display:flex;align-items:center;min-height:56px;padding:14px 8px;border-bottom:1px solid rgba(255,255,255,.12);color:#e2e8f0;font-size:17px;font-weight:800;text-align:left}
+  .menu a:hover{color:#fff;background:rgba(59,130,246,.12)}
+  .mobile-menu-close{position:absolute;top:15px;right:14px;font-size:30px;font-weight:300;line-height:1}
+  .mobile-menu-backdrop{position:fixed;inset:0;z-index:90;background:rgba(0,0,0,.62)}
+  .mobile-menu-backdrop:not([hidden]){display:block}
   .hero{padding:46px 0 30px}
   h1{font-size:32px}
   h2{font-size:24px;margin-top:40px}

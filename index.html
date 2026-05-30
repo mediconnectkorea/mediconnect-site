@@ -64,6 +64,7 @@
     }
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script defer src="/assets/site-nav.js"></script>
     <link rel="stylesheet" as="style" crossorigin="" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 
     <style>
@@ -169,6 +170,8 @@
         .menu a:hover {
             color: #fff;
         }
+
+        .mobile-menu-toggle, .mobile-menu-close, .mobile-contact, .mobile-menu-backdrop { display: none; }
 
         @media(min-width:1024px){.menu{gap:30px}.menu a{font-size:21px;padding:10px 14px}}
 
@@ -762,12 +765,22 @@
             /* Hero */
             .wrap{padding:0 18px}
             .nav{background:rgba(2,5,10,.96);z-index:100}
-            .nav .wrap{padding:10px}
-            .nav-inner{min-height:178px;align-items:flex-start;gap:12px;flex-direction:column;padding:12px}
-            .brand{font-family:'Courier New',monospace;font-size:28px;line-height:1.15;letter-spacing:-.04em;color:#fff}
-            .menu{width:100%;max-width:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-            .menu a{font-size:15px;border:1px solid rgba(255,255,255,.18);padding:12px 10px;background:rgba(15,23,42,.86);min-height:48px;display:flex;align-items:center;justify-content:center;text-align:center;color:rgba(255,255,255,.78)}
-            .hud-overlay { grid-template-columns: 1fr; grid-template-rows: 1fr 60px; min-height: calc(100vh - 178px); height: auto; padding: 10px; }
+            body.menu-open{overflow:hidden}
+            .nav .wrap{padding:0 16px}
+            .nav-inner{position:relative;min-height:64px;display:flex;align-items:center;justify-content:center;padding:0}
+            .brand{font-family:'Courier New',monospace;font-size:20px;line-height:1;letter-spacing:0;color:#fff}
+            .mobile-menu-toggle,.mobile-menu-close{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border:0;background:transparent;color:#fff;cursor:pointer}
+            .mobile-menu-toggle{position:absolute;left:0;top:10px;flex-direction:column;gap:5px}
+            .mobile-menu-toggle span{display:block;width:21px;height:2px;background:#fff}
+            .mobile-contact{display:inline-flex;position:absolute;right:0;top:13px;align-items:center;justify-content:center;min-width:54px;height:38px;padding:0 12px;background:#2563eb;color:#fff;text-decoration:none;font-size:14px;font-weight:900}
+            .menu{position:fixed;top:0;left:0;z-index:130;width:min(82vw,320px);height:100vh;display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;gap:0;padding:78px 18px 24px;background:#07101f;border-right:1px solid rgba(255,255,255,.16);transform:translateX(-102%);transition:transform .24s ease;overflow-y:auto}
+            .nav.menu-open .menu{transform:translateX(0)}
+            .menu a{display:flex;align-items:center;min-height:56px;padding:14px 8px;border-bottom:1px solid rgba(255,255,255,.12);color:#e2e8f0;font-size:17px;font-weight:800;text-align:left}
+            .menu a:hover{color:#fff;background:rgba(59,130,246,.12)}
+            .mobile-menu-close{position:absolute;top:15px;right:14px;font-size:30px;font-weight:300;line-height:1}
+            .mobile-menu-backdrop{position:fixed;inset:0;z-index:90;background:rgba(0,0,0,.62)}
+            .mobile-menu-backdrop:not([hidden]){display:block}
+            .hud-overlay { grid-template-columns: 1fr; grid-template-rows: 1fr 60px; min-height: calc(100vh - 64px); height: auto; padding: 10px; }
             .hero-content { grid-column: 1; grid-row: 1; padding-left: 16px; padding-right: 16px; padding-top: 0; }
             h1 { font-size: 36px; }
             .description { font-size: 14px; max-width: 100%; }
@@ -829,8 +842,10 @@
 
     <nav class="nav">
         <div class="wrap nav-inner">
+            <button class="mobile-menu-toggle" type="button" aria-label="메뉴 열기" aria-expanded="false"><span></span><span></span><span></span></button>
             <a class="brand" href="/">MEDICONNECT</a>
             <div class="menu">
+                <button class="mobile-menu-close" type="button" aria-label="메뉴 닫기">&times;</button>
                 <a href="/about/">회사소개</a>
                 <a href="/listings/">추천매물</a>
                 <a href="/insights/">입지분석칼럼</a>
@@ -838,8 +853,10 @@
                 <a href="https://blog.naver.com/dgmediconnect" target="_blank" rel="noopener">블로그</a>
                 <a href="/contact/">문의</a>
             </div>
+            <a class="mobile-contact" href="/contact/">문의</a>
         </div>
     </nav>
+    <div class="mobile-menu-backdrop" hidden></div>
 
     <div id="canvas-container"></div>
     <div class="grid-mesh"></div>
