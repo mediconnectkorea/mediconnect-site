@@ -54,6 +54,23 @@ a.card:hover,a.item:hover{border-color:#60a5fa}
 .profile-lines .strong{font-size:20px;font-weight:900;color:#fff}
 .credential-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:28px}
 .credential{border:1px solid rgba(255,255,255,.12);background:rgba(0,0,0,.18);padding:14px 16px;font-weight:800}
+.about-intro{padding:44px 0 8px}
+.about-intro .lead{max-width:900px}
+.about-section{max-width:920px;margin:0 auto;padding:38px 0;border-top:1px solid rgba(255,255,255,.1)}
+.about-section h2{margin:6px 0 20px}
+.about-section h3{font-size:22px;margin:30px 0 12px}
+.about-section p{color:#cbd5e1;font-size:17px}
+.about-section .about-lead{font-size:20px;line-height:1.85;color:#f8fafc}
+.about-quote{border-left:4px solid #60a5fa;background:rgba(59,130,246,.12);padding:20px 24px;margin:24px 0;color:#fff;font-size:20px;font-weight:800}
+.about-figure{margin:30px 0 12px;border:1px solid rgba(255,255,255,.14);background:#fff;padding:10px}
+.about-figure img{display:block;width:100%;height:auto}
+.about-figure-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:30px 0 12px}
+.about-figure-grid .about-figure{margin:0}
+.about-caption{margin:10px 0 0;color:#94a3b8;font-size:14px;line-height:1.6}
+.about-service{border:1px solid rgba(96,165,250,.55);background:rgba(59,130,246,.12);padding:28px;margin-top:26px}
+.about-service p{color:#e2e8f0}
+.about-basic{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 24px}
+.about-basic p{margin:0}
 @media(max-width:760px){
   .wrap{padding:0 18px}
   .nav{background:rgba(2,5,10,.96);z-index:100}
@@ -75,4 +92,10 @@ a.card:hover,a.item:hover{border-color:#60a5fa}
   .card h2,.item h2{font-size:22px}
   .phone{font-size:24px}
   .report-images{max-width:none;margin-left:0;margin-right:0;gap:20px}
+  .about-intro{padding-top:34px}
+  .about-section{padding:30px 0}
+  .about-section p{font-size:16px}
+  .about-section .about-lead,.about-quote{font-size:18px}
+  .about-figure-grid,.about-basic{grid-template-columns:1fr}
+  .about-service{padding:22px}
 }
