@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- ============================================================
+     리디자인 시안 v5 (리서치 랩 + 시네마틱 진입 연출) — 2026-06-12
+     v4 피드백: "카카오처럼 처음 들어갔을 때 좌라라락 움직이는" 스펙터클.
+     · 진입: 커튼 리프트 → 의원 7,819점이 흩어진 곳에서 실좌표로 좌라라락 빨려들며
+             경상권 지도 형성 + 헤드라인 마스크 리빌 + 숫자 카운트업.
+     · 스크롤: 데이터셋 가로 핀 스크롤(좌→우), 패럴럭스 깊이, 방법론 핀 재생.
+     · 마감: 커스텀 커서, 마그네틱 CTA, 라이트/다크 존 전환.
+     데이터: /redesign-v4-data.js (window.MC) 재사용 — 빌드 불필요.
+     스택: GSAP3 + ScrollTrigger + Lenis. QA: ?noanim
+     ★ 시안. 라이브 반영 시 index.html 교체 + noindex 해제.
+     ============================================================ -->
+<meta name="robots" content="noindex, nofollow">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YF6FC9EBS3"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date()); gtag('config', 'G-YF6FC9EBS3');
+</script>
+<title>메디커넥트 — 경상권 병의원 개원 입지 데이터 분석</title>
+<meta name="description" content="경상권 의원 8,400여 곳의 좌표, 행정동 인구, 건축물대장을 직접 수집해 병의원 개원 입지를 과목별로 판정하는 데이터 기반 공인중개사무소입니다.">
+<link rel="shortcut icon" href="https://mediconnect.co.kr/assets/og/mediconnect-favicon.png">
+<link rel="icon" type="image/png" href="https://mediconnect.co.kr/assets/og/mediconnect-favicon.png">
+<script defer src="/assets/site-nav.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.css">
+<style>
+:root{
+  --bg:#0a0c0e; --bg2:#0e1114; --panel:#11151a; --light:#eef0f1; --light-ink:#11151a;
+  --txt:#e8ebee; --mut:#8b939c; --dim:#525a63;
+  --acc:#2dd4bf; --acc-dim:rgba(45,212,191,.5);
+  --amber:#fbbf24; --red:#f87171; --green:#34d399;
+  --line:rgba(232,235,238,.08); --line2:rgba(232,235,238,.16);
+  --mono:ui-monospace,'SFMono-Regular','Consolas','Liberation Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:auto}
+::selection{background:var(--acc);color:#0a0c0e}
+body{font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;
+  background:var(--bg);color:var(--txt);font-size:16.5px;line-height:1.8;letter-spacing:-.01em;
+  word-break:keep-all;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit}
+.mono{font-family:var(--mono);letter-spacing:0}
+.num{font-variant-numeric:tabular-nums;font-feature-settings:"tnum"}
+
+/* ===== 진입 커튼 ===== */
+#intro{position:fixed;inset:0;z-index:400;background:var(--bg);display:flex;
+  align-items:center;justify-content:center;flex-direction:column;gap:22px}
+#intro .imark{font-weight:800;font-size:clamp(20px,3vw,30px);letter-spacing:.14em;color:var(--txt);opacity:0}
+#intro .imark i{font-style:normal;color:var(--acc)}
+#intro .iline{width:0;height:1px;background:var(--acc);max-width:280px}
+#intro .itag{font-family:var(--mono);font-size:11px;color:var(--dim);letter-spacing:.3em;opacity:0}
+
+/* ===== 커스텀 커서 ===== */
+.cursor{position:fixed;top:0;left:0;width:34px;height:34px;border:1px solid var(--acc-dim);
+  border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:350;
+  mix-blend-mode:difference;transition:width .25s,height .25s,background .25s,border-color .25s;display:none}
+.cursor.on{background:rgba(45,212,191,.18);border-color:var(--acc);width:52px;height:52px}
+
+.progress{position:fixed;top:0;left:0;height:2px;width:100%;background:var(--acc);
+  transform-origin:0 50%;transform:scaleX(0);z-index:300}
+
+/* ===== 내비 ===== */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;transition:background .4s,border-color .4s;border-bottom:1px solid transparent}
+.nav.scrolled{background:rgba(10,12,14,.8);backdrop-filter:blur(16px);border-bottom-color:var(--line)}
+.nav-wrap{max-width:1360px;margin:0 auto;padding:0 44px}
+.nav-inner{min-height:74px;display:flex;align-items:center;justify-content:space-between;gap:40px}
+.brand{text-decoration:none;font-weight:800;font-size:17px;letter-spacing:.02em;color:var(--txt);white-space:nowrap}
+.brand i{font-style:normal;color:var(--acc)}
+.menu{display:flex;justify-content:flex-end;align-items:center;gap:2px;flex:1}
+.menu a{text-decoration:none;color:var(--mut);font-size:14.5px;font-weight:600;white-space:nowrap;padding:9px 14px;border-radius:8px;transition:color .25s,background .25s}
+.menu a:hover{color:var(--txt);background:rgba(255,255,255,.04)}
+.menu a.menu-cta{color:#0a0c0e;background:var(--acc);margin-left:12px;padding:9px 18px;font-weight:700}
+.menu a.menu-cta:hover{background:#5eead4}
+.mobile-menu-toggle,.mobile-menu-close,.mobile-contact,.mobile-menu-backdrop{display:none}
+
+/* ===== 히어로 ===== */
+.hero{position:relative;min-height:100svh;display:flex;align-items:center;overflow:hidden}
+.hero-aura{position:absolute;right:-8vw;top:50%;width:72vw;height:72vw;z-index:0;pointer-events:none;
+  transform:translateY(-50%);background:radial-gradient(circle,rgba(45,212,191,.11),transparent 60%);
+  filter:blur(30px);animation:auraBreathe 9s ease-in-out infinite alternate}
+@keyframes auraBreathe{from{opacity:.55;transform:translateY(-50%) scale(1)}to{opacity:1;transform:translateY(-50%) scale(1.12)}}
+#map-hero{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+.hero-grad{position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(90deg,rgba(10,12,14,.94) 0%,rgba(10,12,14,.72) 38%,rgba(10,12,14,.05) 70%)}
+.hero-grad-b{position:absolute;left:0;right:0;bottom:0;height:24vh;z-index:1;pointer-events:none;
+  background:linear-gradient(to bottom,transparent,var(--bg))}
+.hero-inner{position:relative;z-index:2;max-width:1360px;margin:0 auto;padding:90px 44px 0;width:100%}
+.hero-tag{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:12px;color:var(--acc);
+  border:1px solid rgba(45,212,191,.25);background:rgba(45,212,191,.05);padding:7px 14px;border-radius:6px;margin-bottom:30px;opacity:0}
+.hero-tag::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--acc);
+  box-shadow:0 0 0 0 rgba(45,212,191,.5);animation:ping 2.4s ease-out infinite}
+@keyframes ping{0%{box-shadow:0 0 0 0 rgba(45,212,191,.5)}70%,100%{box-shadow:0 0 0 9px rgba(45,212,191,0)}}
+.hero h1{font-size:clamp(38px,5.6vw,76px);font-weight:800;line-height:1.18;letter-spacing:-.038em;max-width:820px}
+.hero h1 .ln{display:block;overflow:hidden;padding-bottom:.04em}
+.hero h1 .ln>i{display:block;font-style:normal;will-change:transform}
+.hero h1 .hl{color:var(--acc)}
+.hero h1 em{font-style:normal}
+.hero-sub{margin-top:26px;font-size:17px;color:var(--mut);max-width:560px;line-height:1.9;opacity:0}
+.hero-sub b{color:var(--txt);font-weight:600}
+.hero-src{margin-top:18px;font-family:var(--mono);font-size:12px;color:var(--dim);opacity:0}
+.hero-cta{display:flex;gap:12px;margin-top:38px;flex-wrap:wrap;opacity:0}
+.btn{display:inline-flex;align-items:center;gap:10px;min-height:54px;padding:0 30px;border-radius:10px;
+  text-decoration:none;font-weight:700;font-size:15.5px;transition:background .3s,color .3s,border-color .3s;will-change:transform}
+.btn-acc{background:var(--acc);color:#0a0c0e}
+.btn-acc:hover{background:#5eead4}
+.btn-line{border:1px solid var(--line2);color:var(--txt)}
+.btn-line:hover{border-color:var(--acc);color:var(--acc)}
+.hero-regions{position:absolute;right:44px;bottom:34px;z-index:2;display:flex;gap:26px;font-family:var(--mono);font-size:12.5px;color:var(--mut);opacity:0}
+.hero-regions b{display:block;color:var(--txt);font-size:17px;font-weight:700;margin-bottom:2px}
+.hero-regions span{display:block;text-align:right}
+.scroll-hint{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;
+  align-items:center;gap:8px;color:var(--dim);font-size:10.5px;letter-spacing:.3em;font-family:var(--mono);opacity:0}
+.scroll-hint::after{content:'';width:1px;height:42px;background:linear-gradient(var(--acc),transparent);animation:hint 2s ease-in-out infinite}
+@keyframes hint{0%{transform:scaleY(0);transform-origin:top}45%{transform:scaleY(1);transform-origin:top}55%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* ===== 공통 ===== */
+.wrap{max-width:1360px;margin:0 auto;padding:0 44px}
+.sec-label{display:flex;align-items:center;gap:14px;margin-bottom:26px;font-family:var(--mono);font-size:12px;color:var(--acc)}
+.sec-label::after{content:'';flex:1;height:1px;background:var(--line)}
+.sec-title{font-size:clamp(30px,3.9vw,52px);font-weight:800;line-height:1.22;letter-spacing:-.03em;margin-bottom:16px}
+.sec-title .hl{color:var(--acc)}
+.sec-desc{color:var(--mut);font-size:16.5px;max-width:620px}
+.rv{will-change:transform,opacity}
+
+/* ===== 데이터셋 가로 핀 밴드 ===== */
+.hband{position:relative;background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.hband-pin{height:100vh;display:flex;align-items:center;overflow:hidden}
+.hband-track{display:flex;gap:24px;padding:0 44px;will-change:transform}
+.hpanel{flex:0 0 auto;width:min(420px,80vw);border:1px solid var(--line);border-radius:18px;background:var(--bg);
+  padding:40px 38px;display:flex;flex-direction:column;justify-content:space-between;min-height:340px;position:relative;overflow:hidden}
+.hpanel::after{content:'';position:absolute;left:0;bottom:0;width:100%;height:2px;background:linear-gradient(90deg,var(--acc),transparent)}
+.hpanel .idx{font-family:var(--mono);font-size:12px;color:var(--acc);margin-bottom:auto}
+.hpanel h3{font-size:23px;font-weight:800;letter-spacing:-.02em;line-height:1.4;margin:26px 0 12px}
+.hpanel p{font-size:14.5px;color:var(--mut);line-height:1.75}
+.hpanel.lead{background:none;border:none;width:min(440px,82vw);justify-content:center;padding-left:0}
+.hpanel.lead .sec-label{margin-bottom:22px}
+.hpanel.lead h2{font-size:clamp(30px,3.6vw,46px);font-weight:800;line-height:1.25;letter-spacing:-.03em}
+.hpanel.lead h2 .hl{color:var(--acc)}
+.hpanel.lead p{margin-top:18px;font-size:16px;max-width:380px}
+.hband-hintmo{display:none}
+
+/* ===== 시네마틱 줌 브리지 ===== */
+.zoom{position:relative;height:300vh;background:var(--bg)}
+.zoom-stage{position:relative;height:100svh;overflow:hidden;display:flex;align-items:center;justify-content:center}
+#map-zoom{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+.zoom-cap{position:absolute;inset:0;z-index:2;pointer-events:none}
+.zoom-cap .zc{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);text-align:center;padding:0 24px;
+  font-size:clamp(28px,4.6vw,62px);font-weight:800;letter-spacing:-.03em;line-height:1.32;opacity:0}
+.zoom-cap .zc b{color:var(--acc)}
+.zoom-cap .zc span{display:block;font-family:var(--mono);font-size:.34em;font-weight:600;color:var(--mut);letter-spacing:.12em;margin-top:16px}
+.zoom-hint{position:absolute;left:50%;bottom:30px;transform:translateX(-50%);z-index:2;color:var(--dim);font-size:10.5px;letter-spacing:.3em;font-family:var(--mono);pointer-events:none}
+
+/* ===== 방법론 ===== */
+.method{padding:130px 0 0}
+.method-head{margin-bottom:54px}
+.stage-grid{display:grid;grid-template-columns:430px 1fr;gap:54px;align-items:stretch;height:78vh;min-height:560px}
+.steps{position:relative}
+.step{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;opacity:0;pointer-events:none}
+.step.on{opacity:1;pointer-events:auto}
+.step .no{font-family:var(--mono);font-size:13px;color:var(--acc);margin-bottom:18px}
+.step h3{font-size:clamp(24px,2.4vw,33px);font-weight:800;line-height:1.35;letter-spacing:-.025em;margin-bottom:18px;white-space:pre-line}
+.step p{font-size:16px;color:var(--mut);margin-bottom:12px;line-height:1.85}
+.step p b{color:var(--txt);font-weight:600}
+.step .stat-line{margin-top:18px;border-top:1px solid var(--line);padding-top:16px;display:flex;flex-direction:column;gap:9px}
+.step .stat-line div{display:flex;justify-content:space-between;align-items:baseline;font-size:14.5px}
+.step .stat-line span{color:var(--mut)}
+.step .stat-line b{font-family:var(--mono);font-size:16px;color:var(--txt);font-weight:600}
+.step .stat-line b.acc{color:var(--acc)}
+.grade-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.chip{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line2);border-radius:8px;padding:7px 12px;font-size:13.5px;color:var(--mut);background:var(--bg2)}
+.chip b{font-family:var(--mono);font-weight:700;font-size:13px}
+.chip.gA b{color:var(--green)} .chip.gB b{color:var(--acc)} .chip.gC b{color:var(--amber)} .chip.gD b{color:var(--red)}
+.map-panel{position:relative;border:1px solid var(--line2);border-radius:18px;overflow:hidden;background:#080a0c}
+#map-method{position:absolute;inset:0;width:100%;height:100%}
+.map-hud{position:absolute;top:18px;left:20px;z-index:3;font-family:var(--mono);font-size:11.5px;color:var(--mut);line-height:1.8;pointer-events:none}
+.map-hud b{color:var(--acc);font-weight:600}
+.map-legend{position:absolute;right:20px;bottom:16px;z-index:3;display:flex;gap:16px;font-family:var(--mono);font-size:11px;color:var(--mut);pointer-events:none}
+.map-legend i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;font-style:normal}
+.method-progress{display:flex;gap:8px;margin-top:26px}
+.method-progress i{flex:1;height:2px;background:var(--line);font-style:normal;position:relative;overflow:hidden}
+.method-progress i::after{content:'';position:absolute;inset:0;background:var(--acc);transform:scaleX(0);transform-origin:0 50%;transition:transform .2s linear}
+.method-progress i.on::after{transform:scaleX(1)}
+
+/* ===== 사례 ===== */
+.cases{padding:150px 0 120px}
+.case-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:50px}
+.case-card{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:16px;background:var(--bg2);padding:34px 32px;text-decoration:none;transition:transform .4s cubic-bezier(.16,1,.3,1),border-color .4s}
+.case-card:hover{transform:translateY(-8px);border-color:var(--acc-dim)}
+.case-card .loc{font-family:var(--mono);font-size:12px;color:var(--acc);margin-bottom:16px}
+.case-card h3{font-size:20.5px;font-weight:700;letter-spacing:-.02em;line-height:1.45;margin-bottom:12px}
+.case-card p{font-size:14.5px;color:var(--mut);line-height:1.75;margin-bottom:22px}
+.case-card .kv{margin-top:auto;border-top:1px solid var(--line);padding-top:16px;display:flex;flex-direction:column;gap:7px}
+.case-card .kv div{display:flex;justify-content:space-between;font-size:13.5px}
+.case-card .kv span{color:var(--dim)}
+.case-card .kv b{font-family:var(--mono);color:var(--txt);font-weight:600}
+.case-card .go{margin-top:18px;font-size:14px;font-weight:700;color:var(--acc)}
+.cases-note{margin-top:22px;font-size:14px;color:var(--dim)}
+
+/* ===== 리서치 ===== */
+.research{padding:0 0 130px}
+.res-list{margin-top:44px;border-top:1px solid var(--line2)}
+.res-row{display:grid;grid-template-columns:auto 1fr auto;gap:34px;align-items:center;padding:30px 6px;border-bottom:1px solid var(--line);text-decoration:none;transition:background .3s,padding-left .3s}
+.res-row:hover{background:rgba(255,255,255,.018);padding-left:18px}
+.res-row .tag{font-family:var(--mono);font-size:12px;color:var(--acc);white-space:nowrap}
+.res-row h3{font-size:19px;font-weight:700;letter-spacing:-.015em;margin-bottom:4px}
+.res-row p{font-size:14px;color:var(--mut)}
+.res-row .arr{color:var(--dim);font-size:20px;transition:color .3s,transform .3s}
+.res-row:hover .arr{color:var(--acc);transform:translateX(4px)}
+
+/* ===== 사람(라이트 존) ===== */
+.people{padding:120px 0;background:var(--light);color:var(--light-ink)}
+.people .sec-label{color:#0d9488}
+.people .sec-label::after{background:rgba(17,21,26,.12)}
+.people-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+.people .state{font-size:clamp(24px,2.8vw,38px);font-weight:800;line-height:1.45;letter-spacing:-.025em}
+.people .state .hl{color:#0d9488}
+.people .state-sub{margin-top:24px;color:#55606b;font-size:16px;max-width:480px}
+.lens{border-top:1px solid rgba(17,21,26,.16)}
+.lens div{display:grid;grid-template-columns:88px 1fr;gap:24px;align-items:baseline;padding:19px 4px;border-bottom:1px solid rgba(17,21,26,.1)}
+.lens .k{font-family:var(--mono);font-size:12px;color:#0d9488}
+.lens .v{font-size:15.5px;color:var(--light-ink);font-weight:600}
+.lens .v small{display:block;color:#55606b;font-size:13.5px;font-weight:400;margin-top:2px}
+.lens-foot{margin-top:20px;font-size:14px;color:#55606b}
+.lens-foot a{color:#0d9488;text-decoration:none;font-weight:600}
+
+/* ===== 문의 ===== */
+.contact{padding:120px 0 110px;border-top:1px solid var(--line);background:var(--bg2)}
+.ct-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:90px;align-items:start}
+.ct-grid h2{font-size:clamp(30px,3.6vw,46px);font-weight:800;line-height:1.3;letter-spacing:-.03em;margin-bottom:22px}
+.ct-grid .desc{color:var(--mut);font-size:16px;margin-bottom:34px;max-width:480px}
+.fee{border-top:1px solid var(--line2);margin-bottom:34px}
+.fee div{display:flex;justify-content:space-between;align-items:baseline;padding:15px 4px;border-bottom:1px solid var(--line)}
+.fee span{font-size:15px;color:var(--mut)}
+.fee b{font-family:var(--mono);font-size:15px;color:var(--acc);font-weight:600}
+.fee-note{font-size:13.5px;color:var(--dim);line-height:1.8}
+.ct-card{border:1px solid var(--line2);border-radius:18px;background:var(--bg);padding:42px 44px}
+.ct-card .t{font-family:var(--mono);font-size:12px;color:var(--acc);margin-bottom:20px}
+.ct-phone{display:block;font-size:clamp(30px,3.2vw,42px);font-weight:800;letter-spacing:-.02em;color:var(--txt);text-decoration:none;margin-bottom:28px;transition:color .3s}
+.ct-phone:hover{color:var(--acc)}
+.ct-rows{display:flex;flex-direction:column}
+.ct-rows div{display:grid;grid-template-columns:72px 1fr;gap:18px;padding:13px 0;border-top:1px solid var(--line);font-size:14.5px}
+.ct-rows span{color:var(--dim);font-size:12.5px;font-family:var(--mono);padding-top:3px}
+.ct-rows b{color:var(--txt);font-weight:500;line-height:1.7}
+.ask-mini{margin-top:30px;border-top:1px solid var(--line2);padding-top:22px}
+.ask-mini p{font-size:14px;color:var(--mut);padding:7px 0;line-height:1.7}
+.ask-mini p::before{content:'— ';color:var(--acc)}
+
+/* ===== 푸터 ===== */
+.footer{border-top:1px solid var(--line);padding:48px 0 110px;color:var(--dim);font-size:13.5px}
+.footer-grid{display:flex;justify-content:space-between;gap:44px;flex-wrap:wrap}
+.footer .brand-line{font-weight:800;font-size:16px;color:var(--txt);margin-bottom:12px}
+.footer .brand-line i{font-style:normal;color:var(--acc)}
+.footer p{line-height:1.95}
+.footer .links{display:flex;gap:24px;padding-top:6px}
+.footer .links a{color:var(--mut);text-decoration:none}
+.footer .links a:hover{color:var(--txt)}
+
+.floating-call{display:none;position:fixed;bottom:24px;right:24px;z-index:150;width:56px;height:56px;background:var(--acc);
+  border-radius:50%;align-items:center;justify-content:center;text-decoration:none;box-shadow:0 6px 24px rgba(45,212,191,.35)}
+
+/* ===== 모바일 ===== */
+@media (max-width:900px){
+  .cursor{display:none!important}
+  .nav-wrap{padding:0 18px}
+  .nav{background:rgba(10,12,14,.85);backdrop-filter:blur(14px);border-bottom-color:var(--line)}
+  .nav-inner{position:relative;min-height:60px;justify-content:center}
+  body.menu-open{overflow:hidden}
+  .mobile-menu-toggle,.mobile-menu-close{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border:0;background:transparent;color:var(--txt);cursor:pointer}
+  .mobile-menu-toggle{position:absolute;left:0;top:8px;flex-direction:column;gap:5px}
+  .mobile-menu-toggle span{display:block;width:21px;height:2px;background:var(--txt)}
+  .mobile-contact{display:inline-flex;position:absolute;right:0;top:11px;align-items:center;justify-content:center;min-width:54px;height:38px;padding:0 16px;border-radius:8px;background:var(--acc);color:#0a0c0e;text-decoration:none;font-size:14px;font-weight:800}
+  .menu{position:fixed;top:0;left:0;z-index:130;width:min(82vw,320px);height:100vh;display:flex;flex-direction:column;align-items:stretch;gap:0;padding:74px 18px 24px;background:#0d1013;border-right:1px solid var(--line2);transform:translateX(-102%);transition:transform .25s ease;overflow-y:auto}
+  .nav.menu-open .menu{transform:translateX(0)}
+  .menu a{display:flex;align-items:center;min-height:54px;padding:14px 8px;border-radius:0;border-bottom:1px solid var(--line);color:var(--txt);font-size:16px;font-weight:600}
+  .menu a.menu-cta{background:none;color:var(--acc);margin:0;padding:14px 8px}
+  .mobile-menu-close{position:absolute;top:12px;right:12px;font-size:30px;font-weight:300;line-height:1}
+  .mobile-menu-backdrop{position:fixed;inset:0;z-index:90;background:rgba(0,0,0,.62)}
+  .mobile-menu-backdrop:not([hidden]){display:block}
+  .floating-call{display:flex}
+  .wrap,.hero-inner,.nav-wrap{padding-left:20px;padding-right:20px}
+  .hero{flex-direction:column;align-items:stretch;justify-content:flex-start}
+  .hero-inner{padding-top:96px}
+  .hero h1{font-size:clamp(27px,7.6vw,40px)}
+  .hero-grad{background:linear-gradient(180deg,rgba(10,12,14,.9) 0%,rgba(10,12,14,.55) 55%,rgba(10,12,14,.2) 100%)}
+  .hero-regions{position:static;z-index:2;display:grid;grid-template-columns:1fr 1fr;gap:14px 24px;margin:34px 20px 40px;padding:0}
+  .hero-regions span{text-align:left}
+  .scroll-hint{display:none}
+  /* 가로밴드 → 세로 스택 */
+  .hband-pin{height:auto;display:block;overflow:visible}
+  .hband-track{flex-direction:column;gap:16px;padding:60px 20px;transform:none!important}
+  .hpanel{width:100%;min-height:0;padding:28px 24px}
+  .hpanel.lead{width:100%;padding:0 0 8px}
+  .zoom-cap .zc{font-size:clamp(22px,6.6vw,40px)}
+  .zoom-hint{display:none}
+  .method{padding:70px 0 0}
+  .method-head{margin-bottom:34px}
+  .stage-grid{grid-template-columns:1fr;height:auto;min-height:0;gap:24px}
+  .steps{min-height:0}
+  .step{position:relative;opacity:1;pointer-events:auto;margin-bottom:42px;justify-content:flex-start}
+  .map-panel{height:52vh;min-height:360px;position:relative;order:-1}
+  .method-progress{display:none}
+  .cases{padding:80px 0}
+  .case-grid{grid-template-columns:1fr}
+  .research{padding:0 0 80px}
+  .people{padding:70px 0}
+  .people-grid{grid-template-columns:1fr;gap:40px}
+  .contact{padding:70px 0}
+  .ct-grid{grid-template-columns:1fr;gap:48px}
+  .ct-card{padding:30px 26px}
+  .footer{padding:40px 0 116px}
+}
+</style>
+</head>
+<body>
+
+<div id="intro">
+  <div class="imark">MEDI<i>CONNECT.</i></div>
+  <div class="iline"></div>
+  <div class="itag">LOADING DATABASE</div>
+</div>
+
+<div class="cursor" id="cursor"></div>
+<div class="progress" id="progress"></div>
+
+<nav class="nav" id="nav">
+  <div class="nav-wrap nav-inner">
+    <button class="mobile-menu-toggle" type="button" aria-label="메뉴 열기" aria-expanded="false"><span></span><span></span><span></span></button>
+    <a class="brand" href="/">MEDICONNECT<i>.</i></a>
+    <div class="menu">
+      <button class="mobile-menu-close" type="button" aria-label="메뉴 닫기">&times;</button>
+      <a href="#method">방법론</a>
+      <a href="/listings/">사례·매물</a>
+      <a href="/insights/">리서치</a>
+      <a href="/tools/localdata-excel/">자료실</a>
+      <a href="/about/">회사소개</a>
+      <a href="https://blog.naver.com/dgmediconnect" target="_blank" rel="noopener">블로그</a>
+      <a class="menu-cta" href="#contact">상담 문의</a>
+    </div>
+    <a class="mobile-contact" href="#contact">문의</a>
+  </div>
+</nav>
+<div class="mobile-menu-backdrop" hidden></div>
+
+<!-- ===== 히어로 ===== -->
+<header class="hero">
+  <div class="hero-aura"></div>
+  <canvas id="map-hero"></canvas>
+  <div class="hero-grad"></div>
+  <div class="hero-grad-b"></div>
+  <div class="hero-inner" id="heroInner">
+    <div class="hero-tag mono">LIVE DATABASE — 경상권 의원 전수</div>
+    <h1 aria-label="화면의 점 8,477개는 전부 경상권 의원의 실제 좌표입니다.">
+      <span class="ln"><i>화면의 점 <em class="hl"><span id="heroCount">8,477</span></em>개는</i></span>
+      <span class="ln"><i>전부 <span class="hl">경상권 의원</span>의 실제 좌표입니다.</i></span>
+    </h1>
+    <p class="hero-sub">메디커넥트는 의료기관·인구·건축물 데이터를 직접 수집하고 분석해
+      병의원 개원 입지를 <b>과목별로 판정</b>하는 데이터 기반 공인중개사무소입니다.
+      어디가 비어 있고 어디가 포화인지, 좌표 단위로 알고 있습니다.</p>
+    <p class="hero-src mono">SOURCE: 건강보험심사평가원(HIRA) · 자체 수집 데이터베이스</p>
+    <div class="hero-cta">
+      <a href="#contact" class="btn btn-acc magnetic">무료 입지 상담</a>
+      <a href="#method" class="btn btn-line magnetic">분석 방법 보기 ↓</a>
+    </div>
+  </div>
+  <div class="hero-regions num" id="heroRegions"></div>
+  <div class="scroll-hint">SCROLL</div>
+</header>
+
+<!-- ===== 시네마틱 줌 브리지 (경상권 → 구미 형곡동) ===== -->
+<section class="zoom" id="zoom">
+  <div class="zoom-stage">
+    <canvas id="map-zoom"></canvas>
+    <div class="zoom-cap">
+      <div class="zc">경상권 의원 <b>8,477곳</b>.</div>
+      <div class="zc">이 중 단 한 곳을<br>들여다보겠습니다.</div>
+      <div class="zc">구미시 형곡동<span>신시로 67 — 실분석 지점</span></div>
+    </div>
+    <div class="zoom-hint mono">SCROLL — 줌 인</div>
+  </div>
+</section>
+
+<!-- ===== 방법론 ===== -->
+<section class="method" id="method">
+  <div class="wrap method-head">
+    <div class="sec-label rv">01 / METHOD</div>
+    <h2 class="sec-title rv">실제 분석 한 건을<br>그대로 보여드리겠습니다</h2>
+    <p class="sec-desc rv">구미시 형곡동의 한 메디컬빌딩 의뢰. 아래 지도의 모든 점과 숫자는 이 분석의 실제 데이터입니다.</p>
+  </div>
+  <div class="wrap method-stage" id="methodStage">
+    <div class="stage-grid">
+      <div class="steps" id="steps">
+        <div class="step" data-step="0">
+          <div class="no mono">STEP 1 / 4</div>
+          <h3>"반경 1km" 원은
+거짓말을 합니다</h3>
+          <p>흔히 받아보시는 상권 보고서는 지점 위에 원을 그리고 그 안의 인구를 셉니다.</p>
+          <p>그 원은 <b>강과 산업단지, 걷지 못하는 길</b>을 구분하지 않습니다. "배후세대 3만"의 정체는 대부분 이 원입니다.</p>
+        </div>
+        <div class="step" data-step="1">
+          <div class="no mono">STEP 2 / 4</div>
+          <h3>걸어서 몇 분인지,
+건물 단위로 다시 셉니다</h3>
+          <p>실제 도로망을 따라 <b>주변 건물 1,800동</b> 하나하나의 도보 시간을 계산하고, 건축물대장의 세대수를 얹습니다.</p>
+          <div class="stat-line num">
+            <div><span>도보 5분 내 세대</span><b>1,061</b></div>
+            <div><span>도보 10분 내 세대</span><b>6,491</b></div>
+            <div><span>도보 15분 내 세대</span><b class="acc">13,893</b></div>
+          </div>
+        </div>
+        <div class="step" data-step="2">
+          <div class="no mono">STEP 3 / 4</div>
+          <h3>경쟁은 개수가 아니라
+상태를 봅니다</h3>
+          <p>반경 500m 안 의원 <b>19곳</b>을 전수 확인합니다. 언제 열었는지, 어떤 장비가 있는지, 이전해 온 곳인지.</p>
+          <p><b>전부 오래된 의원이라면 그건 위협이 아니라 기회</b>입니다.</p>
+        </div>
+        <div class="step" data-step="3">
+          <div class="no mono">STEP 4 / 4</div>
+          <h3>결론은 한 마디가 아니라
+과목별로 갈립니다</h3>
+          <p>같은 건물의 같은 층이라도 과목에 따라 판정이 다릅니다. 이 자리의 실제 판정 — <b>14개 과목 중 8개 개원 가능.</b></p>
+          <div class="grade-chips num" id="gradeChips"></div>
+        </div>
+      </div>
+      <div class="map-panel">
+        <canvas id="map-method"></canvas>
+        <div class="map-hud mono" id="mapHud"><b>GUMI / HYEONGGOK</b><br>36.1139N · 128.3387E<br>신시로 67 — 실분석 지점</div>
+        <div class="map-legend mono" id="mapLegend"></div>
+      </div>
+    </div>
+    <div class="method-progress" id="methodProgress"><i></i><i></i><i></i><i></i></div>
+  </div>
+</section>
+
+<!-- ===== 데이터셋 가로 핀 밴드 ===== -->
+<section class="hband" id="hband">
+  <div class="hband-pin">
+    <div class="hband-track" id="hbandTrack">
+      <div class="hpanel lead">
+        <div>
+          <div class="sec-label">02 / DATABASE</div>
+          <h2>이 분석은 <span class="hl">보유 데이터</span>에서<br>나옵니다</h2>
+          <p>남의 보고서를 옮기지 않습니다. 원천 데이터를 직접 수집하고 직접 가공합니다. →</p>
+        </div>
+      </div>
+      <div class="hpanel"><div class="idx mono">DATASET 01 — MEDICAL</div><div><h3>전국 의료기관</h3><p>위치 · 진료과목 · 전문의 구성. 건강보험심사평가원 전수.</p></div></div>
+      <div class="hpanel"><div class="idx mono">DATASET 02 — EQUIPMENT</div><div><h3>의료장비 보유 현황</h3><p>CT · C-arm 등 장비 단위로 경쟁 의원의 실체를 봅니다.</p></div></div>
+      <div class="hpanel"><div class="idx mono">DATASET 03 — POPULATION</div><div><h3>행정동 인구 · 세대</h3><p>연령 구성까지. 진료과목별 수요 추정의 기초.</p></div></div>
+      <div class="hpanel"><div class="idx mono">DATASET 04 — BUILDING</div><div><h3>건축물대장</h3><p>세대수 · 용도 · 주차. 건물 단위로 배후 수요를 셉니다.</p></div></div>
+      <div class="hpanel"><div class="idx mono">DATASET 05 — HISTORY</div><div><h3>개폐업 · 이전 이력</h3><p>어디서 망하고 어디로 옮겼는지가 입지의 정직한 기록입니다.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 사례 ===== -->
+<section class="cases">
+  <div class="wrap">
+    <div class="sec-label rv">03 / CASES</div>
+    <h2 class="sec-title rv">모든 매물에는<br>분석이 붙어 나갑니다</h2>
+    <p class="sec-desc rv">자리를 소개하지 않습니다. 검증한 자리만 소개합니다.</p>
+    <div class="case-grid">
+      <a class="case-card rv" href="/listings/gumi-hyeonggok-uriem/report/">
+        <div class="loc mono">GUMI — 형곡동</div><h3>우리엠빌딩 개원 입지 분석</h3>
+        <p>의료시설 전용 건물. 배후세대·경쟁 구조·과목별 성립 가능성을 전수 검토한 공개 리포트.</p>
+        <div class="kv num"><div><span>도보 15분 배후세대</span><b>13,893</b></div><div><span>과목 판정</span><b>14과목 중 8 가능</b></div></div>
+        <div class="go">리포트 전문 보기 →</div>
+      </a>
+      <a class="case-card rv" href="/listings/busan-namcheon-daenam/">
+        <div class="loc mono">BUSAN — 남천동</div><h3>대남교차로 메디컬빌딩</h3>
+        <p>부산 핵심 교차로의 대형 평면. 차량 15분 권역과 결절 구조까지 검토한 매물.</p>
+        <div class="kv num"><div><span>입지 유형</span><b>교차로 결절</b></div><div><span>검토 범위</span><b>차량 15분 권역</b></div></div>
+        <div class="go">매물 분석 보기 →</div>
+      </a>
+      <a class="case-card rv" href="/listings/sangju-medical-center/">
+        <div class="loc mono">SANGJU — 상주</div><h3>상주 메디컬센터</h3>
+        <p>중소도시 의료 수요의 밀도를 데이터로 확인한 매물 분석.</p>
+        <div class="kv num"><div><span>분석 단위</span><b>건물 · 과목별</b></div><div><span>데이터</span><b>인구 · 경쟁 전수</b></div></div>
+        <div class="go">매물 분석 보기 →</div>
+      </a>
+    </div>
+    <p class="cases-note rv">전체 매물과 분석은 <a href="/listings/" style="color:var(--acc);text-decoration:none;font-weight:600">추천매물</a>에서 보실 수 있습니다.</p>
+  </div>
+</section>
+
+<!-- ===== 리서치 ===== -->
+<section class="research">
+  <div class="wrap">
+    <div class="sec-label rv">04 / RESEARCH</div>
+    <h2 class="sec-title rv">분석을 공개합니다</h2>
+    <p class="sec-desc rv">방법이 옳다면 공개를 두려워할 이유가 없습니다.</p>
+    <div class="res-list rv">
+      <a class="res-row" href="/insights/"><span class="tag mono">COLUMN</span><div><h3>입지분석 칼럼</h3><p>개원 입지를 데이터로 읽는 방법론과 지역 분석을 연재합니다.</p></div><span class="arr">→</span></a>
+      <a class="res-row" href="/tools/localdata-excel/"><span class="tag mono">MONTHLY DATA</span><div><h3>의원 인허가 · 개폐업 데이터</h3><p>전국 의료기관 인허가 데이터를 정리해 무료로 배포합니다.</p></div><span class="arr">→</span></a>
+      <a class="res-row" href="https://blog.naver.com/dgmediconnect" target="_blank" rel="noopener"><span class="tag mono">BLOG</span><div><h3>네이버 블로그</h3><p>장문 리포트 전문과 현장 기록.</p></div><span class="arr">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 사람(라이트 존) ===== -->
+<section class="people">
+  <div class="wrap people-grid">
+    <div>
+      <div class="sec-label rv">05 / PRINCIPLE</div>
+      <p class="state rv">입지 하나만 봅니다.<br>인테리어도, 세무도, 마케팅도<br>하지 않습니다. <span class="hl">그래서<br>이 분야에서 가장 깊습니다.</span></p>
+      <p class="state-sub rv">8년의 경상권 현장 경험. 개원 컨설팅이라는 이름으로 모든 걸 해주겠다는 곳은 많지만, 입지 분석 하나를 끝까지 파는 곳은 없었습니다.</p>
+    </div>
+    <div>
+      <div class="sec-label rv" style="margin-bottom:30px">대표 김진현 — 네 개의 렌즈</div>
+      <div class="lens rv num">
+        <div><span class="k mono">건축</span><span class="v">서울대학교 건축학과<small>건물과 평면을 읽는 눈</small></span></div>
+        <div><span class="k mono">의료</span><span class="v">약학과 졸업 · 현직 약사<small>의료 현장이 실제로 돌아가는 방식</small></span></div>
+        <div><span class="k mono">부동산</span><span class="v">개업공인중개사<small>계약과 권리관계의 실무</small></span></div>
+        <div><span class="k mono">데이터</span><span class="v">경북대 데이터사이언스 대학원<small>분석 모델을 직접 설계</small></span></div>
+      </div>
+      <p class="lens-foot rv">네 영역이 한 사람 안에서 연결될 때, 입지 분석은 보고서가 아니라 판단이 됩니다. <a href="/about/">이력 자세히 →</a></p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 문의 ===== -->
+<section class="contact" id="contact">
+  <span id="cta"></span>
+  <div class="wrap ct-grid">
+    <div>
+      <div class="sec-label rv">06 / CONTACT</div>
+      <h2 class="rv">데이터를 먼저 보시고,<br>그 다음에 판단하십시오</h2>
+      <p class="desc rv">전화 한 통이면 됩니다. 고민 중인 자리가 있다면 그 자리부터, 없다면 과목과 지역부터 시작합니다.</p>
+      <div class="fee rv"><div><span>입지 상담</span><b>0원</b></div><div><span>현장 미팅</span><b>0원</b></div><div><span>입점 시 중개 수수료</span><b>0원</b></div></div>
+      <p class="fee-note rv">자리를 찾아드리고 실제로 입점하실 때도 의사 선생님께 중개 수수료를 받지 않습니다. 보통 수백만 원에서 천만 원이 넘는 비용입니다.</p>
+    </div>
+    <div class="ct-card rv">
+      <div class="t mono">DIRECT LINE</div>
+      <a href="tel:010-9629-1673" class="ct-phone num">010-9629-1673</a>
+      <div class="ct-rows">
+        <div><span>EMAIL</span><b>nirvana995@naver.com</b></div>
+        <div><span>OFFICE</span><b>메디커넥트 공인중개사무소<br>대구광역시 수성구 달구벌대로 3188 301호</b></div>
+      </div>
+      <div class="ask-mini">
+        <p>"이 자리가 괜찮은 건지 확인해주세요."</p>
+        <p>"C-arm 시술 많이 할 수 있는 정형외과 자리 찾습니다."</p>
+        <p>"경쟁 피하면서 되는 곳이 있을까요?"</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap footer-grid">
+    <div>
+      <div class="brand-line">MEDICONNECT<i>.</i></div>
+      <p>메디커넥트 공인중개사무소 · 대표 김진현 (개업공인중개사 / 현직 약사)<br>
+         대구광역시 수성구 달구벌대로 3188 301호 · 010-9629-1673 · nirvana995@naver.com<br>
+         © 메디커넥트 공인중개사무소. All rights reserved.</p>
+    </div>
+    <div class="links">
+      <a href="/about/">회사소개</a><a href="/listings/">추천매물</a><a href="/insights/">리서치</a>
+      <a href="https://blog.naver.com/dgmediconnect" target="_blank" rel="noopener">블로그</a>
+    </div>
+  </div>
+</footer>
+
+<a href="tel:010-9629-1673" class="floating-call" aria-label="전화 상담">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0a0c0e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+  </svg>
+</a>
+
+<script src="/redesign-v4-data.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+<script>
+(function(){
+  /* 최우선 안전장치: 무슨 일이 있어도 6초 뒤 진입 커튼은 사라진다(영구 가림 방지) */
+  setTimeout(()=>{const i=document.getElementById('intro');if(i&&i.style.display!=='none')i.style.display='none';},6000);
+
+  const MC = window.MC || {points:[],counts:{},total:0,gumi:null};
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const noAnim = location.search.indexOf('noanim') > -1 || reduced || typeof gsap === 'undefined';
+  const isMobile = window.matchMedia('(max-width: 900px)').matches;
+  const COS = Math.cos(35.7*Math.PI/180);
+
+  /* 전화 GA */
+  document.querySelectorAll('a[href^="tel:"]').forEach(l=>l.addEventListener('click',()=>{
+    if(typeof gtag==='function') gtag('event','click_phone',{event_category:'lead',event_label:l.getAttribute('href')});
+  }));
+  /* 내비 */
+  const nav=document.getElementById('nav');
+  const onNav=()=>nav.classList.toggle('scrolled',window.scrollY>30);
+  window.addEventListener('scroll',onNav,{passive:true}); onNav();
+  /* 히어로 텍스트 */
+  document.getElementById('heroCount').textContent=(MC.total||0).toLocaleString('ko-KR');
+  const regEl=document.getElementById('heroRegions');
+  if(regEl&&MC.counts) regEl.innerHTML=Object.entries(MC.counts).map(([k,v])=>'<span><b>'+v.toLocaleString('ko-KR')+'</b>'+k+' 의원</span>').join('');
+  /* 판정 칩 */
+  const chips=document.getElementById('gradeChips');
+  if(chips&&MC.gumi){
+    const ord={A:0,B:1,C:2,D:3}, cls={A:'gA',B:'gB',C:'gC',D:'gD'};
+    const gs=MC.gumi.grades.slice().sort((a,b)=>(ord[a.g]-ord[b.g])||a.d.localeCompare(b.d));
+    chips.innerHTML=gs.map(x=>'<span class="chip '+(cls[x.g]||'gC')+'"><b>'+x.g+'</b>'+x.d+'</span>').join('');
+  }
+  const legend=document.getElementById('mapLegend');
+  if(legend) legend.innerHTML='<span><i style="background:rgba(94,234,212,.95)"></i>도보 5분</span><span><i style="background:rgba(20,160,150,.7)"></i>15분</span><span><i style="background:#fbbf24"></i>경쟁 의원</span>';
+
+  function setupCanvas(c){const ctx=c.getContext('2d');const fit=()=>{const d=Math.min(window.devicePixelRatio||1,2);c.width=c.offsetWidth*d;c.height=c.offsetHeight*d;ctx.setTransform(d,0,0,d,0,0);};fit();return{ctx,fit,get w(){return c.offsetWidth},get h(){return c.offsetHeight}};}
+
+  /* ============ 히어로 점지도: 스캔 라인 reveal (모든 점=실좌표) ============ */
+  const heroCv=document.getElementById('map-hero');
+  let heroAssemble=null;
+  if(heroCv&&MC.points.length){
+    const dpr=Math.min(window.devicePixelRatio||1,2);
+    const ctx=heroCv.getContext('2d');
+    const LABELS=[['대구',128.601,35.871],['부산',129.075,35.180],['울산',129.311,35.539],['구미',128.344,36.119],['창원',128.681,35.228],['포항',129.343,36.019]];
+    let lngMin=999,lngMax=-999,latMin=999,latMax=-999;
+    for(const p of MC.points){if(p[0]<lngMin)lngMin=p[0];if(p[0]>lngMax)lngMax=p[0];if(p[1]<latMin)latMin=p[1];if(p[1]>latMax)latMax=p[1];}
+    let W,H,P,targets=[],labels=[],base,bctx,heroDone=false,twRaf=null;
+    const build=()=>{
+      W=heroCv.offsetWidth;H=heroCv.offsetHeight;
+      heroCv.width=W*dpr;heroCv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
+      const pw=(lngMax-lngMin)*COS,ph=latMax-latMin,m=42;
+      const s=Math.min((W-m*2)/pw,(H-m*2)/ph);
+      const ox=W-(lngMax-lngMin)*COS*s-m, oy=m;
+      P=(lng,lat)=>[ox+(lng-lngMin)*COS*s,oy+(latMax-lat)*s];
+      targets=MC.points.map(pt=>P(pt[0],pt[1]));
+      labels=LABELS.map(([nm,lng,lat])=>{const[x,y]=P(lng,lat);return[nm,x,y];});
+      // 밀집 글로우 핫스팟(대구·부산 코어 등)
+      const cell=Math.max(W,H)/24, grid={};
+      for(const t of targets){const k=Math.floor(t[0]/cell)+'_'+Math.floor(t[1]/cell);grid[k]=(grid[k]||0)+1;}
+      const glows=Object.entries(grid).filter(e=>e[1]>38).map(e=>{const[gx,gy]=e[0].split('_').map(Number);return[gx*cell+cell/2,gy*cell+cell/2,e[1]];});
+      // 오프스크린 베이스(점+글로우) 1회 생성
+      base=document.createElement('canvas');base.width=W*dpr;base.height=H*dpr;
+      bctx=base.getContext('2d');bctx.setTransform(dpr,0,0,dpr,0,0);
+      for(const[gx,gy,c]of glows){const r=cell*1.8;const gr=bctx.createRadialGradient(gx,gy,0,gx,gy,r);
+        gr.addColorStop(0,'rgba(45,212,191,'+Math.min(.18,c/820)+')');gr.addColorStop(1,'rgba(45,212,191,0)');
+        bctx.fillStyle=gr;bctx.beginPath();bctx.arc(gx,gy,r,0,6.283);bctx.fill();}
+      bctx.fillStyle='rgba(45,212,191,.44)';
+      for(const t of targets)bctx.fillRect(t[0],t[1],1.5,1.5);
+      bctx.fillStyle='rgba(150,255,242,.14)';
+      for(let i=0;i<targets.length;i+=3)bctx.fillRect(targets[i][0]-1,targets[i][1]-1,3,3);
+    };
+    const drawLabels=()=>{ctx.font='11px ui-monospace,Consolas,monospace';
+      for(const[nm,x,y]of labels){ctx.strokeStyle='rgba(232,235,238,.4)';ctx.lineWidth=1;
+        ctx.beginPath();ctx.moveTo(x-7,y);ctx.lineTo(x+7,y);ctx.moveTo(x,y-7);ctx.lineTo(x,y+7);ctx.stroke();
+        ctx.fillStyle='rgba(232,235,238,.78)';ctx.fillText(nm,x+10,y-8);}};
+    const blit=()=>{ctx.clearRect(0,0,W,H);ctx.drawImage(base,0,0,W*dpr,H*dpr,0,0,W,H);};
+    const drawStatic=()=>{blit();drawLabels();};
+    const twinkle=()=>{ // 살아있는 반짝임(실좌표 점 일부만 밝게)
+      blit();
+      const now=performance.now();
+      ctx.fillStyle='rgba(170,255,245,.95)';
+      for(let k=0;k<36;k++){const i=(Math.floor(now/110)*13+k*331)%targets.length;const t=targets[i];
+        ctx.globalAlpha=.45+.5*Math.sin(now/320+k);ctx.fillRect(t[0]-1,t[1]-1,2.6,2.6);}
+      ctx.globalAlpha=1;drawLabels();twRaf=requestAnimationFrame(twinkle);};
+    build();
+    window.addEventListener('resize',()=>{if(twRaf){cancelAnimationFrame(twRaf);twRaf=null;}build();drawStatic();if(heroDone&&!noAnim)twRaf=requestAnimationFrame(twinkle);});
+    heroAssemble=(onDone)=>{
+      let t0=null;const DUR=2100;
+      const tick=(ts)=>{ if(!t0)t0=ts; const g=Math.min((ts-t0)/DUR,1);
+        ctx.clearRect(0,0,W,H);
+        const rx=Math.max(1,g*W);
+        ctx.drawImage(base,0,0,rx*dpr,H*dpr,0,0,rx,H); // 좌→우로 실좌표 점만 드러남
+        // 스캔 라인 + 선행 글로우
+        const lg=ctx.createLinearGradient(rx-70,0,rx,0);
+        lg.addColorStop(0,'rgba(45,212,191,0)');lg.addColorStop(1,'rgba(45,212,191,.22)');
+        ctx.fillStyle=lg;ctx.fillRect(rx-70,0,70,H);
+        ctx.strokeStyle='rgba(140,255,242,.95)';ctx.lineWidth=2;
+        ctx.shadowColor='rgba(45,212,191,.9)';ctx.shadowBlur=18;
+        ctx.beginPath();ctx.moveTo(rx,0);ctx.lineTo(rx,H);ctx.stroke();ctx.shadowBlur=0;
+        if(g<1) requestAnimationFrame(tick);
+        else{ heroDone=true; drawStatic(); if(!noAnim)twRaf=requestAnimationFrame(twinkle); if(onDone)onDone(); } };
+      requestAnimationFrame(tick);
+    };
+    if(noAnim){ drawStatic(); heroDone=true; }
+  }
+
+  /* ============ 방법론 지도 (v4 검증 엔진) ============ */
+  const mCv=document.getElementById('map-method');
+  let drawMethod=null, methodLastP=0;
+  if(mCv&&MC.gumi){
+    const M=setupCanvas(mCv); const g=MC.gumi; const C={lat:g.center.lat,lng:g.center.lng};
+    const localPts=MC.points.filter(p=>Math.abs(p[1]-C.lat)<0.05&&Math.abs(p[0]-C.lng)<0.06);
+    const ramp=(p,a,b)=>Math.max(0,Math.min(1,(p-a)/(b-a)));
+    let PM; const projM=()=>{const span=0.024,s=M.h/(span*2);PM=(lng,lat)=>[M.w/2+(lng-C.lng)*COS*s,M.h/2+(C.lat-lat)*s];};
+    const tCol=(t)=>t<=5?'rgba(94,234,212,.95)':t<=10?'rgba(45,212,191,.75)':t<=15?'rgba(20,160,150,.6)':'rgba(16,100,98,.45)';
+    const KM1=1/110.574;
+    projM();
+    drawMethod=(p)=>{
+      const ctx=M.ctx; ctx.clearRect(0,0,M.w,M.h);
+      const compA=ramp(p,2.0,2.7);
+      for(const pt of localPts){const [x,y]=PM(pt[0],pt[1]);if(x<-10||x>M.w+10||y<-10||y>M.h+10)continue;
+        const d=Math.hypot((pt[0]-C.lng)*COS,pt[1]-C.lat); const near=d<0.0052;
+        if(near&&compA>0){ctx.fillStyle='rgba(251,191,36,'+(0.85*compA)+')';ctx.beginPath();ctx.arc(x,y,3.2,0,6.283);ctx.fill();
+          ctx.strokeStyle='rgba(251,191,36,'+(0.4*compA)+')';ctx.beginPath();ctx.arc(x,y,6.5,0,6.283);ctx.stroke();}
+        else{ctx.fillStyle='rgba(139,147,156,.4)';ctx.fillRect(x-1,y-1,2.2,2.2);}}
+      const c1=ramp(p,0.05,0.55)*(1-0.8*ramp(p,1.0,1.6));
+      if(c1>0.01){const r=KM1*(M.h/0.048);const [cx,cy]=PM(C.lng,C.lat);
+        ctx.setLineDash([6,5]);ctx.strokeStyle='rgba(248,113,113,'+(0.8*c1)+')';ctx.lineWidth=1.5;
+        ctx.beginPath();ctx.arc(cx,cy,r,0,6.283);ctx.stroke();ctx.setLineDash([]);
+        ctx.fillStyle='rgba(248,113,113,'+(0.05*c1)+')';ctx.beginPath();ctx.arc(cx,cy,r,0,6.283);ctx.fill();
+        ctx.font='11px ui-monospace,Consolas,monospace';ctx.fillStyle='rgba(248,113,113,'+c1+')';ctx.fillText('R = 1km — 지형·도로 무시',cx-r*0.5,cy-r-10);}
+      const bA=ramp(p,1.05,2.0);
+      if(bA>0.01){const tMax=20*ramp(p,1.05,1.9);const dim=p>3.1?0.45:1;
+        for(const b of g.buildings){if(b[2]>tMax)continue;const [x,y]=PM(b[1],b[0]);
+          const sz=Math.min(1.6+Math.sqrt(b[3])*0.22,5);ctx.fillStyle=tCol(b[2]);
+          ctx.globalAlpha=Math.min(bA*1.2,1)*dim;ctx.fillRect(x-sz/2,y-sz/2,sz,sz);}ctx.globalAlpha=1;}
+      const [cx2,cy2]=PM(C.lng,C.lat);const pulse=(performance.now()%2000)/2000;
+      ctx.strokeStyle='rgba(232,235,238,'+(0.5*(1-pulse))+')';ctx.lineWidth=1.2;ctx.beginPath();ctx.arc(cx2,cy2,5+pulse*16,0,6.283);ctx.stroke();
+      ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(cx2,cy2,4,0,6.283);ctx.fill();
+      ctx.strokeStyle='rgba(10,12,14,.9)';ctx.beginPath();ctx.arc(cx2,cy2,4,0,6.283);ctx.stroke();
+    };
+    window.addEventListener('resize',()=>{M.fit();projM();});
+    const loop=()=>{drawMethod(methodLastP);requestAnimationFrame(loop);};
+    if(!noAnim) requestAnimationFrame(loop);
+  }
+
+  const stepEls=Array.from(document.querySelectorAll('.step'));
+  const progEls=Array.from(document.querySelectorAll('#methodProgress i'));
+  const setStep=(p)=>{const idx=Math.max(0,Math.min(3,Math.floor(p)));if(!isMobile)stepEls.forEach((el,i)=>el.classList.toggle('on',i===idx));progEls.forEach((el,i)=>el.classList.toggle('on',i<=idx));};
+
+  /* ============ noAnim 종료 경로 ============ */
+  if(noAnim){
+    document.getElementById('intro').style.display='none';
+    if(drawMethod) drawMethod(4);
+    stepEls.forEach(el=>el.classList.add('on')); setStep(3);
+    document.querySelectorAll('.hero-tag,.hero-sub,.hero-src,.hero-cta,.hero-regions,.scroll-hint').forEach(e=>e.style.opacity=1);
+    document.querySelectorAll('.hero h1 .ln>i').forEach(e=>e.style.transform='none');
+    return;
+  }
+
+  gsap.registerPlugin(ScrollTrigger);
+  const lenis=new Lenis({duration:1.15,smoothWheel:true});
+  lenis.on('scroll',ScrollTrigger.update);
+  gsap.ticker.add(t=>lenis.raf(t*1000)); gsap.ticker.lagSmoothing(0);
+  lenis.stop(); // 인트로 동안 스크롤 잠금
+  document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{
+    const t=document.querySelector(a.getAttribute('href')); if(t){e.preventDefault();lenis.scrollTo(t,{offset:-50});}}));
+
+  /* 진행바 */
+  gsap.to('#progress',{scaleX:1,ease:'none',scrollTrigger:{trigger:document.body,start:'top top',end:'bottom bottom',scrub:.3}});
+
+  /* ============ 진입 연출 타임라인 ============ */
+  const tl=gsap.timeline();
+  tl.to('#intro .imark',{opacity:1,duration:.5,ease:'power2.out'},.1)
+    .to('#intro .iline',{width:280,duration:.7,ease:'power2.inOut'},.2)
+    .to('#intro .itag',{opacity:1,duration:.4},.4)
+    .to('#intro',{yPercent:-100,duration:.9,ease:'power4.inOut',
+      onStart:()=>{ if(heroAssemble) heroAssemble(); },
+      onComplete:()=>{ document.getElementById('intro').style.display='none'; }},1.0)
+    .from('.hero h1 .ln>i',{yPercent:115,duration:1.2,stagger:.14,ease:'power4.out'},1.25)
+    .to('.hero-tag',{opacity:1,duration:.8},1.2)
+    .to('.hero-sub',{opacity:1,y:0,duration:1,ease:'power3.out'},1.7)
+    .to('.hero-src',{opacity:1,duration:.8},1.95)
+    .to('.hero-cta',{opacity:1,y:0,duration:.9,ease:'power3.out'},2.0)
+    .to('.hero-regions',{opacity:1,duration:1},2.1)
+    .to('.scroll-hint',{opacity:1,duration:.8},2.3)
+    .add(()=>lenis.start(),1.0);  // 커튼 리프트 시작과 함께 스크롤 해제
+  /* 카운터 0→total */
+  const cObj={n:0};
+  gsap.to(cObj,{n:MC.total||0,duration:2.0,ease:'power2.out',delay:1.25,
+    onUpdate:()=>{document.getElementById('heroCount').textContent=Math.round(cObj.n).toLocaleString('ko-KR');}});
+
+  /* 히어로 패럴럭스 */
+  gsap.to('#heroInner',{yPercent:-12,opacity:.6,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:.5}});
+  gsap.to('#map-hero',{yPercent:8,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:.8}});
+
+  /* 공통 리빌 */
+  document.querySelectorAll('.rv').forEach(el=>gsap.from(el,{y:34,opacity:0,duration:1.0,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 90%'}}));
+
+  /* ============ 시네마틱 줌 브리지 (경상권 → 구미 형곡동) ============ */
+  const zCv=document.getElementById('map-zoom');
+  if(zCv && MC.points.length && MC.gumi){
+    const zdpr=Math.min(window.devicePixelRatio||1,2);
+    const zctx=zCv.getContext('2d');
+    let ZW,ZH;
+    const zfit=()=>{ZW=zCv.offsetWidth;ZH=zCv.offsetHeight;zCv.width=ZW*zdpr;zCv.height=ZH*zdpr;zctx.setTransform(zdpr,0,0,zdpr,0,0);};
+    zfit();
+    let lo=999,hi=-999,la0=999,la1=-999;
+    for(const p of MC.points){if(p[0]<lo)lo=p[0];if(p[0]>hi)hi=p[0];if(p[1]<la0)la0=p[1];if(p[1]>la1)la1=p[1];}
+    const regCx=(lo+hi)/2, regCy=(la0+la1)/2;
+    const regSpan=Math.max(la1-la0,(hi-lo)*COS)/2*1.12;
+    const G={lat:MC.gumi.center.lat,lng:MC.gumi.center.lng};
+    const lerp=(a,b,t)=>a+(b-a)*t, sm=(e,a,b)=>{const t=Math.max(0,Math.min(1,(e-a)/(b-a)));return t*t*(3-2*t);};
+    const easeIO=(t)=>t<0.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;  // ① 이징: 느린 시작→가속→감속 착지
+    const near=[],far=[];
+    for(const p of MC.points){(Math.abs(p[1]-G.lat)<0.06&&Math.abs(p[0]-G.lng)<0.07)?near.push(p):far.push(p);}
+    const farStep=isMobile?2:1;  // 모바일 성능: 먼 점 절반만
+    const CITY=[['대구',128.601,35.871],['부산',129.075,35.180],['울산',129.311,35.539],['포항',129.343,36.019],['창원',128.681,35.228],['김해',128.889,35.234]];
+    const zcs=Array.from(document.querySelectorAll('.zoom-cap .zc'));
+    const drawZoom=(z)=>{
+      const k=easeIO(z);
+      const span=Math.exp(lerp(Math.log(regSpan),Math.log(0.02),k));
+      const cx=lerp(regCx,G.lng,k), cy=lerp(regCy,G.lat,k), s=ZH/(span*2);
+      const PX=(lng,lat)=>[ZW/2+(lng-cx)*COS*s, ZH/2+(cy-lat)*s];
+      zctx.clearRect(0,0,ZW,ZH);
+      const aFar=0.5*(1-sm(z,0.40,0.82));
+      if(aFar>0.01){zctx.fillStyle='rgba(45,212,191,'+aFar+')';
+        for(let i=0;i<far.length;i+=farStep){const p=far[i];const[x,y]=PX(p[0],p[1]);if(x<-20||x>ZW+20||y<-20||y>ZH+20)continue;zctx.fillRect(x,y,1.7,1.7);}}
+      zctx.fillStyle='rgba(94,234,212,'+(0.5+0.35*sm(z,0.3,1))+')';
+      const nsz=1.7+2.0*sm(z,0.4,1);
+      for(const p of near){const[x,y]=PX(p[0],p[1]);if(x<-20||x>ZW+20||y<-20||y>ZH+20)continue;zctx.fillRect(x-nsz/2,y-nsz/2,nsz,nsz);}
+      // ② 지나치는 도시명 — 화면 안에 있고 아직 구미 잠금 전(z<0.92)일 때만
+      const aCity=(1-sm(z,0.78,0.94));
+      if(aCity>0.03){zctx.font='12px ui-monospace,Consolas,monospace';
+        for(const[nm,lng,lat]of CITY){const[x,y]=PX(lng,lat);
+          if(x<46||x>ZW-46||y<70||y>ZH-46)continue;
+          zctx.strokeStyle='rgba(232,235,238,'+(0.35*aCity)+')';zctx.lineWidth=1;
+          zctx.beginPath();zctx.moveTo(x-6,y);zctx.lineTo(x+6,y);zctx.moveTo(x,y-6);zctx.lineTo(x,y+6);zctx.stroke();
+          zctx.fillStyle='rgba(232,235,238,'+(0.7*aCity)+')';zctx.fillText(nm,x+9,y-7);}}
+      // 중심 마커
+      const[mx,my]=PX(G.lng,G.lat), mr=2+k*4;
+      zctx.strokeStyle='rgba(140,255,242,'+(0.3+0.6*sm(z,0.25,1))+')';zctx.lineWidth=1.4;
+      zctx.beginPath();zctx.arc(mx,my,mr+7,0,6.283);zctx.stroke();
+      zctx.fillStyle='#fff';zctx.beginPath();zctx.arc(mx,my,mr,0,6.283);zctx.fill();
+      zctx.strokeStyle='rgba(10,12,14,.9)';zctx.beginPath();zctx.arc(mx,my,mr,0,6.283);zctx.stroke();
+      // ③ 도착 "착" 잠금 — z>0.85에서 조준 브래킷이 좁혀들며 고정
+      const lock=sm(z,0.85,1);
+      if(lock>0.01){const d=lerp(64,18,lock), a=lock;
+        zctx.strokeStyle='rgba(140,255,242,'+(0.85*a)+')';zctx.lineWidth=1.6;
+        const arm=9;
+        const corner=(sx,sy,dx,dy)=>{zctx.beginPath();zctx.moveTo(sx,sy+dy*arm);zctx.lineTo(sx,sy);zctx.lineTo(sx+dx*arm,sy);zctx.stroke();};
+        corner(mx-d,my-d,1,1);corner(mx+d,my-d,-1,1);corner(mx-d,my+d,1,-1);corner(mx+d,my+d,-1,-1);
+        if(lock>0.6){zctx.font='11px ui-monospace,Consolas,monospace';zctx.fillStyle='rgba(140,255,242,'+a+')';
+          zctx.fillText('LOCKED · 신시로 67',mx+d+8,my-d+2);}}
+      if(zcs[0])zcs[0].style.opacity=(1-sm(z,0.18,0.30));
+      if(zcs[1])zcs[1].style.opacity=(sm(z,0.30,0.40)*(1-sm(z,0.58,0.68)));
+      if(zcs[2])zcs[2].style.opacity=sm(z,0.66,0.80);
+    };
+    window.addEventListener('resize',zfit);
+    drawZoom(0);
+    ScrollTrigger.create({trigger:'#zoom',start:'top top',end:'bottom bottom',pin:'.zoom-stage',scrub:isMobile?.7:.5,
+      invalidateOnRefresh:true,onUpdate(self){drawZoom(self.progress);}});
+  }
+
+  /* ============ 방법론 핀 ============ */
+  if(drawMethod){
+    if(!isMobile){
+      setStep(0);
+      ScrollTrigger.create({trigger:'#methodStage',start:'top top+=90',end:'+=3600',pin:true,scrub:.4,
+        invalidateOnRefresh:true,onUpdate(self){methodLastP=self.progress*4;setStep(methodLastP);}});
+    } else {
+      methodLastP=4; setStep(3); drawMethod(4);
+    }
+  }
+
+  /* ============ 데이터셋 가로 핀 밴드 (핀은 DOM 순서대로 — 줌·방법론 다음에 생성) ============ */
+  if(!isMobile){
+    const track=document.getElementById('hbandTrack');
+    const getX=()=>Math.max(0, track.scrollWidth - window.innerWidth + 44);
+    gsap.to(track,{x:()=>-getX(),ease:'none',
+      scrollTrigger:{trigger:'#hband',start:'top top',end:()=>'+='+getX(),scrub:.5,pin:'.hband-pin',invalidateOnRefresh:true}});
+  }
+
+  /* 모든 핀 생성 후 위치 재계산 (스택 핀 스페이서 정합) */
+  ScrollTrigger.refresh();
+
+  /* ============ 커스텀 커서 + 마그네틱 ============ */
+  if(window.matchMedia('(hover:hover) and (pointer:fine)').matches){
+    const cur=document.getElementById('cursor'); cur.style.display='block';
+    const xt=gsap.quickTo(cur,'x',{duration:.35,ease:'power3'}), yt=gsap.quickTo(cur,'y',{duration:.35,ease:'power3'});
+    window.addEventListener('pointermove',e=>{xt(e.clientX);yt(e.clientY);});
+    document.querySelectorAll('a,button,.case-card,.res-row').forEach(el=>{
+      el.addEventListener('pointerenter',()=>cur.classList.add('on'));
+      el.addEventListener('pointerleave',()=>cur.classList.remove('on'));
+    });
+    document.querySelectorAll('.magnetic').forEach(btn=>{
+      btn.addEventListener('pointermove',e=>{const r=btn.getBoundingClientRect();
+        gsap.to(btn,{x:(e.clientX-r.left-r.width/2)*.28,y:(e.clientY-r.top-r.height/2)*.4,duration:.4,ease:'power3.out'});});
+      btn.addEventListener('pointerleave',()=>gsap.to(btn,{x:0,y:0,duration:.6,ease:'elastic.out(1,.4)'}));
+    });
+  }
+
+  /* 안전장치: 5초 내 인트로가 안 사라지면 강제 제거 */
+  setTimeout(()=>{const i=document.getElementById('intro');if(i&&i.style.display!=='none'){i.style.display='none';lenis.start();}},5000);
+})();
+</script>
+</body>
+</html>
