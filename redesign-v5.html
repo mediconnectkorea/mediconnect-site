@@ -298,15 +298,18 @@ a{color:inherit}
   .zoom-hint{display:none}
   .method{padding:56px 0 0}
   .method-head{margin-bottom:30px}
-  .stage-grid{display:flex;flex-direction:column;height:auto;min-height:0;gap:0}
-  .map-panel{height:42svh;min-height:280px;position:sticky;top:56px;order:-1;z-index:1}
-  .steps{position:relative;margin-top:20px}
-  .step{position:relative;opacity:.26;pointer-events:auto;min-height:66vh;display:flex;flex-direction:column;justify-content:center;margin:0;padding:6px 0;transition:opacity .35s}
-  .step.on{opacity:1}
-  .step h3{font-size:22px}
-  .grade-chips{gap:6px}
-  .chip{padding:6px 10px;font-size:12.5px}
-  .method-progress{display:none}
+  .stage-grid{display:flex;flex-direction:column;height:auto;min-height:0;gap:12px}
+  .map-panel{height:40svh;min-height:260px;position:relative;order:-1}
+  .steps{position:relative;height:44svh;min-height:290px}
+  .step{position:absolute;inset:0;opacity:0;pointer-events:none;justify-content:flex-start;margin:0;overflow:hidden;transition:opacity .35s}
+  .step.on{opacity:1;pointer-events:auto}
+  .step .no{margin-bottom:12px}
+  .step h3{font-size:21px;margin-bottom:10px}
+  .step p{font-size:14px;margin-bottom:7px}
+  .step .stat-line{margin-top:12px;padding-top:12px}
+  .grade-chips{gap:6px;margin-top:10px}
+  .chip{padding:5px 9px;font-size:12px}
+  .method-progress{display:flex;margin-top:12px}
   .cases{padding:80px 0}
   .case-grid{grid-template-columns:1fr}
   .research{padding:0 0 80px}
@@ -839,21 +842,13 @@ a{color:inherit}
       invalidateOnRefresh:true,onUpdate(self){drawZoom(self.progress);}});
   }
 
-  /* ============ 방법론: 데스크톱=핀 스크럽 / 모바일=지도 sticky + 스텝별 트리거 ============ */
+  /* ============ 방법론 핀 스크럽 (데스크톱·모바일 공통, 레이아웃만 반응형) ============ */
   if(drawMethod){
     setStep(0);
-    if(!isMobile){
-      ScrollTrigger.create({trigger:'#methodStage',start:'top top+=90',end:'+=3600',pin:true,scrub:.4,
-        invalidateOnRefresh:true,onUpdate(self){MP.v=self.progress*4;setStep(MP.v);}});
-    } else {
-      // 모바일: 지도는 CSS sticky로 고정, 각 스텝이 화면에 들어올 때 지도 상태를 부드럽게 전환
-      MP.v=0.5;
-      stepEls.forEach((el,i)=>{
-        ScrollTrigger.create({trigger:el,start:'top 60%',
-          onEnter(){gsap.to(MP,{v:i+0.7,duration:.6,ease:'power2.out',overwrite:true});setStep(i+0.5);},
-          onEnterBack(){gsap.to(MP,{v:i+0.7,duration:.6,ease:'power2.out',overwrite:true});setStep(i+0.5);}});
-      });
-    }
+    ScrollTrigger.create({trigger:'#methodStage',
+      start: isMobile?'top top+=54':'top top+=90',
+      end: isMobile?'+=2800':'+=3600', pin:true, scrub:.4, invalidateOnRefresh:true,
+      onUpdate(self){MP.v=self.progress*4; setStep(MP.v);}});
   }
 
   /* ============ 데이터셋 가로 핀 밴드 (핀은 DOM 순서대로 — 줌·방법론 다음에 생성) ============ */
