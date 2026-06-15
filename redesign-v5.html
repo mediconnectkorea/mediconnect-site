@@ -296,12 +296,16 @@ a{color:inherit}
   .hpanel.lead{width:100%;padding:0 0 8px}
   .zoom-cap .zc{font-size:clamp(22px,6.6vw,40px)}
   .zoom-hint{display:none}
-  .method{padding:70px 0 0}
-  .method-head{margin-bottom:34px}
-  .stage-grid{grid-template-columns:1fr;height:auto;min-height:0;gap:24px}
-  .steps{min-height:0}
-  .step{position:relative;opacity:1;pointer-events:auto;margin-bottom:42px;justify-content:flex-start}
-  .map-panel{height:52vh;min-height:360px;position:relative;order:-1}
+  .method{padding:56px 0 0}
+  .method-head{margin-bottom:30px}
+  .stage-grid{display:flex;flex-direction:column;height:auto;min-height:0;gap:0}
+  .map-panel{height:42svh;min-height:280px;position:sticky;top:56px;order:-1;z-index:1}
+  .steps{position:relative;margin-top:20px}
+  .step{position:relative;opacity:.26;pointer-events:auto;min-height:66vh;display:flex;flex-direction:column;justify-content:center;margin:0;padding:6px 0;transition:opacity .35s}
+  .step.on{opacity:1}
+  .step h3{font-size:22px}
+  .grade-chips{gap:6px}
+  .chip{padding:6px 10px;font-size:12.5px}
   .method-progress{display:none}
   .cases{padding:80px 0}
   .case-grid{grid-template-columns:1fr}
@@ -679,7 +683,7 @@ a{color:inherit}
 
   /* ============ 방법론 지도 (v4 검증 엔진) ============ */
   const mCv=document.getElementById('map-method');
-  let drawMethod=null, methodLastP=0;
+  let drawMethod=null; const MP={v:0};
   if(mCv&&MC.gumi){
     const M=setupCanvas(mCv); const g=MC.gumi; const C={lat:g.center.lat,lng:g.center.lng};
     const localPts=MC.points.filter(p=>Math.abs(p[1]-C.lat)<0.05&&Math.abs(p[0]-C.lng)<0.06);
@@ -713,13 +717,13 @@ a{color:inherit}
       ctx.strokeStyle='rgba(10,12,14,.9)';ctx.beginPath();ctx.arc(cx2,cy2,4,0,6.283);ctx.stroke();
     };
     window.addEventListener('resize',()=>{M.fit();projM();});
-    const loop=()=>{drawMethod(methodLastP);requestAnimationFrame(loop);};
+    const loop=()=>{drawMethod(MP.v);requestAnimationFrame(loop);};
     if(!noAnim) requestAnimationFrame(loop);
   }
 
   const stepEls=Array.from(document.querySelectorAll('.step'));
   const progEls=Array.from(document.querySelectorAll('#methodProgress i'));
-  const setStep=(p)=>{const idx=Math.max(0,Math.min(3,Math.floor(p)));if(!isMobile)stepEls.forEach((el,i)=>el.classList.toggle('on',i===idx));progEls.forEach((el,i)=>el.classList.toggle('on',i<=idx));};
+  const setStep=(p)=>{const idx=Math.max(0,Math.min(3,Math.floor(p)));stepEls.forEach((el,i)=>el.classList.toggle('on',i===idx));progEls.forEach((el,i)=>el.classList.toggle('on',i<=idx));};
 
   /* ============ noAnim 종료 경로 ============ */
   if(noAnim){
@@ -835,14 +839,20 @@ a{color:inherit}
       invalidateOnRefresh:true,onUpdate(self){drawZoom(self.progress);}});
   }
 
-  /* ============ 방법론 핀 ============ */
+  /* ============ 방법론: 데스크톱=핀 스크럽 / 모바일=지도 sticky + 스텝별 트리거 ============ */
   if(drawMethod){
+    setStep(0);
     if(!isMobile){
-      setStep(0);
       ScrollTrigger.create({trigger:'#methodStage',start:'top top+=90',end:'+=3600',pin:true,scrub:.4,
-        invalidateOnRefresh:true,onUpdate(self){methodLastP=self.progress*4;setStep(methodLastP);}});
+        invalidateOnRefresh:true,onUpdate(self){MP.v=self.progress*4;setStep(MP.v);}});
     } else {
-      methodLastP=4; setStep(3); drawMethod(4);
+      // 모바일: 지도는 CSS sticky로 고정, 각 스텝이 화면에 들어올 때 지도 상태를 부드럽게 전환
+      MP.v=0.5;
+      stepEls.forEach((el,i)=>{
+        ScrollTrigger.create({trigger:el,start:'top 60%',
+          onEnter(){gsap.to(MP,{v:i+0.7,duration:.6,ease:'power2.out',overwrite:true});setStep(i+0.5);},
+          onEnterBack(){gsap.to(MP,{v:i+0.7,duration:.6,ease:'power2.out',overwrite:true});setStep(i+0.5);}});
+      });
     }
   }
 
