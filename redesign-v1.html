@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- ============================================================
+         리디자인 시안 v1 (에디토리얼 프리미엄) — 2026-06-12
+         디자인 베이스: 글작성자료/글쓰기opus4.8/디자인_에디토리얼_v1.css
+         ★ 시안 파일. 라이브 반영 시 index.html로 교체하고
+           아래 robots noindex를 "index, follow"로 되돌릴 것.
+         ============================================================ -->
+    <meta name="robots" content="noindex, nofollow">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YF6FC9EBS3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-YF6FC9EBS3');
+    </script>
+    <title>메디커넥트 공인중개사무소 — 대구·부산 병의원 개원 입지 분석 전문</title>
+    <meta name="description" content="경상권 병의원 개원 입지와 메디컬빌딩 매물을 데이터로 분석하는 공인중개사무소입니다.">
+    <link rel="shortcut icon" href="https://mediconnect.co.kr/assets/og/mediconnect-favicon.png">
+    <link rel="icon" type="image/png" href="https://mediconnect.co.kr/assets/og/mediconnect-favicon.png">
+    <script defer src="/assets/site-nav.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700&display=swap">
+
+    <style>
+        :root{
+            --ink:#23201c; --head:#171310; --muted:#7c736a; --faint:#aaa093;
+            --accent:#9a2515; --accent-soft:#f3ece7;
+            --paper:#fbfaf8; --page:#ece8e0; --rule:#e7e1d6; --rule2:#d6cdbe;
+        }
+        *{margin:0;padding:0;box-sizing:border-box}
+        html{scroll-behavior:smooth}
+        body{
+            font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Malgun Gothic','맑은 고딕',sans-serif;
+            background:var(--page); color:var(--ink);
+            font-size:16.5px; line-height:1.85; letter-spacing:-0.003em;
+            word-break:keep-all; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+        }
+        h1,h2,h3,h4{font-family:'Noto Serif KR','Pretendard',serif;color:var(--head);word-break:keep-all}
+        a{color:inherit}
+        .num{font-variant-numeric:tabular-nums;font-feature-settings:"tnum"}
+
+        /* ===== 종이 시트 ===== */
+        .sheet{max-width:1120px;margin:0 auto;background:var(--paper);
+            border-left:1px solid var(--rule);border-right:1px solid var(--rule)}
+        .pad{padding-left:72px;padding-right:72px}
+
+        /* ===== 내비게이션 ===== */
+        .nav{position:sticky;top:0;z-index:100;background:rgba(251,250,248,.95);
+            border-bottom:1px solid var(--rule);backdrop-filter:blur(8px)}
+        .nav-wrap{max-width:1120px;margin:0 auto;padding:0 36px}
+        .nav-inner{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:40px}
+        .brand{text-decoration:none;font-family:'Noto Serif KR',serif;font-weight:600;
+            font-size:19px;letter-spacing:.08em;color:var(--head);white-space:nowrap}
+        .menu{display:flex;justify-content:flex-end;align-items:center;gap:8px;flex:1}
+        .menu a{text-decoration:none;color:var(--ink);font-size:15.5px;font-weight:600;
+            letter-spacing:-.01em;white-space:nowrap;padding:10px 14px}
+        .menu a:hover{color:var(--accent)}
+        .menu a.menu-cta{color:var(--accent);font-weight:700}
+        .mobile-menu-toggle,.mobile-menu-close,.mobile-contact,.mobile-menu-backdrop{display:none}
+
+        /* ===== 공통 타이포 ===== */
+        .kicker{font-size:12.5px;letter-spacing:.18em;color:var(--accent);font-weight:600}
+        .sec{padding-top:64px;padding-bottom:72px;border-top:1px solid var(--rule)}
+        .sec-no{display:block;font-family:'Noto Serif KR',serif;font-weight:400;font-size:30px;
+            color:var(--faint);letter-spacing:.02em;margin-bottom:4px}
+        .sec h2{font-size:30px;line-height:1.36;font-weight:600;letter-spacing:-.012em;margin-bottom:6px}
+        .sec-sub{color:var(--muted);font-size:16px;margin-bottom:36px;line-height:1.72}
+        p{margin-bottom:14px}
+        .muted{color:var(--muted)}
+        .hi{color:var(--accent);font-weight:700}
+        mark{background:#f1d9a8;color:inherit;padding:1px 3px;border-radius:2px;
+            box-decoration-break:clone;-webkit-box-decoration-break:clone}
+
+        /* ===== 히어로 ===== */
+        .hero{padding-top:88px;padding-bottom:0}
+        .hero h1{font-size:54px;line-height:1.28;font-weight:600;letter-spacing:-.015em;margin:22px 0 24px}
+        .hero .sub{font-size:18px;color:var(--ink);max-width:620px;line-height:1.8;margin-bottom:40px}
+        .btn-row{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:72px}
+        .btn{display:inline-flex;align-items:center;justify-content:center;min-height:52px;
+            padding:0 30px;text-decoration:none;font-weight:700;font-size:16px;letter-spacing:-.01em}
+        .btn-primary{background:var(--accent);color:#fff}
+        .btn-primary:hover{background:#7e1d10}
+        .btn-ghost{border:1px solid var(--rule2);color:var(--head)}
+        .btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+        .hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--rule);
+            border-top:1px solid var(--rule)}
+        .hero-stat{background:var(--paper);padding:26px 28px 22px}
+        .hero-stat .v{font-family:'Noto Serif KR',serif;font-size:30px;font-weight:600;
+            color:var(--head);line-height:1.2;margin-bottom:6px}
+        .hero-stat .l{font-size:13px;color:var(--muted);line-height:1.55}
+        .hero-src{font-size:12px;color:var(--faint);padding:14px 0 0;line-height:1.6}
+
+        /* ===== 왜 우리인가 ===== */
+        .why-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:64px;align-items:start}
+        .lead-line{font-family:'Noto Serif KR',serif;font-size:24px;font-weight:600;
+            color:var(--head);line-height:1.5;margin-bottom:26px}
+        .why-block{margin-bottom:34px}
+        .why-block .strong{font-size:18px;font-weight:700;color:var(--head)}
+        .why-block .accent-line{border-left:2px solid var(--accent);padding:2px 0 2px 18px;
+            font-size:18px;font-weight:600;color:var(--head);margin:18px 0;line-height:1.7}
+        .profile{border-top:2px solid var(--head);padding-top:22px}
+        .profile .role{font-size:12.5px;letter-spacing:.14em;color:var(--muted);font-weight:600}
+        .profile h3{font-size:26px;font-weight:600;margin:8px 0 14px}
+        .profile h3 .name{color:var(--accent)}
+        .profile .desc{font-size:15.5px;line-height:1.8;margin-bottom:22px}
+        .cred{border-top:1px solid var(--rule)}
+        .cred div{padding:13px 2px;border-bottom:1px solid var(--rule);font-size:15px;font-weight:500}
+        .profile a.more{display:inline-block;margin-top:20px;font-size:14.5px;font-weight:700;
+            color:var(--accent);text-decoration:none}
+        .profile a.more:hover{text-decoration:underline}
+
+        /* ===== 헤어라인 3단 그리드 ===== */
+        .ledger3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--rule);
+            border:1px solid var(--rule)}
+        .ledger3 .cell{background:var(--paper);padding:32px 30px}
+        .cell .n{display:block;font-family:'Noto Serif KR',serif;font-size:14px;font-weight:600;
+            color:var(--accent);letter-spacing:.04em;margin-bottom:12px}
+        .cell h3{font-size:20px;font-weight:600;line-height:1.45;margin-bottom:18px}
+        .cell p{font-size:15px;line-height:1.78;margin-bottom:11px}
+        .cell .quote{font-style:italic;color:var(--accent);border-left:2px solid var(--accent);
+            padding-left:14px;margin:16px 0}
+        .cell .conclusion{font-weight:600;color:var(--head);margin-top:18px;padding-top:16px;
+            border-top:1px solid var(--rule);margin-bottom:0}
+        .cell .hr{height:1px;background:var(--rule);margin:18px 0}
+
+        /* ===== 서비스 인트로 ===== */
+        .svc-intro{max-width:680px;margin-bottom:40px;font-size:16.5px}
+        .svc-intro .big{font-family:'Noto Serif KR',serif;font-size:23px;font-weight:600;
+            color:var(--head);margin:20px 0 14px;line-height:1.5}
+        .svc-intro .big.accent{color:var(--accent)}
+        .svc-intro .hr{height:1px;background:var(--rule);margin:26px 0}
+        .checks{margin-top:18px;border-top:1px solid var(--rule)}
+        .checks div{display:flex;gap:10px;align-items:baseline;padding:12px 2px;
+            border-bottom:1px solid var(--rule);font-size:14.5px;line-height:1.65}
+        .checks .ok::before{content:'○';color:var(--accent);font-weight:700;flex:none}
+        .checks .risk::before{content:'✕';color:var(--muted);font-weight:700;flex:none}
+        .checks p{margin:0}
+
+        /* ===== 사례 ===== */
+        .case-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:start}
+        .case-grid h3{font-size:24px;font-weight:600;line-height:1.5;margin-bottom:18px}
+        .case-points{margin:22px 0 30px;border-top:1px solid var(--rule)}
+        .case-points div{padding:12px 2px;border-bottom:1px solid var(--rule);
+            font-size:15px;line-height:1.7}
+        .case-metrics{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);
+            border:1px solid var(--rule)}
+        .case-metric{background:var(--paper);padding:26px 26px 22px}
+        .case-metric .v{font-family:'Noto Serif KR',serif;font-size:28px;font-weight:600;
+            color:var(--accent);margin-bottom:8px;line-height:1.2}
+        .case-metric .l{font-size:13.5px;color:var(--muted);line-height:1.6}
+        .case-actions{display:flex;flex-wrap:wrap;gap:10px}
+        .case-actions .btn{min-height:46px;padding:0 20px;font-size:14.5px}
+
+        /* ===== 후기 ===== */
+        .quote-wrap{max-width:760px}
+        .pull-quote{font-family:'Noto Serif KR',serif;font-size:29px;font-weight:600;
+            line-height:1.55;color:var(--head);margin:10px 0 28px}
+        .pull-quote::before{content:'“';color:var(--accent);margin-right:2px}
+        .pull-quote::after{content:'”';color:var(--accent);margin-left:2px}
+        .quote-body{font-size:16px;line-height:1.85;margin-bottom:28px}
+        .quote-author{border-top:1px solid var(--rule);padding-top:18px;font-size:15px}
+        .quote-author strong{color:var(--accent)}
+        .quote-author span{display:block;font-size:13px;color:var(--muted);margin-top:3px}
+
+        /* ===== 문의 ===== */
+        .cta-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:start}
+        .ask-list{border-top:1px solid var(--rule);margin:18px 0 36px}
+        .ask-list div{padding:13px 2px;border-bottom:1px solid var(--rule);font-size:15.5px;line-height:1.7}
+        .cost h3{font-size:21px;font-weight:600;line-height:1.55;margin-bottom:16px}
+        .cost p{font-size:15.5px;margin-bottom:8px}
+        .final{background:var(--head);color:#ece4d9;padding:46px 48px}
+        .final .t{font-size:13px;letter-spacing:.14em;color:#b3a89a;font-weight:600;margin-bottom:18px}
+        .final .phone{display:inline-block;font-family:'Noto Serif KR',serif;font-size:34px;
+            font-weight:600;color:#e0b187;letter-spacing:.02em;text-decoration:none;margin-bottom:26px}
+        .final .phone:hover{color:#f0c89e}
+        .final .row{display:flex;gap:16px;font-size:14.5px;line-height:1.7;
+            padding:10px 0;border-top:1px solid rgba(236,228,217,.18)}
+        .final .row .k{flex:none;width:52px;color:#b3a89a;font-size:13px;padding-top:2px}
+        .final .row .v{color:#ece4d9}
+
+        /* ===== 푸터 ===== */
+        .footer{padding-top:36px;padding-bottom:44px;border-top:1px solid var(--rule);
+            font-size:13px;color:var(--muted);line-height:1.8}
+        .footer .brand-line{font-family:'Noto Serif KR',serif;font-size:15px;font-weight:600;
+            color:var(--head);letter-spacing:.06em;margin-bottom:10px}
+        .footer a{color:var(--muted)}
+
+        /* ===== 플로팅 전화 ===== */
+        .floating-call{display:none;position:fixed;bottom:24px;right:24px;z-index:100;
+            width:56px;height:56px;background:var(--accent);border-radius:50%;
+            align-items:center;justify-content:center;
+            box-shadow:0 4px 14px rgba(154,37,21,.35);text-decoration:none}
+
+        /* ===== 모바일 ===== */
+        @media (max-width:880px){
+            .sheet{border:none}
+            .pad{padding-left:22px;padding-right:22px}
+            .nav-wrap{padding:0 16px}
+            .nav-inner{position:relative;min-height:60px;justify-content:center}
+            body.menu-open{overflow:hidden}
+            .mobile-menu-toggle,.mobile-menu-close{display:inline-flex;align-items:center;
+                justify-content:center;width:44px;height:44px;border:0;background:transparent;
+                color:var(--head);cursor:pointer}
+            .mobile-menu-toggle{position:absolute;left:0;top:8px;flex-direction:column;gap:5px}
+            .mobile-menu-toggle span{display:block;width:21px;height:2px;background:var(--head)}
+            .mobile-contact{display:inline-flex;position:absolute;right:0;top:11px;align-items:center;
+                justify-content:center;min-width:54px;height:38px;padding:0 14px;
+                background:var(--accent);color:#fff;text-decoration:none;font-size:14px;font-weight:700}
+            .menu{position:fixed;top:0;left:0;z-index:130;width:min(82vw,320px);height:100vh;
+                display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;
+                gap:0;padding:74px 18px 24px;background:var(--paper);
+                border-right:1px solid var(--rule2);transform:translateX(-102%);
+                transition:transform .24s ease;overflow-y:auto}
+            .nav.menu-open .menu{transform:translateX(0)}
+            .menu a{display:flex;align-items:center;min-height:54px;padding:14px 8px;
+                border-bottom:1px solid var(--rule);color:var(--ink);font-size:16.5px;font-weight:600}
+            .menu a:hover{color:var(--accent)}
+            .mobile-menu-close{position:absolute;top:13px;right:12px;font-size:30px;font-weight:300;line-height:1}
+            .mobile-menu-backdrop{position:fixed;inset:0;z-index:90;background:rgba(23,19,16,.45)}
+            .mobile-menu-backdrop:not([hidden]){display:block}
+            .floating-call{display:flex}
+
+            .hero{padding-top:52px}
+            .hero h1{font-size:34px}
+            .hero .sub{font-size:16px;margin-bottom:30px}
+            .btn-row{margin-bottom:48px}
+            .hero-stats{grid-template-columns:1fr 1fr}
+            .hero-stat{padding:20px 18px 16px}
+            .hero-stat .v{font-size:24px}
+            .sec{padding-top:44px;padding-bottom:48px}
+            .sec h2{font-size:24px}
+            .sec-no{font-size:26px}
+            .why-grid,.case-grid,.cta-grid{grid-template-columns:1fr;gap:40px}
+            .ledger3{grid-template-columns:1fr}
+            .cell{padding:24px 20px}
+            .lead-line{font-size:21px}
+            .pull-quote{font-size:22px}
+            .final{padding:30px 24px}
+            .final .phone{font-size:27px}
+            .case-metrics{grid-template-columns:1fr 1fr}
+            .case-metric{padding:18px 16px 14px}
+            .case-metric .v{font-size:22px}
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="nav">
+        <div class="nav-wrap nav-inner">
+            <button class="mobile-menu-toggle" type="button" aria-label="메뉴 열기" aria-expanded="false"><span></span><span></span><span></span></button>
+            <a class="brand" href="/">MEDICONNECT</a>
+            <div class="menu">
+                <button class="mobile-menu-close" type="button" aria-label="메뉴 닫기">&times;</button>
+                <a href="/about/">회사소개</a>
+                <a href="/listings/">추천매물</a>
+                <a href="/insights/">입지분석칼럼</a>
+                <a href="/tools/localdata-excel/">자료실</a>
+                <a href="https://blog.naver.com/dgmediconnect" target="_blank" rel="noopener">블로그</a>
+                <a class="menu-cta" href="/contact/">문의</a>
+            </div>
+            <a class="mobile-contact" href="/contact/">문의</a>
+        </div>
+    </nav>
+    <div class="mobile-menu-backdrop" hidden></div>
+
+    <div class="sheet">
+
+        <!-- 히어로 -->
+        <header class="hero pad">
+            <div class="kicker">병의원 개원 입지 분석 · 대구 — 부산 — 경상권</div>
+            <h1>병의원 입지,<br>이것만 합니다.</h1>
+            <p class="sub">
+                진료과목마다 성공하는 입지는 다릅니다. 메디커넥트는 8년의 경상권 현장 경험과
+                독자적인 데이터 분석 모델을 결합하여, 감이 아닌 숫자로 입지의 정답을 제시합니다.
+            </p>
+            <div class="btn-row">
+                <a href="#contact" class="btn btn-primary">무료 상담 신청 →</a>
+                <a href="/listings/gumi-hyeonggok-uriem/report/" class="btn btn-ghost">분석 리포트 샘플 보기</a>
+            </div>
+        </header>
+        <div class="hero-stats">
+            <div class="hero-stat"><div class="v num">13,893</div><div class="l">도보 15분권 배후세대</div></div>
+            <div class="hero-stat"><div class="v num">64.7%</div><div class="l">40대 이상 인구 비율</div></div>
+            <div class="hero-stat"><div class="v num">170건</div><div class="l">매물 수집 후 개원 가능 건물 필터링</div></div>
+            <div class="hero-stat"><div class="v num">4개</div><div class="l">과목별 성립 가능성 검토</div></div>
+        </div>
+        <div class="pad"><div class="hero-src">위 수치는 구미 형곡동 우리엠빌딩 분석 사례의 실제 결과입니다. 모든 분석은 같은 깊이로 진행합니다.</div></div>
+
+        <!-- 01 왜 우리인가 -->
+        <section class="sec pad">
+            <span class="sec-no">01</span>
+            <h2>왜 우리인가</h2>
+            <p class="sec-sub">개원 컨설팅이라는 이름으로 이것저것 다 해주겠다는 곳은 많습니다. 저희는 다릅니다.</p>
+
+            <div class="why-grid">
+                <div>
+                    <p class="lead-line">입지 분석, 오직 이것만 합니다.</p>
+                    <div class="why-block">
+                        <p>인테리어, 세무, 인허가, 마케팅, 의료기기.</p>
+                        <p>개원 컨설팅이라는 이름으로 이것저것 다 해주겠다는 곳은 많습니다.</p>
+                        <p class="accent-line">저희는 하지 않습니다.<br>입지 하나만 봅니다. 그래서 이 분야에서 가장 깊습니다.</p>
+                    </div>
+                    <div class="why-block">
+                        <p class="strong">감이 아니라, 구조를 봅니다.</p>
+                        <p>유동인구나 반경 인구 하나로 병의원 입지를 설명하지 않습니다.
+                           진료과목, 실제 접근권, 경쟁 구조, 건물 조건과 지역 의료 히스토리를 함께 읽습니다.</p>
+                        <p><mark>의료 현장과 데이터를 연결해, 실제로 계약할 수 있는 입지를 검토합니다.</mark></p>
+                    </div>
+                </div>
+
+                <div class="profile">
+                    <div class="role">대표 / 수석 분석</div>
+                    <h3>김진현</h3>
+                    <p class="desc">건축, 의료 현장, 부동산 실무, 데이터사이언스를 하나의 분석 과정으로 연결합니다.</p>
+                    <div class="cred">
+                        <div>서울대학교 건축학과</div>
+                        <div>약학과 졸업, 현직 약사</div>
+                        <div>개업공인중개사</div>
+                        <div>경북대 데이터사이언스 대학원 석사과정</div>
+                    </div>
+                    <a class="more" href="/about/">대표 이력과 분석 방법 자세히 보기 →</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 02 문제 -->
+        <section class="sec pad">
+            <span class="sec-no">02</span>
+            <h2>지금 이렇게 자리를 고르고 있지 않습니까?</h2>
+            <p class="sec-sub">개원 입지를 정하는 과정에서 가장 흔한 세 가지 장면입니다.</p>
+
+            <div class="ledger3">
+                <div class="cell">
+                    <span class="n">첫째</span>
+                    <h3>추천해주는 사람이 전문가가 아닙니다</h3>
+                    <p><strong>제약회사 직원, 동네 브로커.</strong> 분석 도구도, 논리도, 데이터도 없습니다.</p>
+                    <p class="quote">"여기 잘 된답니다" — 이게 전부입니다.</p>
+                    <div class="hr"></div>
+                    <p><strong>일반 공인중개사.</strong> 부동산은 알아도, 의료업이 어떻게 돌아가는지 모릅니다.
+                       어떤 특약을 넣어야 임차인 권리를 지킬 수 있는지도 모릅니다.</p>
+                    <p class="muted">이들에게 병의원은 상가 중개하다 걸리는 것 중 하나일 뿐입니다.</p>
+                    <p class="conclusion">빈 자리를 소개하는 것이지, 좋은 자리를 찾아주는 것이 아닙니다.</p>
+                </div>
+                <div class="cell">
+                    <span class="n">둘째</span>
+                    <h3>근거 없는 숫자</h3>
+                    <p><strong>"배후세대 3만"이라는 말을 들었습니다.</strong> 그런데 그 3만이 어디서 온 숫자인지
+                       물어보면 아무도 대답을 못합니다. 반경 원을 그려서 안에 있는 인구를 센 겁니다.</p>
+                    <p class="muted">실제로 걸어서 올 수 있는 사람이 몇 명인지는 모릅니다.</p>
+                    <div class="hr"></div>
+                    <p><strong>"데이터 분석"이라는 곳도 마찬가지입니다.</strong> 소상공인 상권분석을 돌려서
+                       "유동인구가 많습니다" "개원 최적지입니다."</p>
+                    <p class="hi">병의원은 유동인구로 먹고 사는 업종이 아닙니다.</p>
+                    <p class="conclusion">치킨집 상권분석 도구로 병원 자리를 보고 있는 겁니다.</p>
+                </div>
+                <div class="cell">
+                    <span class="n">셋째</span>
+                    <h3>"여기 좋습니다" 한 마디로 끝납니다</h3>
+                    <p><strong>내과 자리와 안과 자리는 완전히 다릅니다.</strong>
+                       경쟁이 40곳인 과목이 있고, 0곳인 과목이 있습니다.</p>
+                    <p>그런데 과목 구분 없이 "여기 좋습니다"라고 합니다.</p>
+                    <p class="muted">뭐가 좋은 건지, 왜 좋은 건지 설명이 없습니다.</p>
+                    <p class="conclusion">이것만 하는 사람이 없기 때문입니다.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 03 저희가 보는 방법 -->
+        <section class="sec pad">
+            <span class="sec-no">03</span>
+            <h2>저희한테 물어보시면</h2>
+
+            <div class="svc-intro">
+                <p class="big">같은 건물입니다. 그런데 어떤 과목을 여느냐에 따라 답이 완전히 달라집니다.</p>
+                <p>되는 과목이 있고, 안 되는 과목이 있습니다. <span class="hi">그 차이가 숫자로 나옵니다.</span></p>
+                <div class="hr"></div>
+                <p>이 숫자는 직감이 아닙니다. 경상도권 수십 개 도시의 실제 데이터를 수집하고,
+                   자체 개발한 분석 모델을 돌려서 나온 결과입니다. 그리고 그 모델에는 8년간 현장에서
+                   직접 확인한 <strong>"왜 잘 되고, 왜 망했는지"</strong>가 녹아 있습니다.</p>
+                <p class="muted">데이터만으로는 반쪽입니다. 현장을 모르면 숫자가 거짓말을 합니다.</p>
+                <p class="big accent">저희는 둘 다 가지고 있습니다.</p>
+            </div>
+
+            <div class="ledger3">
+                <div class="cell">
+                    <span class="n">하나</span>
+                    <h3>과목별로 답이 다릅니다</h3>
+                    <p>같은 건물이라도 어떤 과목은 되고, 어떤 과목은 안 됩니다.
+                       과목마다 경쟁 구조가 다르고, 필요한 배후 규모가 다릅니다.</p>
+                    <p class="quote">"여기 좋습니다"가 아니라, 과목별로 된다/안 된다를 나눠서 말씀드립니다.</p>
+                </div>
+                <div class="cell">
+                    <span class="n">둘</span>
+                    <h3>경쟁 의원의 진짜 상태를 봅니다</h3>
+                    <p>주변에 의원이 몇 개 있는지만 세는 게 아닙니다. 그 의원들이 언제 열었는지,
+                       장비가 뭐가 있는지, 이전한 적 있는지, 실제로 잘 되고 있는지까지 봅니다.</p>
+                    <p class="quote">경쟁이 많아 보여도, 전부 오래된 의원이면 그건 기회입니다.</p>
+                </div>
+                <div class="cell">
+                    <span class="n">셋</span>
+                    <h3>비슷한 조건에서 어떻게 됐는지 알고 있습니다</h3>
+                    <p>감으로 되겠다/안 되겠다를 판단하지 않습니다. 인구 구성이 비슷한 도시들에서,
+                       비슷한 조건의 의원이 실제로 어떻게 되었는지 데이터가 있습니다.</p>
+                    <div class="checks">
+                        <div class="ok"><p>잘 되고 있는 사례가 있으면 됩니다.</p></div>
+                        <div class="risk"><p>비슷한 조건에서 성공 사례가 없으면 위험합니다.</p></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 04 분석 사례 -->
+        <section class="sec pad" id="case-gumi-hyeonggok">
+            <span class="sec-no">04</span>
+            <h2>분석 사례 — 구미 형곡동 우리엠빌딩</h2>
+            <p class="sec-sub">실제 진행한 개원 입지 분석입니다. 모든 의뢰는 이 깊이로 검토합니다.</p>
+
+            <div class="case-grid">
+                <article>
+                    <h3>구미 형곡동 병의원 개원 입지,<br>데이터로 본 우리엠빌딩 분석</h3>
+                    <p>구미시 형곡동 우리엠빌딩을 기준으로 배후세대, 기존 의원 분포, 과목별 경쟁 강도,
+                       건물 조건을 함께 검토한 개원 입지 분석 리포트입니다. 공홈에는 매물 정보와 분석 요약을
+                       분리해 정리하고, 네이버 블로그에는 장문 리포트 전문을 공개했습니다.</p>
+                    <div class="case-points">
+                        <div>의료시설 전용 건물, 기존 3개 의원 운영, 형곡동 의원 밀집 동선 위의 입지</div>
+                        <div>도보 15분권 배후세대와 40대 이상 인구 비율을 함께 검토</div>
+                        <div>정신건강의학과, 통증계열, 소화기내과, 외과 관점의 과목별 성립 가능성 분석</div>
+                        <div>네이버 부동산 170건과 건축물대장을 비교해 의원 개원 가능 건물을 필터링</div>
+                    </div>
+                    <div class="case-actions">
+                        <a class="btn btn-primary" href="/listings/gumi-hyeonggok-uriem/report/">추천매물 리포트 보기 →</a>
+                        <a class="btn btn-ghost" href="/listings/gumi-hyeonggok-uriem/">매물 조건만 보기</a>
+                        <a class="btn btn-ghost" href="https://blog.naver.com/dgmediconnect/224290430439" target="_blank" rel="noopener">네이버 블로그 전문</a>
+                    </div>
+                </article>
+
+                <div class="case-metrics" aria-label="구미 형곡동 우리엠빌딩 분석 핵심 수치">
+                    <div class="case-metric"><div class="v num">13,893</div><div class="l">우리엠빌딩 기준 도보 15분권 배후세대</div></div>
+                    <div class="case-metric"><div class="v num">64.7%</div><div class="l">형곡동 40대 이상 인구 비율</div></div>
+                    <div class="case-metric"><div class="v num">170건</div><div class="l">형곡동 반경 내 사무실·상가 매물 수집 및 필터링</div></div>
+                    <div class="case-metric"><div class="v num">4개</div><div class="l">정신건강의학과·통증계열·소화기내과·외과 추천 과목 검토</div></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 05 고객 후기 -->
+        <section class="sec pad">
+            <span class="sec-no">05</span>
+            <h2>고객 후기</h2>
+
+            <div class="quote-wrap">
+                <p class="pull-quote">3곳 중에 고민하고 있었는데,<br>과목별로 다 다르더라고요.</p>
+                <div class="quote-body">
+                    <p>재활의학과 개원을 준비하면서 대구에서 3곳을 놓고 고민하고 있었습니다.
+                       다른 곳에서는 세 곳 다 "괜찮다"고 했는데, 메디커넥트는 각 위치별로 숫자를 보여줬습니다.
+                       한 곳은 되고, 한 곳은 경쟁이 너무 많고, 한 곳은 사람이 없다고.</p>
+                    <p class="strong"><mark>근거가 있으니까 결정할 수 있었습니다.</mark></p>
+                </div>
+                <div class="quote-author">
+                    <strong>박○○</strong> · 재활의학과 전문의
+                    <span>대구 수성구, 2025년 개원</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 06 문의 -->
+        <section class="sec pad" id="contact">
+            <span id="cta"></span>
+            <span class="sec-no">06</span>
+            <h2>이런 고민이 있으시면, 전화 한 통이면 됩니다</h2>
+
+            <div class="cta-grid">
+                <div>
+                    <p class="kicker" style="margin-bottom:6px">요청 예시</p>
+                    <div class="ask-list">
+                        <div>"어디 병원이 잘 된다던데, 그 병원이랑 비슷한 자리 찾아주세요."</div>
+                        <div>"C-arm 시술을 많이 할 수 있는 정형외과 자리를 찾고 있습니다."</div>
+                        <div>"경쟁을 피하고 싶은데, 경쟁이 적으면서 돈을 벌 수 있는 곳이 있을까요?"</div>
+                        <div>"지금 고민 중인 자리가 있는데, 이 자리가 괜찮은 건지 확인해주세요."</div>
+                    </div>
+
+                    <div class="cost">
+                        <p class="kicker" style="margin-bottom:6px">비용</p>
+                        <h3>상담 무료. 미팅 무료.<br>그리고 실제 입점 시 <span class="hi">중개 수수료도 무료.</span></h3>
+                        <p>상담만 무료가 아닙니다. 자리를 찾아드리고, 건물과 매칭이 되어 실제로 입점하실 때도
+                           <mark>의사 선생님께 중개 수수료를 받지 않습니다.</mark></p>
+                        <p>보통 수백만 원에서 천만 원이 넘는 비용입니다. 저희는 받지 않습니다.</p>
+                        <p class="muted">부담 없이 연락하시고, 데이터를 보신 후에 판단하시면 됩니다.</p>
+                    </div>
+                </div>
+
+                <div class="final">
+                    <div class="t">전화 상담</div><br>
+                    <a href="tel:010-9629-1673" class="phone num">010-9629-1673</a>
+                    <div class="row"><span class="k">이메일</span><span class="v">nirvana995@naver.com</span></div>
+                    <div class="row"><span class="k">주소</span><span class="v">메디커넥트 공인중개사무소<br>대구광역시 수성구 달구벌대로 3188 301호</span></div>
+                    <div class="row"><span class="k">블로그</span><span class="v"><a href="https://blog.naver.com/dgmediconnect" target="_blank" rel="noopener" style="color:#e0b187;text-decoration:none">blog.naver.com/dgmediconnect</a></span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 푸터 -->
+        <footer class="footer pad">
+            <div class="brand-line">MEDICONNECT</div>
+            <div>메디커넥트 공인중개사무소 · 대표 김진현 (개업공인중개사 / 현직 약사)</div>
+            <div>대구광역시 수성구 달구벌대로 3188 301호 · 010-9629-1673 · nirvana995@naver.com</div>
+            <div>© 메디커넥트 공인중개사무소. All rights reserved.</div>
+        </footer>
+
+    </div>
+
+    <!-- 모바일 플로팅 전화 버튼 -->
+    <a href="tel:010-9629-1673" class="floating-call" aria-label="전화 상담">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+        </svg>
+    </a>
+
+    <script>
+        document.querySelectorAll('a[href^="tel:"]').forEach((link) => {
+            link.addEventListener('click', () => {
+                if (typeof gtag === 'function') {
+                    gtag('event', 'click_phone', {
+                        event_category: 'lead',
+                        event_label: link.getAttribute('href')
+                    });
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

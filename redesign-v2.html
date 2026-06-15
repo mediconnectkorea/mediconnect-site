@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- ============================================================
+         리디자인 시안 v2 (모션 리치 다크 프리미엄) — 2026-06-12
+         스택: GSAP 3 + ScrollTrigger + Lenis 스무스 스크롤 + 커스텀 캔버스
+         ★ 시안 파일. 라이브 반영 시 index.html로 교체하고
+           robots noindex를 "index, follow"로 되돌릴 것.
+         QA: ?noanim 쿼리로 애니메이션 끄고 레이아웃 검수 가능.
+         ============================================================ -->
+    <meta name="robots" content="noindex, nofollow">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YF6FC9EBS3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-YF6FC9EBS3');
+    </script>
+    <title>메디커넥트 공인중개사무소 — 대구·부산 병의원 개원 입지 분석 전문</title>
+    <meta name="description" content="경상권 병의원 개원 입지와 메디컬빌딩 매물을 데이터로 분석하는 공인중개사무소입니다.">
+    <link rel="shortcut icon" href="https://mediconnect.co.kr/assets/og/mediconnect-favicon.png">
+    <link rel="icon" type="image/png" href="https://mediconnect.co.kr/assets/og/mediconnect-favicon.png">
+    <script defer src="/assets/site-nav.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap">
+
+    <style>
+        :root{
+            --bg:#0b0a09; --bg2:#13110f;
+            --txt:#f4f1ec; --mut:#98928a; --dim:#5e5953;
+            --acc:#ff4f1f; --acc-soft:rgba(255,79,31,.12);
+            --line:rgba(244,241,236,.09); --line2:rgba(244,241,236,.16);
+            --glass:rgba(255,255,255,.035);
+        }
+        *{margin:0;padding:0;box-sizing:border-box}
+        html{scroll-behavior:auto}
+        ::selection{background:var(--acc);color:#fff}
+        body{
+            font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;
+            background:var(--bg);color:var(--txt);
+            font-size:17px;line-height:1.8;letter-spacing:-0.01em;
+            word-break:keep-all;-webkit-font-smoothing:antialiased;
+            overflow-x:hidden;
+        }
+        .serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400}
+        .num{font-variant-numeric:tabular-nums;font-feature-settings:"tnum"}
+        a{color:inherit}
+
+        /* ===== 그레인 + 진행바 ===== */
+        .grain{position:fixed;inset:-50%;width:200%;height:200%;z-index:200;pointer-events:none;opacity:.05;
+            background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            animation:grain 8s steps(10) infinite}
+        @keyframes grain{
+            0%,100%{transform:translate(0,0)}10%{transform:translate(-5%,-10%)}20%{transform:translate(-15%,5%)}
+            30%{transform:translate(7%,-25%)}40%{transform:translate(-5%,25%)}50%{transform:translate(-15%,10%)}
+            60%{transform:translate(15%,0)}70%{transform:translate(0,15%)}80%{transform:translate(3%,35%)}90%{transform:translate(-10%,10%)}}
+        .progress{position:fixed;top:0;left:0;height:2px;width:100%;background:var(--acc);
+            transform-origin:0 50%;transform:scaleX(0);z-index:300}
+
+        /* ===== 내비게이션 ===== */
+        .nav{position:fixed;top:0;left:0;right:0;z-index:100;transition:background .4s ease,border-color .4s ease;
+            border-bottom:1px solid transparent}
+        .nav.scrolled{background:rgba(11,10,9,.72);backdrop-filter:blur(16px);border-bottom-color:var(--line)}
+        .nav-wrap{max-width:1280px;margin:0 auto;padding:0 40px}
+        .nav-inner{min-height:76px;display:flex;align-items:center;justify-content:space-between;gap:40px}
+        .brand{text-decoration:none;font-weight:800;font-size:18px;letter-spacing:.06em;color:var(--txt);white-space:nowrap}
+        .brand b{color:var(--acc)}
+        .menu{display:flex;justify-content:flex-end;align-items:center;gap:4px;flex:1}
+        .menu a{text-decoration:none;color:var(--mut);font-size:15px;font-weight:600;
+            white-space:nowrap;padding:10px 14px;border-radius:999px;transition:color .25s}
+        .menu a:hover{color:var(--txt)}
+        .menu a.menu-cta{color:var(--txt);border:1px solid var(--line2);margin-left:10px;padding:10px 20px;transition:all .25s}
+        .menu a.menu-cta:hover{background:var(--acc);border-color:var(--acc);color:#fff}
+        .mobile-menu-toggle,.mobile-menu-close,.mobile-contact,.mobile-menu-backdrop{display:none}
+
+        /* ===== 히어로 ===== */
+        .hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:center;
+            overflow:hidden;padding:140px 0 0}
+        #hero-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+        .aurora{position:absolute;border-radius:50%;filter:blur(110px);pointer-events:none;z-index:0}
+        .aurora.a1{width:54vw;height:54vw;left:-12vw;top:-18vw;background:radial-gradient(circle,rgba(255,79,31,.20),transparent 65%);
+            animation:drift1 18s ease-in-out infinite alternate}
+        .aurora.a2{width:44vw;height:44vw;right:-14vw;bottom:-10vw;background:radial-gradient(circle,rgba(255,140,60,.10),transparent 65%);
+            animation:drift2 22s ease-in-out infinite alternate}
+        @keyframes drift1{from{transform:translate(0,0) scale(1)}to{transform:translate(8vw,6vh) scale(1.15)}}
+        @keyframes drift2{from{transform:translate(0,0) scale(1.1)}to{transform:translate(-6vw,-8vh) scale(.95)}}
+        .hero-fade{position:absolute;left:0;right:0;bottom:0;height:30vh;z-index:1;
+            background:linear-gradient(to bottom,transparent,var(--bg))}
+
+        .hero-inner{position:relative;z-index:2;max-width:1280px;margin:0 auto;padding:0 40px;width:100%}
+        .hero-kicker{display:flex;align-items:center;gap:14px;color:var(--mut);font-size:14px;
+            font-weight:600;letter-spacing:.14em;margin-bottom:34px}
+        .hero-kicker::before{content:'';width:34px;height:1px;background:var(--acc)}
+        .hero-kicker .serif{color:var(--acc);font-size:16px;letter-spacing:.02em}
+        .hero h1{font-size:clamp(58px,9.5vw,142px);font-weight:900;line-height:1.04;
+            letter-spacing:-0.045em;color:var(--txt)}
+        .hero h1 .hl{color:var(--acc)}
+        .hl-line{display:block;overflow:hidden;padding-bottom:.08em;margin-bottom:-.08em}
+        .hl-line>span{display:inline-block;will-change:transform}
+        .hero-bottom{display:flex;align-items:flex-end;justify-content:space-between;gap:48px;margin-top:54px;flex-wrap:wrap}
+        .hero-sub{font-size:18px;color:var(--mut);max-width:480px;line-height:1.85}
+        .hero-sub b{color:var(--txt);font-weight:700}
+        .hero-cta-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+        .btn{display:inline-flex;align-items:center;gap:10px;min-height:58px;padding:0 32px;border-radius:999px;
+            text-decoration:none;font-weight:700;font-size:16px;letter-spacing:-.01em;
+            transition:transform .3s cubic-bezier(.16,1,.3,1),background .3s,color .3s,border-color .3s;will-change:transform}
+        .btn-acc{background:var(--acc);color:#fff}
+        .btn-acc:hover{background:#ff6a40}
+        .btn-line{border:1px solid var(--line2);color:var(--txt)}
+        .btn-line:hover{border-color:var(--acc);color:var(--acc)}
+        .btn .arr{transition:transform .3s cubic-bezier(.16,1,.3,1)}
+        .btn:hover .arr{transform:translateX(5px)}
+        .scroll-hint{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);z-index:2;
+            display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--dim);font-size:11px;letter-spacing:.22em}
+        .scroll-hint::after{content:'';width:1px;height:42px;background:linear-gradient(var(--acc),transparent);
+            animation:hint 1.8s ease-in-out infinite}
+        @keyframes hint{0%{transform:scaleY(0);transform-origin:top}45%{transform:scaleY(1);transform-origin:top}
+            55%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+        /* ===== 마키 ===== */
+        .marquee{position:relative;z-index:2;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+            overflow:hidden;padding:20px 0;background:rgba(11,10,9,.4)}
+        .marquee-track{display:flex;gap:0;width:max-content;animation:marq 36s linear infinite}
+        .marquee span{display:inline-flex;align-items:center;gap:22px;padding:0 22px;white-space:nowrap;
+            font-size:15px;font-weight:600;color:var(--dim);letter-spacing:.06em}
+        .marquee span::after{content:'◆';font-size:7px;color:var(--acc)}
+        @keyframes marq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+        /* ===== 공통 섹션 ===== */
+        .wrap{max-width:1280px;margin:0 auto;padding:0 40px}
+        section{position:relative}
+        .sec-label{display:flex;align-items:center;gap:16px;margin-bottom:28px;
+            color:var(--mut);font-size:13px;font-weight:700;letter-spacing:.2em}
+        .sec-label .no{color:var(--acc);font-size:13px}
+        .sec-label::after{content:'';flex:1;height:1px;background:var(--line)}
+        .sec-title{font-size:clamp(34px,4.6vw,62px);font-weight:850;line-height:1.18;letter-spacing:-.035em;margin-bottom:18px}
+        .sec-title .hl{color:var(--acc)}
+        .sec-desc{color:var(--mut);font-size:17px;max-width:560px}
+
+        /* ===== 스탯 밴드 ===== */
+        .stats{padding:110px 0 60px}
+        .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);
+            border:1px solid var(--line);border-radius:24px;overflow:hidden}
+        .stat{background:var(--bg);padding:42px 36px 36px;position:relative;transition:background .35s}
+        .stat:hover{background:var(--bg2)}
+        .stat .v{font-size:clamp(40px,4.2vw,58px);font-weight:850;letter-spacing:-.04em;line-height:1.1;color:var(--txt)}
+        .stat .v em{font-style:normal;color:var(--acc);font-size:.55em;font-weight:800;margin-left:2px}
+        .stat .l{margin-top:12px;font-size:14px;color:var(--mut);line-height:1.6}
+        .stats-src{margin-top:16px;font-size:12.5px;color:var(--dim)}
+        .stats-src b{color:var(--mut);font-weight:600}
+
+        /* ===== 빅 스테이트먼트 ===== */
+        .statement{padding:150px 0 130px}
+        .statement .txt{font-size:clamp(30px,4.1vw,56px);font-weight:800;line-height:1.42;
+            letter-spacing:-.03em;max-width:1080px}
+        .statement .txt .w{display:inline-block;opacity:.13;will-change:opacity}
+        .statement .txt .hl{color:var(--acc)}
+        .statement .after{margin-top:44px;display:flex;gap:18px;align-items:flex-start;max-width:640px}
+        .statement .after::before{content:'';flex:none;width:34px;height:1px;background:var(--acc);margin-top:15px}
+        .statement .after p{color:var(--mut);font-size:17px}
+
+        /* ===== 문제 — 스티키 스택 ===== */
+        .problem{padding:110px 0 140px}
+        .stack{margin-top:70px;display:flex;flex-direction:column;gap:28px}
+        .p-card{position:sticky;background:linear-gradient(160deg,#161311 0%,#0e0c0b 100%);
+            border:1px solid var(--line2);border-radius:28px;padding:56px 60px;
+            display:grid;grid-template-columns:auto 1fr;gap:52px;align-items:start;
+            box-shadow:0 -20px 60px rgba(0,0,0,.5);will-change:transform}
+        .p-card .big-no{font-size:clamp(64px,8vw,110px);font-weight:900;line-height:1;
+            letter-spacing:-.04em;color:transparent;-webkit-text-stroke:1.5px rgba(255,79,31,.65)}
+        .p-card h3{font-size:clamp(24px,2.6vw,34px);font-weight:800;letter-spacing:-.025em;line-height:1.3;margin-bottom:22px}
+        .p-card p{font-size:16.5px;color:var(--mut);margin-bottom:12px;max-width:640px}
+        .p-card p b{color:var(--txt);font-weight:700}
+        .p-card .quote{color:var(--acc);font-weight:700;font-size:18px;margin:18px 0}
+        .p-card .concl{margin-top:24px;padding-top:22px;border-top:1px solid var(--line);
+            color:var(--txt);font-weight:700;font-size:18px}
+
+        /* ===== 서비스 ===== */
+        .services{padding:110px 0 130px}
+        .svc-state{margin:54px 0 70px;max-width:860px}
+        .svc-state p{font-size:clamp(20px,2.2vw,27px);font-weight:600;line-height:1.6;
+            letter-spacing:-.02em;color:var(--mut);margin-bottom:10px}
+        .svc-state p b{color:var(--txt);font-weight:800}
+        .svc-state p.hl{color:var(--acc);font-weight:800;font-size:clamp(24px,2.6vw,32px);margin-top:22px}
+        .svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+        .svc-card{position:relative;border:1px solid var(--line);border-radius:26px;padding:44px 40px;
+            background:var(--glass);backdrop-filter:blur(8px);overflow:hidden;
+            transition:transform .45s cubic-bezier(.16,1,.3,1),border-color .45s;will-change:transform}
+        .svc-card:hover{transform:translateY(-10px);border-color:rgba(255,79,31,.5)}
+        .svc-card::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .45s;
+            background:radial-gradient(420px circle at var(--mx,50%) var(--my,0%),rgba(255,79,31,.13),transparent 60%)}
+        .svc-card:hover::before{opacity:1}
+        .svc-card .idx{font-size:13px;font-weight:800;color:var(--acc);letter-spacing:.18em;margin-bottom:26px;display:block}
+        .svc-card h3{font-size:23px;font-weight:800;letter-spacing:-.02em;line-height:1.4;margin-bottom:18px}
+        .svc-card p{font-size:15.5px;color:var(--mut);margin-bottom:12px;position:relative}
+        .svc-card .pull{margin-top:24px;padding:20px 22px;border-radius:16px;background:var(--acc-soft);
+            color:var(--txt);font-weight:700;font-size:16px;line-height:1.6;position:relative}
+        .svc-card .ok,.svc-card .risk{display:flex;gap:10px;align-items:baseline;margin-top:14px;
+            padding:14px 18px;border-radius:14px;font-size:14.5px;font-weight:600;position:relative}
+        .svc-card .ok{background:rgba(120,220,130,.08);color:#bfe8c4}
+        .svc-card .ok::before{content:'●';color:#7adc82;font-size:9px;flex:none}
+        .svc-card .risk{background:rgba(255,90,70,.07);color:#f0b9af}
+        .svc-card .risk::before{content:'●';color:var(--acc);font-size:9px;flex:none}
+
+        /* ===== 사례 ===== */
+        .case{padding:110px 0 140px;background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+        .case-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:80px;align-items:start;margin-top:60px}
+        .case h3{font-size:clamp(26px,3vw,38px);font-weight:800;letter-spacing:-.03em;line-height:1.35;margin-bottom:22px}
+        .case p.lead{color:var(--mut);font-size:17px;margin-bottom:30px}
+        .case-points{display:flex;flex-direction:column;margin-bottom:38px}
+        .case-points div{display:flex;gap:16px;align-items:baseline;padding:15px 4px;
+            border-bottom:1px solid var(--line);font-size:16px;color:var(--txt)}
+        .case-points div::before{content:'→';color:var(--acc);font-weight:800;flex:none}
+        .case-actions{display:flex;flex-wrap:wrap;gap:12px}
+        .case-metrics{display:grid;grid-template-columns:1fr 1fr;gap:18px;position:sticky;top:110px}
+        .case-metric{border:1px solid var(--line2);border-radius:22px;padding:34px 30px;background:var(--bg);
+            transition:border-color .35s,transform .35s}
+        .case-metric:hover{border-color:rgba(255,79,31,.5);transform:translateY(-4px)}
+        .case-metric .v{font-size:clamp(34px,3.4vw,46px);font-weight:850;letter-spacing:-.04em;color:var(--acc);line-height:1.15}
+        .case-metric .l{margin-top:10px;font-size:13.5px;color:var(--mut);line-height:1.6}
+
+        /* ===== 후기 ===== */
+        .voice{padding:150px 0}
+        .voice .q{font-size:clamp(30px,4vw,54px);font-weight:800;line-height:1.4;letter-spacing:-.03em;max-width:980px}
+        .voice .q::before{content:'“';color:var(--acc);margin-right:6px}
+        .voice .q::after{content:'”';color:var(--acc);margin-left:6px}
+        .voice .body{margin-top:38px;max-width:660px;color:var(--mut);font-size:17px}
+        .voice .body b{color:var(--txt)}
+        .voice .who{margin-top:30px;display:flex;align-items:center;gap:16px;font-size:15px}
+        .voice .who::before{content:'';width:34px;height:1px;background:var(--acc)}
+        .voice .who b{color:var(--acc)}
+        .voice .who span{color:var(--dim);font-size:13.5px}
+
+        /* ===== CTA ===== */
+        .cta{padding:130px 0 110px;border-top:1px solid var(--line);position:relative;overflow:hidden}
+        .cta .aurora.a3{width:60vw;height:40vw;left:50%;top:-10vw;transform:translateX(-50%);
+            background:radial-gradient(circle,rgba(255,79,31,.13),transparent 60%);animation:none}
+        .cta-head{text-align:center;margin-bottom:64px;position:relative;z-index:1}
+        .cta-head .sec-title{margin-bottom:14px}
+        .cta-head .sec-desc{margin:0 auto}
+        .phone-hero{display:block;text-align:center;text-decoration:none;position:relative;z-index:1;
+            font-size:clamp(46px,8.6vw,124px);font-weight:900;letter-spacing:-.045em;line-height:1.1;
+            color:var(--txt);transition:color .3s;margin-bottom:70px}
+        .phone-hero:hover{color:var(--acc)}
+        .phone-hero small{display:block;font-size:14px;font-weight:600;color:var(--dim);letter-spacing:.22em;margin-bottom:18px}
+        .cta-cols{display:grid;grid-template-columns:1fr 1fr;gap:80px;position:relative;z-index:1;
+            border-top:1px solid var(--line);padding-top:70px}
+        .cta-cols h4{font-size:13px;font-weight:800;color:var(--acc);letter-spacing:.2em;margin-bottom:24px}
+        .ask{display:flex;flex-direction:column}
+        .ask div{padding:15px 4px;border-bottom:1px solid var(--line);font-size:16px;color:var(--mut);
+            transition:color .3s,padding-left .3s}
+        .ask div:hover{color:var(--txt);padding-left:12px}
+        .cost-big{font-size:clamp(22px,2.4vw,30px);font-weight:800;line-height:1.5;letter-spacing:-.02em;margin-bottom:22px}
+        .cost-big .hl{color:var(--acc)}
+        .cost p{color:var(--mut);font-size:16px;margin-bottom:10px}
+        .cost p b{color:var(--txt)}
+        .cost .free-tags{display:flex;flex-wrap:wrap;gap:10px;margin:26px 0 6px}
+        .cost .free-tags span{border:1px solid var(--line2);border-radius:999px;padding:9px 20px;
+            font-size:14px;font-weight:700;color:var(--txt)}
+        .cost .free-tags span b{color:var(--acc)}
+
+        /* ===== 푸터 ===== */
+        .footer{border-top:1px solid var(--line);padding:54px 0 110px;color:var(--dim);font-size:14px}
+        .footer-grid{display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap}
+        .footer .brand-line{font-weight:800;font-size:17px;letter-spacing:.06em;color:var(--txt);margin-bottom:14px}
+        .footer .brand-line b{color:var(--acc)}
+        .footer p{line-height:1.9}
+        .footer a{color:var(--mut);text-decoration:none}
+        .footer a:hover{color:var(--txt)}
+        .footer .links{display:flex;gap:22px;align-items:flex-start;padding-top:6px}
+
+        /* ===== 플로팅 전화 ===== */
+        .floating-call{display:none;position:fixed;bottom:24px;right:24px;z-index:150;
+            width:58px;height:58px;background:var(--acc);border-radius:50%;
+            align-items:center;justify-content:center;text-decoration:none;
+            box-shadow:0 6px 22px rgba(255,79,31,.4)}
+
+        /* ===== 리빌 기본 ===== */
+        .rv{will-change:transform,opacity}
+
+        /* ===== 모바일 ===== */
+        @media (max-width:900px){
+            .nav-wrap{padding:0 18px}
+            .nav{background:rgba(11,10,9,.8);backdrop-filter:blur(14px);border-bottom-color:var(--line)}
+            .nav-inner{position:relative;min-height:62px;justify-content:center}
+            body.menu-open{overflow:hidden}
+            .mobile-menu-toggle,.mobile-menu-close{display:inline-flex;align-items:center;justify-content:center;
+                width:44px;height:44px;border:0;background:transparent;color:var(--txt);cursor:pointer}
+            .mobile-menu-toggle{position:absolute;left:0;top:9px;flex-direction:column;gap:5px}
+            .mobile-menu-toggle span{display:block;width:21px;height:2px;background:var(--txt)}
+            .mobile-contact{display:inline-flex;position:absolute;right:0;top:12px;align-items:center;justify-content:center;
+                min-width:54px;height:38px;padding:0 16px;border-radius:999px;background:var(--acc);color:#fff;
+                text-decoration:none;font-size:14px;font-weight:800}
+            .menu{position:fixed;top:0;left:0;z-index:130;width:min(82vw,320px);height:100vh;
+                display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;gap:0;
+                padding:76px 18px 24px;background:#100e0c;border-right:1px solid var(--line2);
+                transform:translateX(-102%);transition:transform .24s ease;overflow-y:auto}
+            .nav.menu-open .menu{transform:translateX(0)}
+            .menu a{display:flex;align-items:center;min-height:54px;padding:14px 8px;border-radius:0;
+                border-bottom:1px solid var(--line);color:var(--txt);font-size:16.5px;font-weight:700}
+            .menu a.menu-cta{border:0;border-bottom:1px solid var(--line);margin:0;color:var(--acc)}
+            .mobile-menu-close{position:absolute;top:12px;right:12px;font-size:30px;font-weight:300;line-height:1}
+            .mobile-menu-backdrop{position:fixed;inset:0;z-index:90;background:rgba(0,0,0,.6)}
+            .mobile-menu-backdrop:not([hidden]){display:block}
+            .floating-call{display:flex}
+
+            .wrap,.hero-inner{padding:0 20px}
+            .hero{padding-top:110px}
+            .hero h1{font-size:clamp(44px,12.5vw,72px)}
+            .hero-bottom{margin-top:36px;gap:28px}
+            .hero-sub{font-size:15.5px}
+            .btn{min-height:52px;padding:0 26px;font-size:15px}
+            .scroll-hint{display:none}
+            .stats{padding:64px 0 40px}
+            .stats-grid{grid-template-columns:1fr 1fr;border-radius:18px}
+            .stat{padding:26px 22px 22px}
+            .statement{padding:90px 0 80px}
+            .problem,.services{padding:70px 0 90px}
+            .p-card{grid-template-columns:1fr;gap:18px;padding:32px 26px;border-radius:20px}
+            .svc-grid{grid-template-columns:1fr}
+            .case{padding:70px 0 90px}
+            .case-grid{grid-template-columns:1fr;gap:44px;margin-top:40px}
+            .case-metrics{position:static;grid-template-columns:1fr 1fr;gap:12px}
+            .case-metric{padding:22px 18px;border-radius:16px}
+            .voice{padding:90px 0}
+            .cta{padding:80px 0 70px}
+            .cta-cols{grid-template-columns:1fr;gap:48px;padding-top:48px}
+            .phone-hero{margin-bottom:48px}
+            .footer{padding:40px 0 110px}
+        }
+
+        @media (prefers-reduced-motion: reduce){
+            .grain,.aurora{animation:none}
+            .marquee-track{animation-duration:120s}
+        }
+    </style>
+</head>
+<body>
+
+    <div class="grain"></div>
+    <div class="progress" id="progress"></div>
+
+    <nav class="nav" id="nav">
+        <div class="nav-wrap nav-inner">
+            <button class="mobile-menu-toggle" type="button" aria-label="메뉴 열기" aria-expanded="false"><span></span><span></span><span></span></button>
+            <a class="brand" href="/">MEDI<b>CONNECT</b></a>
+            <div class="menu">
+                <button class="mobile-menu-close" type="button" aria-label="메뉴 닫기">&times;</button>
+                <a href="/about/">회사소개</a>
+                <a href="/listings/">추천매물</a>
+                <a href="/insights/">입지분석칼럼</a>
+                <a href="/tools/localdata-excel/">자료실</a>
+                <a href="https://blog.naver.com/dgmediconnect" target="_blank" rel="noopener">블로그</a>
+                <a class="menu-cta" href="/contact/">문의하기</a>
+            </div>
+            <a class="mobile-contact" href="/contact/">문의</a>
+        </div>
+    </nav>
+    <div class="mobile-menu-backdrop" hidden></div>
+
+    <!-- ===== 히어로 ===== -->
+    <header class="hero">
+        <canvas id="hero-canvas"></canvas>
+        <div class="aurora a1"></div>
+        <div class="aurora a2"></div>
+        <div class="hero-fade"></div>
+
+        <div class="hero-inner">
+            <div class="hero-kicker rv-kicker">
+                <span class="serif">Location Intelligence</span>
+                <span>대구 · 부산 · 경상권 병의원 개원 입지 분석</span>
+            </div>
+            <h1 aria-label="병의원 입지, 이것만 합니다.">
+                <span class="hl-line"><span>병의원 입지,</span></span>
+                <span class="hl-line"><span><span class="hl">이것만</span> 합니다.</span></span>
+            </h1>
+            <div class="hero-bottom">
+                <p class="hero-sub rv-sub">진료과목마다 성공하는 입지는 다릅니다. 메디커넥트는 <b>8년의 경상권 현장 경험</b>과
+                    <b>독자적인 데이터 분석 모델</b>을 결합하여, 감이 아닌 숫자로 입지의 정답을 제시합니다.</p>
+                <div class="hero-cta-row rv-cta">
+                    <a href="#contact" class="btn btn-acc magnetic">무료 상담 신청 <span class="arr">→</span></a>
+                    <a href="/listings/gumi-hyeonggok-uriem/report/" class="btn btn-line magnetic">분석 리포트 샘플</a>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-hint">SCROLL</div>
+    </header>
+
+    <!-- ===== 마키 ===== -->
+    <div class="marquee" aria-hidden="true">
+        <div class="marquee-track">
+            <span>내과</span><span>정형외과</span><span>안과</span><span>피부과</span><span>정신건강의학과</span>
+            <span>이비인후과</span><span>소아청소년과</span><span>재활의학과</span><span>외과</span><span>치과</span>
+            <span>대구</span><span>부산</span><span>울산</span><span>창원</span><span>구미</span><span>포항</span>
+            <span>내과</span><span>정형외과</span><span>안과</span><span>피부과</span><span>정신건강의학과</span>
+            <span>이비인후과</span><span>소아청소년과</span><span>재활의학과</span><span>외과</span><span>치과</span>
+            <span>대구</span><span>부산</span><span>울산</span><span>창원</span><span>구미</span><span>포항</span>
+        </div>
+    </div>
+
+    <!-- ===== 스탯 ===== -->
+    <section class="stats">
+        <div class="wrap">
+            <div class="stats-grid">
+                <div class="stat rv"><div class="v num"><span class="count" data-val="13893">0</span></div><div class="l">도보 15분권 배후세대</div></div>
+                <div class="stat rv"><div class="v num"><span class="count" data-val="64.7" data-dec="1">0</span><em>%</em></div><div class="l">40대 이상 인구 비율</div></div>
+                <div class="stat rv"><div class="v num"><span class="count" data-val="170">0</span><em>건</em></div><div class="l">매물 수집 후 개원 가능 건물 필터링</div></div>
+                <div class="stat rv"><div class="v num"><span class="count" data-val="4">0</span><em>과목</em></div><div class="l">과목별 성립 가능성 검토</div></div>
+            </div>
+            <p class="stats-src rv"><b>구미 형곡동 우리엠빌딩 분석 사례</b>의 실제 결과 수치입니다. 모든 의뢰를 같은 깊이로 분석합니다.</p>
+        </div>
+    </section>
+
+    <!-- ===== 빅 스테이트먼트 (01 왜 우리인가) ===== -->
+    <section class="statement">
+        <div class="wrap">
+            <div class="sec-label rv"><span class="no">01</span><span>왜 우리인가</span></div>
+            <p class="txt scrub-text">인테리어, 세무, 인허가, 마케팅. 다 해주겠다는 곳은 많습니다.
+                저희는 하지 않습니다. <span class="hl">입지 하나만 봅니다.</span>
+                그래서 이 분야에서 가장 깊습니다.</p>
+            <div class="after rv">
+                <p>유동인구나 반경 인구 하나로 입지를 설명하지 않습니다. 진료과목, 실제 접근권, 경쟁 구조,
+                건물 조건과 지역 의료 히스토리를 함께 읽습니다. 의료 현장과 데이터를 연결해,
+                실제로 계약할 수 있는 입지를 검토합니다. — <b style="color:var(--txt)">대표 김진현</b>
+                <span style="display:block;margin-top:10px;font-size:14px;color:var(--dim)">서울대 건축학과 · 약학과 졸업(현직 약사) · 개업공인중개사 · 경북대 데이터사이언스 대학원
+                &nbsp;<a href="/about/" style="color:var(--acc);text-decoration:none;font-weight:700">이력 자세히 →</a></span></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== 02 문제 — 스티키 스택 ===== -->
+    <section class="problem">
+        <div class="wrap">
+            <div class="sec-label rv"><span class="no">02</span><span>지금의 방식</span></div>
+            <h2 class="sec-title rv">지금 이렇게 자리를<br>고르고 있지 않습니까?</h2>
+            <p class="sec-desc rv">개원 입지를 정하는 과정에서 가장 흔한 세 가지 장면입니다.</p>
+
+            <div class="stack" id="stack">
+                <div class="p-card" style="top:110px">
+                    <div class="big-no num">01</div>
+                    <div>
+                        <h3>추천해주는 사람이 전문가가 아닙니다</h3>
+                        <p><b>제약회사 직원, 동네 브로커.</b> 분석 도구도, 논리도, 데이터도 없습니다.</p>
+                        <p class="quote">"여기 잘 된답니다" — 이게 전부입니다.</p>
+                        <p><b>일반 공인중개사.</b> 부동산은 알아도 의료업이 어떻게 돌아가는지 모릅니다.
+                           어떤 특약을 넣어야 임차인 권리를 지킬 수 있는지도 모릅니다.</p>
+                        <p class="concl">빈 자리를 소개하는 것이지, 좋은 자리를 찾아주는 것이 아닙니다.</p>
+                    </div>
+                </div>
+                <div class="p-card" style="top:130px">
+                    <div class="big-no num">02</div>
+                    <div>
+                        <h3>근거 없는 숫자</h3>
+                        <p><b>"배후세대 3만"이라는 말을 들었습니다.</b> 그 3만이 어디서 온 숫자인지 물어보면
+                           아무도 대답을 못합니다. 반경 원을 그려서 안에 있는 인구를 센 겁니다.
+                           실제로 걸어서 올 수 있는 사람이 몇 명인지는 모릅니다.</p>
+                        <p><b>"데이터 분석"이라는 곳도 마찬가지입니다.</b> 소상공인 상권분석을 돌려서
+                           "유동인구가 많습니다" "개원 최적지입니다."</p>
+                        <p class="quote">병의원은 유동인구로 먹고 사는 업종이 아닙니다.</p>
+                        <p class="concl">치킨집 상권분석 도구로 병원 자리를 보고 있는 겁니다.</p>
+                    </div>
+                </div>
+                <div class="p-card" style="top:150px">
+                    <div class="big-no num">03</div>
+                    <div>
+                        <h3>"여기 좋습니다" 한 마디로 끝납니다</h3>
+                        <p><b>내과 자리와 안과 자리는 완전히 다릅니다.</b> 경쟁이 40곳인 과목이 있고,
+                           0곳인 과목이 있습니다. 그런데 과목 구분 없이 "여기 좋습니다"라고 합니다.</p>
+                        <p>뭐가 좋은 건지, 왜 좋은 건지 설명이 없습니다.</p>
+                        <p class="concl">이것만 하는 사람이 없기 때문입니다.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== 03 서비스 ===== -->
+    <section class="services">
+        <div class="wrap">
+            <div class="sec-label rv"><span class="no">03</span><span>저희가 보는 방법</span></div>
+            <h2 class="sec-title rv">저희한테 물어보시면<br><span class="hl">과목별로</span> 답을 드립니다</h2>
+
+            <div class="svc-state rv">
+                <p><b>같은 건물입니다.</b> 그런데 어떤 과목을 여느냐에 따라 답이 완전히 달라집니다.
+                   되는 과목이 있고, 안 되는 과목이 있습니다. 그 차이가 숫자로 나옵니다.</p>
+                <p>경상도권 수십 개 도시의 실제 데이터를 수집하고 자체 분석 모델을 돌려 나온 결과에,
+                   8년간 현장에서 직접 확인한 <b>"왜 잘 되고, 왜 망했는지"</b>가 녹아 있습니다.</p>
+                <p class="hl">데이터와 현장. 저희는 둘 다 가지고 있습니다.</p>
+            </div>
+
+            <div class="svc-grid">
+                <div class="svc-card rv">
+                    <span class="idx">SERVICE — 01</span>
+                    <h3>과목별로<br>답이 다릅니다</h3>
+                    <p>같은 건물이라도 어떤 과목은 되고, 어떤 과목은 안 됩니다.
+                       과목마다 경쟁 구조가 다르고, 필요한 배후 규모가 다릅니다.</p>
+                    <div class="pull">"여기 좋습니다"가 아니라, 과목별로 된다 / 안 된다를 나눠서 말씀드립니다.</div>
+                </div>
+                <div class="svc-card rv">
+                    <span class="idx">SERVICE — 02</span>
+                    <h3>경쟁 의원의<br>진짜 상태를 봅니다</h3>
+                    <p>주변 의원 개수만 세지 않습니다. 언제 열었는지, 장비가 뭐가 있는지,
+                       이전한 적 있는지, 실제로 잘 되고 있는지까지 봅니다.</p>
+                    <div class="pull">경쟁이 많아 보여도, 전부 오래된 의원이면 그건 기회입니다.</div>
+                </div>
+                <div class="svc-card rv">
+                    <span class="idx">SERVICE — 03</span>
+                    <h3>비슷한 조건의 결과를<br>알고 있습니다</h3>
+                    <p>감으로 판단하지 않습니다. 인구 구성이 비슷한 도시들에서 비슷한 조건의 의원이
+                       실제로 어떻게 되었는지 데이터가 있습니다.</p>
+                    <div class="ok">잘 되고 있는 사례가 있으면 됩니다.</div>
+                    <div class="risk">비슷한 조건에서 성공 사례가 없으면 위험합니다.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== 04 사례 ===== -->
+    <section class="case" id="case-gumi-hyeonggok">
+        <div class="wrap">
+            <div class="sec-label rv"><span class="no">04</span><span>분석 사례</span></div>
+            <h2 class="sec-title rv">구미 형곡동 우리엠빌딩</h2>
+            <p class="sec-desc rv">실제 진행한 개원 입지 분석입니다. 모든 의뢰는 이 깊이로 검토합니다.</p>
+
+            <div class="case-grid">
+                <article>
+                    <h3 class="rv">구미 형곡동 병의원 개원 입지,<br>데이터로 본 우리엠빌딩 분석</h3>
+                    <p class="lead rv">배후세대, 기존 의원 분포, 과목별 경쟁 강도, 건물 조건을 함께 검토한
+                       개원 입지 분석 리포트입니다. 공홈에는 매물 정보와 분석 요약을, 네이버 블로그에는
+                       장문 리포트 전문을 공개했습니다.</p>
+                    <div class="case-points">
+                        <div class="rv">의료시설 전용 건물, 기존 3개 의원 운영, 의원 밀집 동선 위의 입지</div>
+                        <div class="rv">도보 15분권 배후세대와 40대 이상 인구 비율을 함께 검토</div>
+                        <div class="rv">정신건강의학과 · 통증계열 · 소화기내과 · 외과 과목별 성립 가능성 분석</div>
+                        <div class="rv">네이버 부동산 170건 × 건축물대장 비교로 개원 가능 건물 필터링</div>
+                    </div>
+                    <div class="case-actions rv">
+                        <a class="btn btn-acc magnetic" href="/listings/gumi-hyeonggok-uriem/report/">리포트 전문 보기 <span class="arr">→</span></a>
+                        <a class="btn btn-line magnetic" href="/listings/gumi-hyeonggok-uriem/">매물 조건</a>
+                        <a class="btn btn-line magnetic" href="https://blog.naver.com/dgmediconnect/224290430439" target="_blank" rel="noopener">네이버 블로그</a>
+                    </div>
+                </article>
+                <div class="case-metrics">
+                    <div class="case-metric rv"><div class="v num">13,893</div><div class="l">도보 15분권 배후세대</div></div>
+                    <div class="case-metric rv"><div class="v num">64.7%</div><div class="l">40대 이상 인구 비율</div></div>
+                    <div class="case-metric rv"><div class="v num">170건</div><div class="l">매물 수집 · 필터링</div></div>
+                    <div class="case-metric rv"><div class="v num">4과목</div><div class="l">성립 가능성 검토</div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== 05 후기 ===== -->
+    <section class="voice">
+        <div class="wrap">
+            <div class="sec-label rv"><span class="no">05</span><span>고객 후기</span></div>
+            <p class="q rv">3곳 중에 고민하고 있었는데,<br>과목별로 다 다르더라고요.</p>
+            <div class="body rv">
+                <p>재활의학과 개원을 준비하면서 대구에서 3곳을 놓고 고민하고 있었습니다.
+                   다른 곳에서는 세 곳 다 "괜찮다"고 했는데, 메디커넥트는 각 위치별로 숫자를 보여줬습니다.
+                   한 곳은 되고, 한 곳은 경쟁이 너무 많고, 한 곳은 사람이 없다고.
+                   <b>근거가 있으니까 결정할 수 있었습니다.</b></p>
+            </div>
+            <div class="who rv"><b>박○○</b> 재활의학과 전문의 <span>대구 수성구 · 2025년 개원</span></div>
+        </div>
+    </section>
+
+    <!-- ===== 06 CTA ===== -->
+    <section class="cta" id="contact">
+        <span id="cta"></span>
+        <div class="aurora a3"></div>
+        <div class="wrap">
+            <div class="cta-head">
+                <div class="sec-label rv" style="justify-content:center"><span class="no">06</span><span>문의</span></div>
+                <h2 class="sec-title rv">이런 고민이 있으시면,<br>전화 한 통이면 됩니다</h2>
+            </div>
+            <a href="tel:010-9629-1673" class="phone-hero num rv">
+                <small>CALL — 무료 상담</small>
+                010 - 9629 - 1673
+            </a>
+            <div class="cta-cols">
+                <div>
+                    <h4>요청 예시</h4>
+                    <div class="ask">
+                        <div class="rv">"어디 병원이 잘 된다던데, 그 병원이랑 비슷한 자리 찾아주세요."</div>
+                        <div class="rv">"C-arm 시술을 많이 할 수 있는 정형외과 자리를 찾고 있습니다."</div>
+                        <div class="rv">"경쟁이 적으면서 돈을 벌 수 있는 곳이 있을까요?"</div>
+                        <div class="rv">"지금 고민 중인 자리가 괜찮은 건지 확인해주세요."</div>
+                    </div>
+                </div>
+                <div class="cost">
+                    <h4>비용</h4>
+                    <p class="cost-big rv">상담 무료. 미팅 무료.<br>실제 입점 시 <span class="hl">중개 수수료도 무료.</span></p>
+                    <p class="rv">자리를 찾아드리고, 건물과 매칭되어 실제로 입점하실 때도
+                       <b>의사 선생님께 중개 수수료를 받지 않습니다.</b>
+                       보통 수백만 원에서 천만 원이 넘는 비용입니다. 저희는 받지 않습니다.</p>
+                    <div class="free-tags rv">
+                        <span>상담 <b>0원</b></span><span>미팅 <b>0원</b></span><span>중개 수수료 <b>0원</b></span>
+                    </div>
+                    <p class="rv" style="color:var(--dim);font-size:14.5px">부담 없이 연락하시고, 데이터를 보신 후에 판단하시면 됩니다.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== 푸터 ===== -->
+    <footer class="footer">
+        <div class="wrap footer-grid">
+            <div>
+                <div class="brand-line">MEDI<b>CONNECT</b></div>
+                <p>메디커넥트 공인중개사무소 · 대표 김진현 (개업공인중개사 / 현직 약사)<br>
+                   대구광역시 수성구 달구벌대로 3188 301호<br>
+                   010-9629-1673 · nirvana995@naver.com<br>
+                   © 메디커넥트 공인중개사무소. All rights reserved.</p>
+            </div>
+            <div class="links">
+                <a href="/about/">회사소개</a>
+                <a href="/listings/">추천매물</a>
+                <a href="/insights/">입지분석칼럼</a>
+                <a href="https://blog.naver.com/dgmediconnect" target="_blank" rel="noopener">네이버 블로그</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 모바일 플로팅 전화 버튼 -->
+    <a href="tel:010-9629-1673" class="floating-call" aria-label="전화 상담">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+        </svg>
+    </a>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+    <script>
+    (function(){
+        const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const noAnim = location.search.indexOf('noanim') > -1 || reduced || typeof gsap === 'undefined';
+
+        /* ---------- 전화 클릭 GA ---------- */
+        document.querySelectorAll('a[href^="tel:"]').forEach((link) => {
+            link.addEventListener('click', () => {
+                if (typeof gtag === 'function') {
+                    gtag('event', 'click_phone', { event_category: 'lead', event_label: link.getAttribute('href') });
+                }
+            });
+        });
+
+        /* ---------- 내비 스크롤 상태 ---------- */
+        const nav = document.getElementById('nav');
+        const onScrollNav = () => nav.classList.toggle('scrolled', window.scrollY > 30);
+        window.addEventListener('scroll', onScrollNav, {passive:true});
+        onScrollNav();
+
+        /* ---------- 히어로 캔버스: 흐르는 등시선 ---------- */
+        const canvas = document.getElementById('hero-canvas');
+        if (canvas && !reduced) {
+            const ctx = canvas.getContext('2d');
+            let w, h, dpr, raf, visible = true, t = 0;
+            const resize = () => {
+                dpr = Math.min(window.devicePixelRatio || 1, 2);
+                w = canvas.offsetWidth; h = canvas.offsetHeight;
+                canvas.width = w * dpr; canvas.height = h * dpr;
+                ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            };
+            resize();
+            window.addEventListener('resize', resize);
+            const LINES = 9;
+            const draw = () => {
+                if (!visible) { raf = null; return; }
+                ctx.clearRect(0, 0, w, h);
+                t += 0.0035;
+                for (let i = 0; i < LINES; i++) {
+                    const yBase = h * (0.18 + i * 0.085);
+                    const amp = 26 + i * 9;
+                    const acc = i === Math.floor(LINES/2);
+                    ctx.beginPath();
+                    for (let x = -10; x <= w + 10; x += 14) {
+                        const n = Math.sin(x * 0.0042 + t * 2 + i * 1.7)
+                                + 0.55 * Math.sin(x * 0.009 - t * 1.3 + i * 0.8)
+                                + 0.3 * Math.sin(x * 0.017 + t * 0.7 + i * 2.6);
+                        const y = yBase + n * amp;
+                        x < 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+                    }
+                    ctx.strokeStyle = acc ? 'rgba(255,79,31,0.20)' : 'rgba(244,241,236,' + (0.028 + i * 0.004) + ')';
+                    ctx.lineWidth = acc ? 1.2 : 1;
+                    ctx.stroke();
+                }
+                raf = requestAnimationFrame(draw);
+            };
+            const io = new IntersectionObserver(([e]) => {
+                visible = e.isIntersecting;
+                if (visible && !raf) raf = requestAnimationFrame(draw);
+            });
+            io.observe(canvas);
+            raf = requestAnimationFrame(draw);
+        }
+
+        if (noAnim) {
+            document.querySelectorAll('.count').forEach(el => {
+                const v = parseFloat(el.dataset.val), d = parseInt(el.dataset.dec || '0', 10);
+                el.textContent = v.toLocaleString('ko-KR', {minimumFractionDigits:d, maximumFractionDigits:d});
+            });
+            document.querySelectorAll('.statement .txt .w').forEach(el => el.style.opacity = 1);
+            return;
+        }
+
+        gsap.registerPlugin(ScrollTrigger);
+
+        /* ---------- Lenis 스무스 스크롤 ---------- */
+        const lenis = new Lenis({ duration: 1.15, smoothWheel: true });
+        lenis.on('scroll', ScrollTrigger.update);
+        gsap.ticker.add((time) => lenis.raf(time * 1000));
+        gsap.ticker.lagSmoothing(0);
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', (e) => {
+                const target = document.querySelector(a.getAttribute('href'));
+                if (target) { e.preventDefault(); lenis.scrollTo(target, {offset:-60}); }
+            });
+        });
+
+        /* ---------- 진행바 ---------- */
+        gsap.to('#progress', { scaleX: 1, ease: 'none',
+            scrollTrigger: { trigger: document.body, start: 'top top', end: 'bottom bottom', scrub: 0.3 } });
+
+        /* ---------- 히어로 인트로 ---------- */
+        const intro = gsap.timeline({ defaults: { ease: 'power4.out' } });
+        intro.from('.hl-line > span', { yPercent: 118, duration: 1.25, stagger: 0.12 }, 0.15)
+             .from('.rv-kicker', { y: 24, opacity: 0, duration: 0.9 }, 0.05)
+             .from('.rv-sub', { y: 30, opacity: 0, duration: 0.9 }, 0.75)
+             .from('.rv-cta', { y: 30, opacity: 0, duration: 0.9 }, 0.9)
+             .from('.marquee', { opacity: 0, duration: 1 }, 1.0);
+
+        /* ---------- 공통 리빌 ---------- */
+        document.querySelectorAll('.rv').forEach(el => {
+            gsap.from(el, { y: 44, opacity: 0, duration: 1.1, ease: 'power3.out',
+                scrollTrigger: { trigger: el, start: 'top 88%' } });
+        });
+
+        /* ---------- 카운터 ---------- */
+        document.querySelectorAll('.count').forEach(el => {
+            const v = parseFloat(el.dataset.val), d = parseInt(el.dataset.dec || '0', 10);
+            const obj = { n: 0 };
+            gsap.to(obj, { n: v, duration: 1.8, ease: 'power2.out',
+                scrollTrigger: { trigger: el, start: 'top 88%' },
+                onUpdate: () => { el.textContent = obj.n.toLocaleString('ko-KR', {minimumFractionDigits:d, maximumFractionDigits:d}); } });
+        });
+
+        /* ---------- 빅 스테이트먼트: 단어 스크럽 ---------- */
+        const st = document.querySelector('.statement .txt');
+        if (st) {
+            const wrapWords = (node) => {
+                [...node.childNodes].forEach(child => {
+                    if (child.nodeType === 3) {
+                        const frag = document.createDocumentFragment();
+                        child.textContent.split(/(\s+)/).forEach(tk => {
+                            if (!tk) return;
+                            if (/^\s+$/.test(tk)) { frag.appendChild(document.createTextNode(tk)); return; }
+                            const s = document.createElement('span');
+                            s.className = 'w'; s.textContent = tk;
+                            frag.appendChild(s);
+                        });
+                        node.replaceChild(frag, child);
+                    } else if (child.nodeType === 1) wrapWords(child);
+                });
+            };
+            wrapWords(st);
+            gsap.to(st.querySelectorAll('.w'), { opacity: 1, stagger: 0.6, ease: 'none',
+                scrollTrigger: { trigger: st, start: 'top 75%', end: 'bottom 45%', scrub: 0.4 } });
+        }
+
+        /* ---------- 문제 카드 스택: 다음 카드가 덮을 때 축소 ---------- */
+        const cards = gsap.utils.toArray('.p-card');
+        cards.forEach((card, i) => {
+            const next = cards[i + 1];
+            if (!next) return;
+            gsap.to(card, { scale: 0.94, opacity: 0.45, filter: 'blur(2px)', transformOrigin: 'center top', ease: 'none',
+                scrollTrigger: { trigger: next, start: 'top bottom', end: 'top top+=160', scrub: true } });
+        });
+
+        /* ---------- 서비스 카드: 마우스 추적 글로우 ---------- */
+        document.querySelectorAll('.svc-card').forEach(card => {
+            card.addEventListener('pointermove', (e) => {
+                const r = card.getBoundingClientRect();
+                card.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+                card.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+            });
+        });
+
+        /* ---------- 마그네틱 버튼 (데스크톱) ---------- */
+        if (window.matchMedia('(hover:hover)').matches) {
+            document.querySelectorAll('.magnetic').forEach(btn => {
+                btn.addEventListener('pointermove', (e) => {
+                    const r = btn.getBoundingClientRect();
+                    gsap.to(btn, { x: (e.clientX - r.left - r.width/2) * 0.25,
+                                   y: (e.clientY - r.top - r.height/2) * 0.35, duration: 0.4, ease: 'power3.out' });
+                });
+                btn.addEventListener('pointerleave', () => gsap.to(btn, { x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1,0.4)' }));
+            });
+        }
+    })();
+    </script>
+
+</body>
+</html>
