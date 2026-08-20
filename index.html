@@ -1,4 +1,4 @@
-﻿<html lang="ko"><head>
+<html lang="ko"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Google tag (gtag.js) -->
@@ -60,11 +60,12 @@
         "https://blog.naver.com/dgmediconnect",
         "https://share.google/SoMvMCoJsEVTjtwOh"
       ],
-      "description": "대구·부산·울산·경남 병의원 개원입지, 병원자리, 의료부동산을 과목별 데이터로 분석하는 공인중개사무소입니다."
+      "description": "대구·경북·부산·울산·경남 병의원 개원입지, 병원자리, 의료부동산을 과목별 데이터로 분석하는 공인중개사무소입니다."
     }
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script defer src="/assets/site-nav.js"></script>
+    <script defer src="/assets/site-analytics.js"></script>
     <link rel="stylesheet" as="style" crossorigin="" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 
     <style>
@@ -136,7 +137,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 48px;
+            gap: 32px;
         }
 
         .brand {
@@ -152,19 +153,19 @@
             display: flex;
             justify-content: flex-end;
             align-items: center;
-            gap: 18px;
+            gap: 8px;
             flex: 1;
         }
 
         .menu a {
             text-decoration: none;
             color: #dbeafe;
-            font-size: 18px;
+            font-size: 17px;
             font-weight: 900;
             letter-spacing: -.03em;
             white-space: nowrap;
             text-align: center;
-            padding: 10px 12px;
+            padding: 10px 9px;
         }
 
         .menu a:hover {
@@ -173,7 +174,7 @@
 
         .mobile-menu-toggle, .mobile-menu-close, .mobile-contact, .mobile-menu-backdrop { display: none; }
 
-        @media(min-width:1024px){.menu{gap:30px}.menu a{font-size:21px;padding:10px 14px}}
+        @media(min-width:1180px){.menu{gap:14px}.menu a{font-size:18px;padding:10px}}
 
         .logo-group {
             display: flex;
@@ -760,6 +761,25 @@
             text-decoration: none;
         }
 
+        @media (max-width: 1050px) and (min-width: 769px) {
+            .nav{background:rgba(2,5,10,.96);z-index:100}
+            body.menu-open{overflow:hidden}
+            .nav .wrap{padding:0 16px}
+            .nav-inner{position:relative;min-height:64px;display:flex;align-items:center;justify-content:center;padding:0}
+            .brand{font-family:'Courier New',monospace;font-size:20px;line-height:1;letter-spacing:0;color:#fff}
+            .mobile-menu-toggle,.mobile-menu-close{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border:0;background:transparent;color:#fff;cursor:pointer}
+            .mobile-menu-toggle{position:absolute;left:0;top:10px;flex-direction:column;gap:5px}
+            .mobile-menu-toggle span{display:block;width:21px;height:2px;background:#fff}
+            .mobile-contact{display:inline-flex;position:absolute;right:0;top:13px;align-items:center;justify-content:center;min-width:54px;height:38px;padding:0 12px;background:#2563eb;color:#fff;text-decoration:none;font-size:14px;font-weight:900}
+            .menu{position:fixed;top:0;left:0;z-index:130;width:min(82vw,320px);height:100vh;display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;gap:0;padding:78px 18px 24px;background:#07101f;border-right:1px solid rgba(255,255,255,.16);transform:translateX(-102%);transition:transform .24s ease;overflow-y:auto}
+            .nav.menu-open .menu{transform:translateX(0)}
+            .menu a{display:flex;align-items:center;min-height:56px;padding:14px 8px;border-bottom:1px solid rgba(255,255,255,.12);color:#e2e8f0;font-size:17px;font-weight:800;text-align:left}
+            .menu a:hover{color:#fff;background:rgba(59,130,246,.12)}
+            .mobile-menu-close{position:absolute;top:15px;right:14px;font-size:30px;font-weight:300;line-height:1}
+            .mobile-menu-backdrop{position:fixed;inset:0;z-index:90;background:rgba(0,0,0,.62)}
+            .mobile-menu-backdrop:not([hidden]){display:block}
+        }
+
         @media (max-width: 768px) {
             .floating-call { display: flex; }
             /* Hero */
@@ -847,9 +867,9 @@
             <div class="menu">
                 <button class="mobile-menu-close" type="button" aria-label="메뉴 닫기">&times;</button>
                 <a href="/about/">회사소개</a>
+                <a href="/services/clinic-opening/">의사용 서비스</a><a href="/services/medical-building/">건물주용 서비스</a>
                 <a href="/listings/">추천매물</a>
-                <a href="/insights/">입지분석칼럼</a>
-                <a href="/tools/localdata-excel/">자료실</a>
+                <a href="/insights/">칼럼</a>
                 <a href="https://blog.naver.com/dgmediconnect" target="_blank" rel="noopener">블로그</a>
                 <a href="/contact/">문의</a>
             </div>
@@ -866,7 +886,7 @@
             <div class="meta-tag">ANALYSIS_MODE // CORE_EXPERTISE</div>
             <h1>병의원 입지,<br><span style="color: #ffffff">이것만 합니다.</span></h1>
             <p class="description">
-                진료과목마다 성공하는 입지는 다릅니다. 메디커넥트는 8년의 경상권 현장 경험과 독자적인 데이터 분석 모델을 결합하여, 감이 아닌 숫자로 입지의 정답을 제시합니다.
+                진료과목마다 검토해야 할 입지는 다릅니다. 메디커넥트는 8년의 경상권 현장 경험과 실제 데이터를 함께 사용해, 개원과 병의원 입점 결정에 필요한 근거를 제시합니다.
             </p>
             <a href="#cta" class="cta-button">무료 상담 신청 →</a>
         </div>
@@ -878,32 +898,32 @@
                 <div class="bar-container"><div class="bar-fill" style="width: 80%"></div></div>
             </div>
             <div class="data-point">
-                <div class="data-label">Proprietary Models</div>
-                <div class="data-value">12<span>UNITS</span></div>
+                <div class="data-label">Service Regions</div>
+                <div class="data-value">05<span>AREAS</span></div>
                 <div class="bar-container"><div class="bar-fill" style="width: 45%"></div></div>
             </div>
             <div class="data-point">
-                <div class="data-label">Gyeongsang Database</div>
-                <div class="data-value">4.2k<span>PTS</span></div>
+                <div class="data-label">Published Building Cases</div>
+                <div class="data-value">04<span>CASES</span></div>
                 <div class="bar-container"><div class="bar-fill" style="width: 92%"></div></div>
             </div>
             <div class="data-point">
-                <div class="data-label">Analysis Confidence</div>
-                <div class="data-value">98.4<span>%</span></div>
+                <div class="data-label">Gumi Listings Compared</div>
+                <div class="data-value">170<span>LISTS</span></div>
                 <div class="bar-container"><div class="bar-fill" style="width: 98%"></div></div>
             </div>
             <div style="margin-top: auto; font-family: var(--font-mono); font-size: 9px; line-height: 1.8; color: var(--text-muted); opacity: 0.6;">
-                [SYS_LOG] Fetching regional demographic data...<br>
-                [SYS_LOG] Mapping traffic flow nodes...<br>
-                [SYS_LOG] Calculating competitive proximity...<br>
-                [SYS_LOG] READY.
+                [WORK] 지역별 인구·세대 자료 확인<br>
+                [WORK] 실제 보행 경로와 접근 방향 확인<br>
+                [WORK] 진료과목별 경쟁과 건물 조건 확인<br>
+                [WORK] 현장 검토
             </div>
         </div>
 
         <div class="footer">
             <div class="status-badge">
                 <div class="status-dot"></div>
-                <span>LIVE DATA FEED: BUSAN/ULSAN/GYEONGNAM ACTIVE</span>
+                <span>대구·경북·부산·울산·경남 검토</span>
             </div>
             <div>©2024 MEDICONNECT ANALYTICS GROUP. ALL RIGHTS RESERVED.</div>
             <div>COORDINATES: 35.1796° N, 129.0756° E</div>
@@ -1074,7 +1094,7 @@
                     <p>이전한 적 있는지, 실제로 잘 되고 있는지까지 봅니다.</p>
                     <div class="service-highlight opportunity">
                         <span class="quote-mark">"</span>
-                        <p>경쟁이 많아 보여도,<br>전부 오래된 의원이면<br>그건 기회입니다.</p>
+                        <p>오래된 의원이라고 해서<br>약한 경쟁으로 단정하지 않고,<br>실제 진료 범위를 확인합니다.</p>
                     </div>
                 </div>
             </div>
@@ -1101,6 +1121,10 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:32px;">
+            <a class="cta-button" href="/services/clinic-opening/">개원 입지 검토 보기 →</a>
+            <a class="cta-button" href="/services/medical-building/">병의원 입점·유치 보기 →</a>
         </div>
     </section>
 
